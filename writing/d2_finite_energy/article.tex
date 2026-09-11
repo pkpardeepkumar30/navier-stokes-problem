@@ -1,0 +1,600 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  english,
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={How can velocity blow up while energy stays bounded?},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{How can velocity blow up while energy stays bounded?}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{A taller peak, a smaller region, and the geometry that
+connects them}
+\author{}
+\date{2026-09-11}
+\begin{document}
+\maketitle
+
+
+\textbf{A velocity can become arbitrarily large while the energy
+associated with its shrinking core decreases.} The reason is that
+kinetic energy depends on both the speed and the amount of fluid moving
+at that speed. If the region of intense motion shrinks sufficiently
+quickly, its decreasing volume can outweigh the increasing speed
+squared.
+
+This is one of the most useful ideas to understand in the proposed
+OpenAI Navier--Stokes construction. The paper describes unbounded
+velocity near a finite time while the full flow's kinetic energy remains
+uniformly bounded. Its leading core has an even more striking property:
+the energy in that narrowing region tends to zero. To see why those
+statements can coexist, we need to look at the geometry as carefully as
+the velocity.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
+Theorem 1.1 and Section 2.1}
+
+We will start with an ordinary function that becomes taller and
+narrower. Then we will repeat the argument in cylindrical coordinates,
+insert the paper's radial and axial scales, and check the result using a
+smooth toy vortex. An animation will show the same changing field in
+fixed spatial coordinates and in coordinates that shrink with it.
+
+The goal is to explain why an energy bound alone cannot rule out
+concentration of velocity. These calculations reproduce that mechanism;
+they do not verify the proposed Navier--Stokes solution or establish
+that a real fluid reaches its singular limit. The
+\href{../d1_core_size/article.html}{first article} examined the separate
+question of physical fluid assumptions.
+
+\subsection{Start with a tall, narrow
+bump}\label{start-with-a-tall-narrow-bump}
+
+Imagine a rectangular graph with height \(H\) and width \(w\). The area
+under the graph is \(Hw\). If we instead square its height before
+integrating, the area is \(H^2w\). This second quantity is the useful
+analogy for kinetic energy, because energy depends on velocity squared.
+
+Now make the rectangle narrower while setting \(H=w^{-1/2}\). Its height
+grows without bound as \(w\) approaches zero, but
+
+\[
+H^2w=(w^{-1/2})^2w=1.
+\]
+
+The sharp corners are not essential. A smooth Gaussian gives the same
+result:
+
+\[
+f_\epsilon(x)=\epsilon^{-1/2}
+\exp\left(-\frac{x^2}{2\epsilon^2}\right).
+\]
+
+Its peak is \(\epsilon^{-1/2}\). To integrate its square, substitute
+\(X=x/\epsilon\), so that \(dx=\epsilon\,dX\):
+
+\[
+\int_{-\infty}^{\infty}f_\epsilon(x)^2\,dx
+=\epsilon^{-1}\epsilon\int_{-\infty}^{\infty}e^{-X^2}\,dX
+=\sqrt{\pi}.
+\]
+
+The height keeps growing while the squared integral stays fixed. More
+generally, replacing \(\epsilon^{-1/2}\) by \(\epsilon^{-p}\) gives
+
+\[
+\int f_\epsilon^2\,dx=\sqrt{\pi}\,\epsilon^{1-2p}.
+\]
+
+For positive \(p<1/2\) the integral tends to zero; at \(p=1/2\) it stays
+constant; for \(p>1/2\) it diverges. In all three cases the peak
+diverges. \textbf{The outcome depends on how growth and concentration
+compete.}
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={Gaussian curves become taller and narrower; three amplitude exponents give decreasing, constant, and increasing squared integrals.}]{figures/01_tall_and_narrow.png}}
+
+}
+
+\caption{\label{fig-bump}The first two panels show the smooth bump and
+its square for three shrinking widths, with p=1/2. Their whole-line
+squared integrals are equal, although the displayed spatial window is
+finite. The last panel varies p: the squared integral can decrease, stay
+fixed, or increase even though every peak grows.}
+
+\end{figure}%
+
+\subsection{A vortex has two widths that
+matter}\label{a-vortex-has-two-widths-that-matter}
+
+For a constant-density fluid, kinetic energy is
+
+\[
+E=\frac{\rho}{2}\int |\mathbf u|^2\,dV.
+\]
+
+The maximum speed asks how large the velocity becomes at its most
+intense location. Energy adds the squared speed throughout a region.
+These are different measurements. In mathematical notation, they
+correspond to the \(L^\infty\) norm and, up to the density factor, the
+square of the \(L^2\) norm.
+
+For a core around a vortex axis, a radial width alone is insufficient.
+We also need its extent along the axis. Call the two scales \(a\) and
+\(b\). In cylindrical coordinates,
+
+\[
+dV=r\,dr\,d\theta\,dz.
+\]
+
+Set \(r=aR\) and \(z=bZ\). Then
+
+\[
+dV=a^2b\,R\,dR\,d\theta\,dZ.
+\]
+
+The radial scale appears \textbf{twice}: once from \(dr\) and once from
+the factor \(r\). The axial scale appears once. For a velocity of the
+form \(U\,\mathbf F(R,\theta,Z)\) with a fixed square-integrable shape,
+
+\[
+E=\frac{\rho}{2}U^2a^2b
+\int |\mathbf F|^2 R\,dR\,d\theta\,dZ.
+\]
+
+The last integral is a fixed shape factor. Thus the useful estimate is
+
+\[
+\boxed{E_{\rm core}\ \text{scales like}\ U^2a^2b.}
+\]
+
+Using \(a^3\) would assume equal radial and axial scaling. Using only
+\(a^2\) would omit the shrinking axial extent. Either shortcut can
+change the conclusion.
+
+\subsection{Put in the paper's scales}\label{put-in-the-papers-scales}
+
+The paper writes \(\tau=1-t\) for time remaining in its dimensionless
+variables. Section 2.1 gives
+
+\[
+a\asymp\tau^{1/2},\qquad
+b\asymp\tau^{1/2-h},\qquad
+U\asymp\tau^{-1/2-h}.
+\]
+
+Here \(U\) represents the dominant azimuthal or axial speed scale. The
+radial velocity has a weaker stated scale, \(O(\tau^{-1/2})\). The
+parameter \(h\) is small and positive; the introduction gives
+\(h<0.01\), and the detailed construction imposes stronger restrictions.
+The comparison symbol \(\asymp\) leaves fixed multiplicative constants
+unspecified.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
+Section 2.1, page 4}
+
+Multiplying the two radial factors and the axial factor gives
+
+\[
+V_{\rm core}\asymp a^2b\asymp\tau^{3/2-h}.
+\]
+
+Multiplying by the squared speed then gives
+
+\[
+\boxed{E_{\rm core}\asymp
+\tau^{-1-2h}\tau^{3/2-h}
+=\tau^{1/2-3h}.}
+\]
+
+Because \(h<0.01\), the exponent \(1/2-3h\) is positive. The energy
+scale therefore tends to zero as \(\tau\) tends to zero. The radial
+component contributes at most the scale \(\tau^{1/2-h}\), which also
+tends to zero. This explains the core-energy statement on page 4.
+
+For a numerical example, use the limit \(h\to0^+\) and compare with a
+reference stage \(\tau_0\). If the remaining time falls to one millionth
+of its reference value, the model gives:
+
+\begin{itemize}
+\tightlist
+\item
+  The characteristic speed is \textbf{1,000 times larger}.
+\item
+  Each characteristic width is \textbf{1,000 times smaller}.
+\item
+  The characteristic volume is \textbf{one billionth} of its reference
+  value.
+\item
+  The core-energy scale is \textbf{one thousandth} of its reference
+  value.
+\end{itemize}
+
+The energy multiplication is easy to check:
+\(1000^2\times10^{-9}=10^{-3}\).
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Time remaining / reference
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Speed / reference
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Radius / reference
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Axial width / reference
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Volume / reference
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Energy / reference
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 1 & 1 & 1 & 1 & 1 \\
+0.01 & 10 & 0.1 & 0.1 & 0.001 & 0.1 \\
+0.0001 & 100 & 0.01 & 0.01 & 1e-06 & 0.01 \\
+1e-06 & 1e+03 & 0.001 & 0.001 & 1e-09 & 0.001 \\
+\end{longtable}
+}
+
+The table contains ratios, not predictions in metres, seconds, or
+joules. We use \(h=0\) as a limiting example, not as a parameter value
+realizing the theorem.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={Normalized speed rises, volume and energy fall, and the relative radius-to-height ratio changes only slightly at the necessary h ceiling.}]{figures/02_core_scaling.png}}
+
+}
+
+\caption{\label{fig-scales}On the left, peak speed increases while
+volume and energy decrease. Radius, axial width, and energy have the
+same normalized power in the h=0 limit, so their curves overlap. The
+right panel shows how small the change in relative slenderness is over a
+finite time range when using the detailed necessary upper bound on h.}
+
+\end{figure}%
+
+\subsection{Does a shrinking core violate
+incompressibility?}\label{does-a-shrinking-core-violate-incompressibility}
+
+Incompressibility means that a parcel made of the \textbf{same fluid
+particles} preserves its volume. If that parcel is squeezed radially, it
+must extend in another direction. A region selected because the flow is
+particularly intense is a different object: particles can enter and
+leave it.
+
+A simple example makes the distinction concrete. Consider the separate
+affine velocity field
+
+\[
+\mathbf v(x,y,z,t)=
+\left(-\frac{x}{2\tau},-\frac{y}{2\tau},\frac{z}{\tau}\right),
+\qquad \tau=1-t.
+\]
+
+Its divergence is \(-1/(2\tau)-1/(2\tau)+1/\tau=0\). Starting at
+\(\tau_0=1\), the exact trajectories are
+
+\[
+x=x_0\sqrt{\tau},\qquad
+y=y_0\sqrt{\tau},\qquad
+z=\frac{z_0}{\tau}.
+\]
+
+The material volume factor is \(\sqrt{\tau}\sqrt{\tau}/\tau=1\). Radial
+lengths shrink and axial lengths grow.
+
+By comparison, the paper's intense-flow core has both \(a\to0\) and
+\(b\to0\), with the radius shrinking faster when \(h>0\). That region is
+not a material container. In the paper's central flow, radial inflow and
+axial outflow are compatible with a shrinking region of intense motion.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
+Section 2.1 and Figure 1}
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={A material parcel keeps constant volume as it stretches axially, while a separately defined core envelope decreases in both widths and volume.}]{figures/03_material_and_core.png}}
+
+}
+
+\caption{\label{fig-material}The left panel follows dimensions of the
+same material parcel in the affine example: radial squeezing is
+compensated by axial stretching. The right panel follows the prescribed
+dimensions of an intense-flow envelope, whose volume decreases. These
+are two separate models, not trajectories computed from the same
+velocity field.}
+
+\end{figure}%
+
+The affine example is used only for this geometric point. It grows with
+distance and has infinite whole-space energy; it is not our
+finite-energy vortex model.
+
+\subsection{Watch the concentration in two coordinate
+systems}\label{watch-the-concentration-in-two-coordinate-systems}
+
+For the animation we prescribe a smooth, purely azimuthal toy velocity,
+
+\[
+u_\theta(r,z,\tau)=U(\tau)\,R
+\exp\left(\frac{1-R^2-Z^2}{2}\right),
+\qquad R=\frac r{a(\tau)},\quad Z=\frac z{b(\tau)}.
+\]
+
+Its maximum magnitude is \(U\), at \(R=1\), \(Z=0\), and it vanishes
+smoothly on the axis. We set the other two velocity components to zero.
+This field is divergence free and has finite energy at each positive
+\(\tau\). Its time dependence is prescribed; it is not an evaluated
+profile from the paper and does not reproduce the paper's radial inflow
+or axial outflow.
+
+\textbf{\href{animations/core_collapse.html}{Open the animation with
+play, pause, and a frame slider}.}
+
+The left panel holds spatial coordinates fixed. The high-speed region
+becomes smaller while the peak value rises. The right panel divides
+positions by the current radial and axial widths, and speed by the
+current peak. In those variables, the shape stays fixed.
+
+The color scales deliberately measure different quantities: the left
+uses speed relative to the initial peak on a fixed logarithmic scale;
+the right uses speed relative to the current peak on a fixed linear
+scale. Playback takes equal steps in the logarithm of time remaining, so
+movie seconds are not physical seconds. The axes are stretched to fit
+each panel; their labeled units specify the geometry.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={Final frame: a concentrated high-speed core in fixed coordinates and an unchanged normalized shape in similarity coordinates.}]{figures/04_animation_static.png}}
+
+}
+
+\caption{\label{fig-animation}Static final frame of the animation. The
+time remaining is one hundredth of its reference value, the peak is ten
+times larger, and the toy energy is one tenth as large. The normalized
+shape in the right panel has stayed unchanged. The initial
+axial-to-radial width ratio of two is a toy choice; no material
+trajectories are shown.}
+
+\end{figure}%
+
+The main animation uses the \(h\to0^+\) limit. It shows concentration
+without an increasing aspect ratio. For the paper's positive \(h\), the
+ratio \(a/b\) has the additional factor \(\tau^h\) and eventually tends
+to zero. Lemma 4.8 implies the necessary bound \(h<e^{-10}\), so the
+visible change over a finite range can be extremely small. A
+dramatically lengthening-looking schematic would need explicit
+exaggeration; the right panel of the scaling figure quantifies the small
+change instead.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
+Lemma 4.8, page 35}
+
+\subsection{What the calculation
+verifies}\label{what-the-calculation-verifies}
+
+The Gaussian vortex has an exact whole-space energy:
+
+\[
+E_{\rm toy}=\frac{\rho}{2}e\pi^{3/2}U^2a^2b.
+\]
+
+We independently integrate the same field in Cartesian and cylindrical
+coordinates. Both agree with the analytic expression. A quadrature
+refinement study separates integration error from the small omitted
+Gaussian tail. The
+\href{../../code/d2_finite_energy/study.ipynb}{notebook} records the
+comparison and lets readers change the scales.
+
+This exact result concerns the \textbf{entire Gaussian toy field}. In
+applying its scaling argument to the paper, we estimate the
+\textbf{leading core contribution}. The paper's full velocity also
+includes an exterior, transitions, and corrections. Showing that the
+leading core energy decreases does not by itself bound those other
+contributions or prove Theorem 1.1.
+
+What we needed was the speed scale and all three spatial scale factors.
+What makes the mechanism work is concentration: the volume carrying the
+largest speeds decreases fast enough to outweigh the growth of speed
+squared. The computation verifies that balance for explicit smooth
+examples and reproduces the paper's stated core-energy exponent.
+
+The next task asks a harder question: what acceleration, pressure,
+viscosity, and forcing are required to produce a prescribed flow? That
+is where the momentum residual enters. The \href{source-notes.md}{source
+and model notes} document the assumptions behind this installment.
+
+
+
+
+\end{document}

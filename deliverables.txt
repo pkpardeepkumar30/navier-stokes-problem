@@ -5,7 +5,7 @@ Purpose and current status
 --------------------------
 This file is the ordered delivery roadmap for project-ideas.txt. Task numbers there identify topics; the D-numbers here identify outputs in the preferred order.
 
-Current status: D1 built and validated; ready for user review. D2 remains planned. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
+Current status: D1 complete and accepted; D2 in progress. The user authorized continuing through the ordered roadmap. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
 
 The order favors a useful public result early, then a progressively deeper computational explanation. D1-D6 form the educational core. Later items are conditional research or verification work, not prerequisites for releasing the early articles. D7's initial conditioning work can begin alongside D3 and D6.
 
@@ -26,7 +26,7 @@ Shared delivery standard
 
 D1 — Core size versus velocity and the first limits of fluid modelling
 ---------------------------------------------------------------------
-Status: Ready for review (2026-09-11).
+Status: Complete; user accepted the revised deliverable.
 Related topics: Task 8, supported by Tasks 1, 12, and 15.
 Depends on: The source and units audit below, included within D1.
 
@@ -71,7 +71,7 @@ No Navier-Stokes time integration, full profile reconstruction, all-order correc
 
 D2 — Finite-energy blow-up and the geometry of a shrinking core
 --------------------------------------------------------------
-Status: Planned.
+Status: In progress.
 Related topics: Tasks 2 and 13; selected geometry from Task 1.
 Depends on: D1's source/scaling note.
 
@@ -264,3 +264,12 @@ Progress record
 - Plan review: user authorized D1 and requested separate code/ and writing/ folders.
 - 2026-09-11: D1 artifacts generated and validated; ready for user review. No public posting or manuscript submission performed. D2 has not started.
 - D1 reader-feedback revision: expanded the introduction, stated the physical message explicitly, added a worked example and plain-language explanations, and moved detailed parameter/calibration restrictions to a technical note. HTML and LaTeX regenerated; article execution, values, tables, figures, and local links checked.
+- Continued work authorized: D1 accepted; proceed through the roadmap. D2 source scalings checked on paper page 4, energy/geometry models implemented, eight scientific checks passed, figures and animation being prepared.
+
+Continuation checkpoint
+-----------------------
+- Active deliverable: D2, code/d2_finite_energy/ and writing/d2_finite_energy/.
+- Implemented: reusable energy.py, d2.py generation, parameters, eight scientific checks, three static figures, animation player template.
+- Next: finish and inspect animation; write the notebook and reader-friendly article/source audit; extend build.py to select deliverables; render and validate D2; then proceed to D3 source/profile audit.
+- Authorization: continue ordered work without requesting approval for routine local implementation. Keep code and writing separate; do not publish, submit, message others, commit, or push without authorization.
+- This file is a durable checkpoint, not a scheduled background job. Credit refills do not themselves trigger a new run here.

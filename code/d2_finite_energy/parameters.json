@@ -1,0 +1,38 @@
+{
+  "study": "D2: finite-energy concentration and core geometry",
+  "reference": {
+    "h": 0.0,
+    "a0": 1.0,
+    "b0": 2.0,
+    "u0": 1.0,
+    "density": 1.0,
+    "units": "consistent arbitrary units, no physical fluid calibration",
+    "interpretation": "h -> 0+ limit; Gaussian widths and normalization are toy choices"
+  },
+  "scaling": {
+    "time_ratio_min": 1e-12,
+    "samples": 241,
+    "necessary_h_ceiling": 0.00004539992976248485,
+    "source": "Section 2.1 p.4 and Lemma 4.8 p.35 of the version recorded in source-manifest.json",
+    "ceiling_interpretation": "excluded upper endpoint, necessary but not sufficient parameter restriction"
+  },
+  "quadrature": {"orders": [16, 32, 48, 64, 96], "cutoff_in_widths": 8.0},
+  "animation": {
+    "frames": 72,
+    "fps": 12,
+    "time_ratio_min": 0.01,
+    "grid_points": 321,
+    "clock": "uniform steps in log10(tau/tau0); playback seconds are not physical seconds",
+    "left_color": "logarithmic |u_theta|/U0, fixed across frames",
+    "right_color": "linear |u_theta|/U(tau), fixed across frames",
+    "trajectory_interpretation": "prescribed Gaussian swirl snapshots; no material trajectories",
+    "geometry": "fixed initial axial/radial width ratio 2; h=0 limit shows no growing slenderness"
+  },
+  "one_dimensional_toy": {"widths": [1.0, 0.25, 0.0625], "exponents": [0.25, 0.5, 0.75]},
+  "scope": {
+    "paper_profiles_evaluated": false,
+    "navier_stokes_solved": false,
+    "total_paper_energy_evaluated": false,
+    "material_model": "separate affine incompressible field; infinite whole-space energy, used only for deformation"
+  }
+}

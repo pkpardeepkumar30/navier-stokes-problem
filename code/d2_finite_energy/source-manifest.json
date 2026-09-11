@@ -1,0 +1,24 @@
+{
+  "scope": "D2 source scaling audit, not verification of the proof",
+  "sources": [
+    {
+      "id": "openai-ns",
+      "title": "Finite time blowup for Navier-Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "accessed": "2026-09-11",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "bytes": 2959204,
+      "locators": [
+        "Theorem 1.1 p.1: bounded whole-flow L2 norm",
+        "Section 2.1 pp.3-4: radial and axial widths, velocities, core energy",
+        "Figure 1 p.4: schematic geometry is exaggerated",
+        "Lemma 4.8 p.35: necessary h ceiling"
+      ],
+      "cached_path": "code/.cache/sources/navier-stokes.pdf",
+      "pages": 166,
+      "creation_date_metadata": "D:20260908190626Z"
+    }
+  ],
+  "source_page_visually_checked": "PDF p.4 rendered locally with pdftoppm",
+  "toy_models": "Derived within this study; no external profile data"
+}

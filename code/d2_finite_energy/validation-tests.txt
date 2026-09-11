@@ -1,0 +1,13 @@
+test_cartesian_and_cylindrical_integrals_agree (test_energy.EnergyChecks.test_cartesian_and_cylindrical_integrals_agree) ... ok
+test_cylindrical_integral_against_analytic_value (test_energy.EnergyChecks.test_cylindrical_integral_against_analytic_value) ... ok
+test_energy_regimes_are_not_confused_with_peak (test_energy.EnergyChecks.test_energy_regimes_are_not_confused_with_peak) ... ok
+test_invalid_scales_and_time (test_energy.EnergyChecks.test_invalid_scales_and_time) ... ok
+test_material_volume_and_pathline_equation (test_energy.EnergyChecks.test_material_volume_and_pathline_equation) ... ok
+test_one_dimensional_integral (test_energy.EnergyChecks.test_one_dimensional_integral) ... ok
+test_swirl_is_smooth_on_axis_and_divergence_free (test_energy.EnergyChecks.test_swirl_is_smooth_on_axis_and_divergence_free) ... ok
+test_symbolic_jacobian_and_energy_power (test_energy.EnergyChecks.test_symbolic_jacobian_and_energy_power) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.511s
+
+OK

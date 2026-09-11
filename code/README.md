@@ -1,5 +1,9 @@
 # Computational studies
 
+Select a deliverable with --study d1 or --study d2 when running code/build.py.
+The default remains D1. D2's full build also regenerates its offline animation;
+see [D2 reproduction notes](d2_finite_energy/README.md).
+
 Run commands from the repository root. The initial implementation uses Python 3.13; the package declares Python 3.11 or newer. The exact verified environment is in `requirements-lock.txt` and D1's `validation.json`.
 
 ```powershell

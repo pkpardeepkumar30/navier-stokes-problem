@@ -1,0 +1,25 @@
+{
+  "h_baseline": 0.0,
+  "baseline_is_limiting_toy": true,
+  "radial_exponent": 0.5,
+  "axial_exponent": 0.5,
+  "speed_exponent": -0.5,
+  "volume_exponent": 1.5,
+  "energy_exponent": 0.5,
+  "gaussian_energy_constant": 15.136284808687387,
+  "gaussian_reference_energy": 15.136284808687387,
+  "ratios_at_time_ratio_1e_6": {
+    "radial": 0.001,
+    "axial": 0.001,
+    "speed": 1000.0,
+    "volume": 9.999999999999999e-10,
+    "energy": 0.001,
+    "slenderness": 1.0
+  },
+  "max_order64_relative_quadrature_error": 3.3306690738754696e-15,
+  "quadrature_tail_fraction": 1.0435995085739128e-26,
+  "necessary_ceiling_slenderness_ratio_at_1e_12": 0.998746340071075,
+  "paper_profile_evaluated": false,
+  "total_paper_energy_evaluated": false,
+  "parameters_sha256": "c2cb53c0ffda5259951f1bbad1d045d605db1814c1294133f1ed6e8ed631af36"
+}

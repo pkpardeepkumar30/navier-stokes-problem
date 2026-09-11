@@ -1,0 +1,22 @@
+{
+  "frames": 72,
+  "fps": 12,
+  "time_ratio_range": [
+    1.0,
+    0.01
+  ],
+  "frame_sampling": "uniform in log(time ratio)",
+  "embedded_lossless_webp_frames": true,
+  "autoplay": false,
+  "paper_profile": false,
+  "particle_tracking": false,
+  "axis_aspect": "panels stretch axes to fit; read labeled coordinate units",
+  "left_color_range": [
+    0.0001,
+    10.0
+  ],
+  "right_color_range": [
+    0,
+    1
+  ]
+}

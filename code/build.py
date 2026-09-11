@@ -1,12 +1,13 @@
-"""Validate and regenerate D1 from the repository's isolated Python environment.
+"""Validate and regenerate a deliverable in the isolated Python environment.
 
-Usage (repository root): code/.venv/Scripts/python.exe code/build.py
+Usage (repository root): code/.venv/Scripts/python.exe code/build.py --study d2
 Use --compute-only for the notebook/data/figures without Quarto publishing.
 """
 
 import argparse
 import hashlib
 import importlib.metadata
+import importlib
 import json
 import os
 from pathlib import Path
@@ -16,11 +17,14 @@ import shutil
 import subprocess
 import sys
 import time
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 CODE = ROOT / "code"
-STUDY = CODE / "d1_core_size"
-ARTICLE = ROOT / "writing" / "d1_core_size"
+STUDIES = {
+    "d1": ("d1_core_size", 3, "test_scaling.py"),
+    "d2": ("d2_finite_energy", 4, "test_energy.py"),
+}
 sys.path.insert(0, str(CODE / "src"))
 
 
@@ -40,24 +44,39 @@ def find_quarto():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--compute-only", action="store_true")
+    parser.add_argument("--study", choices=STUDIES, default="d1")
     args = parser.parse_args()
     import nbformat
     from nbclient import NotebookClient
-    from nscomp.d1 import generate
+    folder, expected_figures, test_pattern = STUDIES[args.study]
+    STUDY = CODE / folder
+    ARTICLE = ROOT / "writing" / folder
+    generate = importlib.import_module(f"nscomp.{args.study}").generate
 
     start = time.perf_counter()
     report_path = STUDY / "validation.json"
-    report = {"status": "in_progress", "python": platform.python_version(),
+    report = {"status": "in_progress", "study": args.study, "python": platform.python_version(),
               "platform": platform.system(), "rendered_formats": []}
     report_path.write_text(json.dumps(report, indent=2)+"\n", encoding="utf-8")
     try:
-        tests = run([sys.executable, "-m", "unittest", "discover", "-s", CODE / "tests", "-v"],
+        tests = run([sys.executable, "-m", "unittest", "discover", "-s", CODE / "tests",
+                     "-p", test_pattern, "-v"],
                     capture_output=True, text=True, encoding="utf-8")
         test_log = tests.stdout + tests.stderr
         (STUDY / "validation-tests.txt").write_text(test_log, encoding="utf-8")
         print(test_log)
         report["scientific_checks"] = "passed; see validation-tests.txt"
-        generate()
+        if args.study == "d2":
+            generate(include_animation=True)
+            node = shutil.which("node")
+            if node:
+                result = run([node, STUDY / "check-player.cjs"], capture_output=True, text=True)
+                print(result.stdout)
+                report["animation_player_checks"] = "passed in Node DOM stub; not browser visual review"
+            else:
+                report["animation_player_checks"] = "not run: Node unavailable"
+        else:
+            generate()
         run([sys.executable, "-m", "ipykernel", "install", "--sys-prefix", "--name", "python3",
              "--display-name", "Python (Navier-Stokes companion)"], capture_output=True)
         # Use only this environment's kernelspec during fresh execution.
@@ -89,8 +108,8 @@ def main():
             for output_format in ["html", "latex"]:
                 completed = run([quarto, "render", ARTICLE / "article.qmd", "--to", output_format],
                                 env=env, capture_output=True, text=True, encoding="utf-8")
-                (CODE / ".cache" / f"d1-quarto-{output_format}.log").parent.mkdir(parents=True, exist_ok=True)
-                (CODE / ".cache" / f"d1-quarto-{output_format}.log").write_text(
+                (CODE / ".cache" / f"{args.study}-quarto-{output_format}.log").parent.mkdir(parents=True, exist_ok=True)
+                (CODE / ".cache" / f"{args.study}-quarto-{output_format}.log").write_text(
                     completed.stdout+completed.stderr, encoding="utf-8")
                 report["rendered_formats"].append(output_format)
                 print(f"Rendered {output_format}.")
@@ -101,21 +120,27 @@ def main():
             from bs4 import BeautifulSoup
             document = BeautifulSoup(html, "html.parser")
             images = document.find_all("img")
-            if len(images) != 3 or any(not img.get("src", "").startswith("data:image/") for img in images):
-                raise RuntimeError("Expected three embedded scientific figures")
+            if len(images) != expected_figures or any(not img.get("src", "").startswith("data:image/") for img in images):
+                raise RuntimeError(f"Expected {expected_figures} embedded scientific figures")
             missing_links = []
+            ids = {element["id"] for element in document.find_all(id=True)}
             for anchor in document.find_all("a", href=True):
-                href = anchor["href"]
-                if href.startswith((".", "source-notes")) and not (ARTICLE/href.split("#")[0]).exists():
+                href = urlsplit(anchor["href"])
+                if href.scheme or href.netloc:
+                    continue
+                if href.path and not (ARTICLE/unquote(href.path)).exists():
+                    missing_links.append(href)
+                elif not href.path and href.fragment and unquote(href.fragment) not in ids:
                     missing_links.append(href)
             if missing_links:
                 raise RuntimeError(f"Broken local article links: {missing_links}")
             tex = (ARTICLE / "article.tex").read_text(encoding="utf-8")
             graphics = re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", tex)
-            if len(graphics) != 3 or any(not (ARTICLE/g).exists() for g in graphics):
+            if len(graphics) != expected_figures or any(not (ARTICLE/g).exists() for g in graphics):
                 raise RuntimeError("LaTeX figure references did not resolve")
             report["artifact_checks"] = {"embedded_figures": len(images), "local_links_resolve": True,
                                          "latex_figure_paths_resolve": True, "pdf_compiled": False}
+            report["article_source_sha256"] = hashlib.sha256((ARTICLE/"article.qmd").read_bytes()).hexdigest()
         report["dependencies"] = {
             name: importlib.metadata.version(name)
             for name in ["numpy", "matplotlib", "sympy", "nbformat", "nbclient", "nbconvert", "ipykernel", "pypdf", "PyYAML"]

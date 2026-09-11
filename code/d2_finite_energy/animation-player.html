@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A shrinking core in fixed and similarity coordinates</title>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;margin:0 auto;padding:1rem;max-width:1100px;color:#1d2b3a;background:#fff}
+h1{font-size:1.4rem;margin:.2rem 0}.note{max-width:75ch;color:#526170}
+img{width:100%;height:auto;display:block} .controls{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center}
+button,select{font:inherit;padding:.45rem .8rem;border:1px solid #147d83;border-radius:5px;background:#fff;color:#086c79}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #bc681b;outline-offset:2px}
+input[type=range]{flex:1;min-width:160px}output{min-width:100px}
+</style></head><body>
+<h1>A smaller core, a larger speed, a stationary rescaled shape</h1>
+<p class="note">A prescribed Gaussian swirl using the h &rarr; 0+ limit, not the paper's velocity profile.
+The left panel keeps spatial coordinates fixed; the right divides distances and speeds by their current scales.
+Axes are stretched to fit each panel: compare the labeled units, not lengths on the screen.</p>
+<img id="frame" alt="Two velocity-magnitude panels compare a shrinking, intensifying Gaussian swirl in fixed coordinates with its unchanged shape in similarity coordinates.">
+<div class="controls">
+<button id="play" type="button">Play</button><button id="reset" type="button">Reset</button>
+<label for="position">Frame</label><input id="position" type="range" min="0" value="0" step="1">
+<output id="counter" for="position"></output>
+<label for="speed">Playback</label><select id="speed"><option value=".5">0.5x</option><option value="1" selected>1x</option><option value="2">2x</option></select>
+</div>
+<p class="note">Use Play/Pause or move the slider. Playback advances uniformly in log(time remaining), not in physical time.
+The movie stops before the singular time. Left colors show speed relative to the initial peak on a fixed logarithmic scale;
+right colors show speed relative to the current peak on a fixed linear scale. No particle paths or material-boundary motion are depicted.</p>
+<noscript>The player needs JavaScript. Static frames are available as frame_start.png, frame_middle.png, and frame_end.png in this folder.</noscript>
+<script id="frame-data" type="application/json">__FRAMES_JSON__</script>
+<script>
+const frames=JSON.parse(document.getElementById("frame-data").textContent);
+const img=document.getElementById("frame"), slider=document.getElementById("position"),
+counter=document.getElementById("counter"), play=document.getElementById("play"),
+speed=document.getElementById("speed");
+let current=0, timer=null;
+slider.max=frames.length-1;
+function draw(i){current=Math.max(0,Math.min(frames.length-1,i));img.src=frames[current];slider.value=current;counter.textContent=(current+1)+" / "+frames.length;}
+function stop(){if(timer!==null)clearInterval(timer);timer=null;play.textContent="Play";play.setAttribute("aria-pressed","false");}
+function start(){if(current===frames.length-1)draw(0);play.textContent="Pause";play.setAttribute("aria-pressed","true");timer=setInterval(()=>{if(current===frames.length-1){stop();return;}draw(current+1);},1000/(__FPS__*Number(speed.value)));}
+play.addEventListener("click",()=>timer===null?start():stop());
+document.getElementById("reset").addEventListener("click",()=>{stop();draw(0);});
+slider.addEventListener("input",()=>{stop();draw(Number(slider.value));});
+speed.addEventListener("change",()=>{if(timer!==null){stop();start();}});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();});
+draw(0);
+</script></body></html>
