@@ -9,3 +9,9 @@ Prepared for review on 2026-09-11.
 - Browser access was unavailable, so the complete HTML page has not had a browser-based visual review. Its build and document structure were checked. The LaTeX source has not been compiled to PDF or checked for printed pagination.
 
 The editable narrative is [article.qmd](article.qmd). Review the opening explanation, the illustrative reference pair, and the distinction between formal extrapolation and physical fluid modelling before publication. Preparing these files has not published them.
+
+## Revision following reader feedback
+
+The article now introduces the motivation, question, method, and main physical message before the derivation. It adds a worked calculation at 0.01c, explains molecular averaging and the Mach/Knudsen comparisons in plain language, and moves detailed exponent and viscosity restrictions to a technical note. Figure captions explain how to read the comparisons.
+
+Both HTML and LaTeX were regenerated after the rewrite; all four article code cells executed in each render. The revised exports passed checks for evaluated inline values, three tables, three embedded figures, resolving local links and internal anchors, and valid LaTeX figure paths. The numerical implementation and input parameters are unchanged. The browser/PDF review limitations above still apply.

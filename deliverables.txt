@@ -263,3 +263,4 @@ Progress record
 - Planning revision: project-ideas.txt strengthened; preferred deliverables and acceptance criteria recorded here.
 - Plan review: user authorized D1 and requested separate code/ and writing/ folders.
 - 2026-09-11: D1 artifacts generated and validated; ready for user review. No public posting or manuscript submission performed. D2 has not started.
+- D1 reader-feedback revision: expanded the introduction, stated the physical message explicitly, added a worked example and plain-language explanations, and moved detailed parameter/calibration restrictions to a technical note. HTML and LaTeX regenerated; article execution, values, tables, figures, and local links checked.
