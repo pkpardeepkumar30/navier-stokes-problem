@@ -1,0 +1,16 @@
+parameter,value,effective_r0_m,u0_m_s,h,speed_m_s,radius_m,radius_nm,radius_over_baseline,note
+h,0.0,0.001,1.0,0.0,2997924.58,3.33564095198152e-10,0.333564095198152,1.0,one factor at a time; normalization_factor is degenerate with radius_factor
+h,0.001,0.001,1.0,0.001,2997924.58,3.436426685697071e-10,0.3436426685697071,1.0302148028419185,one factor at a time; normalization_factor is degenerate with radius_factor
+h,0.005,0.001,1.0,0.005,2997924.58,3.866395126603464e-10,0.3866395126603464,1.1591160986036737,one factor at a time; normalization_factor is degenerate with radius_factor
+h,0.009,0.001,1.0,0.009,2997924.58,4.3421086340028095e-10,0.434210863400281,1.3017314202907246,one factor at a time; normalization_factor is degenerate with radius_factor
+h,0.01,0.001,1.0,0.01,2997924.58,4.4686442470166243e-10,0.44686442470166243,1.3396658427406731,one factor at a time; normalization_factor is degenerate with radius_factor
+h,4.5399929762484854e-05,0.001,1.0,4.5399929762484854e-05,2997924.58,3.340160517209795e-10,0.3340160517209795,1.001354931568876,one factor at a time; normalization_factor is degenerate with radius_factor
+radius_factor,0.1,0.0001,1.0,0.0,2997924.58,3.33564095198152e-11,0.0333564095198152,0.1,one factor at a time; normalization_factor is degenerate with radius_factor
+radius_factor,1.0,0.001,1.0,0.0,2997924.58,3.33564095198152e-10,0.333564095198152,1.0,one factor at a time; normalization_factor is degenerate with radius_factor
+radius_factor,10.0,0.01,1.0,0.0,2997924.58,3.3356409519815204e-09,3.3356409519815204,10.0,one factor at a time; normalization_factor is degenerate with radius_factor
+speed_factor,0.1,0.001,0.1,0.0,2997924.58,3.335640951981517e-11,0.03335640951981517,0.09999999999999991,one factor at a time; normalization_factor is degenerate with radius_factor
+speed_factor,1.0,0.001,1.0,0.0,2997924.58,3.33564095198152e-10,0.333564095198152,1.0,one factor at a time; normalization_factor is degenerate with radius_factor
+speed_factor,10.0,0.001,10.0,0.0,2997924.58,3.3356409519815184e-09,3.335640951981518,9.999999999999995,one factor at a time; normalization_factor is degenerate with radius_factor
+normalization_factor,0.3333333333333333,0.0003333333333333333,1.0,0.0,2997924.58,1.1118803173271734e-10,0.11118803173271734,0.3333333333333333,one factor at a time; normalization_factor is degenerate with radius_factor
+normalization_factor,1.0,0.001,1.0,0.0,2997924.58,3.33564095198152e-10,0.333564095198152,1.0,one factor at a time; normalization_factor is degenerate with radius_factor
+normalization_factor,3.0,0.003,1.0,0.0,2997924.58,1.0006922855944562e-09,1.0006922855944562,3.0000000000000004,one factor at a time; normalization_factor is degenerate with radius_factor

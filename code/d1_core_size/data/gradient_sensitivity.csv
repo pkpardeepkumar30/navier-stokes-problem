@@ -1,0 +1,4 @@
+beta,kn_screen_radius_m,kn_screen_speed_m_s,mach_screen_speed_m_s,first_of_two_screens,note
+0.1,6.73e-05,14.858841010401187,103.4951305376248,Kn,formal crossing; if below U0 the screen is already crossed at the reference
+1.0,6.73e-06,148.5884101040119,103.4951305376248,Mach,formal crossing; if below U0 the screen is already crossed at the reference
+10.0,6.73e-07,1485.8841010401195,103.4951305376248,Mach,formal crossing; if below U0 the screen is already crossed at the reference

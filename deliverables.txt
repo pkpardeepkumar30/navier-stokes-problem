@@ -1,0 +1,265 @@
+DELIVERABLES: PREFERRED ORDER AND COMPLETION CRITERIA
+===================================================
+
+Purpose and current status
+--------------------------
+This file is the ordered delivery roadmap for project-ideas.txt. Task numbers there identify topics; the D-numbers here identify outputs in the preferred order.
+
+Current status: D1 built and validated; ready for user review. D2 remains planned. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
+
+The order favors a useful public result early, then a progressively deeper computational explanation. D1-D6 form the educational core. Later items are conditional research or verification work, not prerequisites for releasing the early articles. D7's initial conditioning work can begin alongside D3 and D6.
+
+Maintain this file as work proceeds. For each deliverable, update its status, record actual artifact paths and validation results, and note unresolved limitations. Do not mark an output complete merely because its outline or a placeholder notebook exists.
+
+Status vocabulary: Planned; In progress; Ready for review; Complete; Deferred.
+
+Shared delivery standard
+------------------------
+- Use Python initially, with reusable functions supporting notebooks and executable Quarto articles.
+- Each public installment includes a clear question, a derivation or model definition, reproducible calculations, a concise explanation, source references, and a statement of what the calculation establishes.
+- Label exact identities, asymptotic models, numerical checks, and schematic visuals explicitly.
+- Include the parameters, units, fluid-property conditions, and source version needed to reproduce a result.
+- Provide a documented regeneration command and record the relevant environment/dependency versions.
+- Export static figures in a shareable format such as SVG/PDF and PNG, plus machine-readable figure/table data where useful. Provide captions and static alternatives for animations.
+- Run notebooks or article builds from a clean execution state. Choose validation checks that support the scientific claim; record precision and resolution limits when they matter.
+- Release useful educational work independently of whether the later research branches succeed. Public posting or submission is a separate action from preparing these artifacts.
+
+D1 — Core size versus velocity and the first limits of fluid modelling
+---------------------------------------------------------------------
+Status: Ready for review (2026-09-11).
+Related topics: Task 8, supported by Tasks 1, 12, and 15.
+Depends on: The source and units audit below, included within D1.
+
+Delivered artifacts:
+- Reading copy: writing/d1_core_size/article.html.
+- Editable article and generated LaTeX: writing/d1_core_size/article.qmd and article.tex.
+- Executed notebook and inputs: code/d1_core_size/study.ipynb and parameters.json.
+- Reusable Python: code/src/nscomp/; build and setup instructions: code/README.md.
+- Three scientific figures in PNG and SVG: writing/d1_core_size/figures/.
+- Seven CSV datasets and a computed summary: code/d1_core_size/data/.
+- Source/calibration audit: writing/d1_core_size/source-notes.md and code/d1_core_size/source-manifest.json.
+- Validation: code/d1_core_size/validation.json and validation-tests.txt; all nine checks passed, all eight notebook code cells executed from cleared outputs, HTML/LaTeX rendered, and embedded figures/local asset references checked.
+- Manual review and rendering limits: writing/d1_core_size/review-notes.md. LaTeX source is exported; a PDF has not been compiled.
+
+Principal result and limitation:
+At the illustrative 1 mm / 1 m/s anchor, the inverse-law limit gives radii of approximately 0.334 nm at 0.01c and 0.0334 nm at 0.1c. These are formal extrapolations. Mach/Knudsen screens arise much earlier under the stated reference assumptions; a full dimensional profile/viscosity match and actual gradient field remain uncomputed. The detailed paper imposes a necessary h<exp(-10) ceiling, so wider introductory exponent sweeps are labelled illustrative, and h=0 is used only as a limit.
+
+Working title:
+"How small does a collapsing vortex become—and which fluid assumption fails first?"
+
+Outputs:
+- A concise source/notation note identifying the paper version, radius and speed definitions, time scaling, admissible exponent choices, and relevant source equations.
+- One reproducible notebook with reusable scaling/calibration functions.
+- One short executable article explaining the derivation and physical interpretation.
+- A log-log plot of characteristic velocity versus core radius, with clearly labelled physical reference bands and formal-extrapolation regions.
+- A table of radii at selected speeds, including sonic/hypersonic markers for a specified fluid state and the formal extrapolations 0.01c and 0.1c. Include c only if it adds explanatory value and label it unattainable for massive fluid matter.
+- A sensitivity figure/table showing the effect of reference radius, reference speed, exponent, and any unresolved profile factors.
+- A calibration ledger recording the actual assumptions and which physical markers have been evaluated. Start with a general dimensionless curve and a small number of illustrative cases; use air and water reference properties where supported, without calling either a fully calibrated solution prematurely.
+- Exported figure/table data and reproduction instructions.
+
+Completion criteria:
+- The radius-speed exponent is derived from cited source scalings, with dimensional consistency checked.
+- Reference values correspond to a nonzero-speed stage of the collapse; speed alone is not presented as determining an absolute radius.
+- The dimensional mapping accounts for viscosity and profile normalization, or the missing calibration is explicitly identified.
+- The interpretation distinguishes Mach-number screening, gas Knudsen criteria, and liquid molecular/relaxation considerations. Temperature and pressure conditions accompany property values.
+- Any proxy for a local gradient length is explicit. No single universal atomic/molecular cutoff is claimed.
+- Results separate the formal classical extrapolation from the range plausibly described by a real fluid model.
+- Numerical checks cover the inverse relation, units, and limiting power-law behavior; plotted values can be regenerated from the exported parameters.
+
+Scope boundary:
+No Navier-Stokes time integration, full profile reconstruction, all-order corrections, or molecular simulation is required. Mention possible smaller correction scales as a limitation rather than claiming they have already been quantified.
+
+D2 — Finite-energy blow-up and the geometry of a shrinking core
+--------------------------------------------------------------
+Status: Planned.
+Related topics: Tasks 2 and 13; selected geometry from Task 1.
+Depends on: D1's source/scaling note.
+
+Outputs:
+- An article and notebook progressing from a tall, narrow toy function to anisotropic cylindrical scaling.
+- Static figures comparing peak amplitude, radial/axial scales, core volume, and core kinetic energy.
+- A short animation pairing physical-space collapse with similarity coordinates.
+- A visual explanation distinguishing material stretching from a shrinking region of intense flow.
+
+Completion criteria:
+- The volume element and axial scale are included in the energy argument.
+- Core energy is distinguished from total localized-flow energy.
+- The reader can identify which figures use a toy profile and which evaluate a paper profile. Full profile evaluation is not required to publish the toy/scaling explanation.
+- Streamlines, pathlines, time scales, color normalization, and visual exaggerations are labelled accurately.
+
+D3 — A computational explanation of the base-flow residual
+----------------------------------------------------------
+Status: Planned.
+Related topics: Tasks 1 and 4.
+Depends on: The relevant source/profile audit extending D1; D2 supplies pedagogical context.
+
+Outputs:
+- Reusable evaluation of the selected base velocity, pressure, and required derivatives, with explicit profile choices and limitations.
+- An article/notebook decomposing acceleration, transport, pressure, and viscosity.
+- Term-by-term plots, absolute residual norms, and a defined normalized cancellation diagnostic.
+- A derivative-check and precision/resolution note for the resolved examples.
+
+Completion criteria:
+- Divergence and coordinate/Jacobian conventions are checked.
+- At least one nontrivial derivative calculation has an independent check.
+- The distinction between a manufactured source and a force smooth through the singular time is clear.
+- Numerical cancellation and finite sampling are not described as proof of smooth extension.
+
+D4 — How zero-mean oscillations generate mean stress
+---------------------------------------------------
+Status: Planned.
+Related topics: Task 3.
+Depends on: D3 for the motivating residual; the toy experiment is otherwise self-contained.
+
+Outputs:
+- An article/notebook starting from averages of sine and sine squared.
+- A divergence-free toy velocity realizing a simple prescribed mean stress.
+- Figures or a short animation separating the oscillatory velocity and averaged momentum flux.
+- Quantitative stress, mean-velocity, and divergence errors, with a map to the paper's admissibility conditions.
+
+Completion criteria:
+- Averaging and discretization errors are controlled.
+- The toy construction is clearly distinguished from the full spatially varying stress-realization mechanism.
+- The role of isotropic stress/pressure and any restrictions on realizable stress are explained.
+
+D5 — One pulse: shear amplification, stress generation, viscous decay
+---------------------------------------------------------------------
+Status: Planned.
+Related topics: Task 5; selected mechanisms from Tasks 3 and 15.
+Depends on: D4 and a source audit of the chosen pulse model.
+
+Outputs:
+- An article/notebook following wavevector, amplitude, stress, and damping through one pulse life cycle.
+- A heat-equation reference example and a clearly identified shear/pulse model.
+- Time-history plots and, if useful, an animation with physical wavelength information.
+
+Completion criteria:
+- Amplification and viscous damping are evaluated on consistent scales.
+- The shortest wavelength and temporal resolution are reported.
+- A reduced illustrative pulse is not represented as the complete paper construction.
+
+D6 — Selected correction levels and residual improvement
+--------------------------------------------------------
+Status: Planned.
+Related topics: Tasks 6 and 1.
+Depends on: D3-D5 and the exact source definitions of the selected corrections.
+
+Outputs:
+- A reproducible comparison of the base field with at least the first implementable correction stage.
+- Residual-versus-time and residual-versus-truncation plots, including absolute and normalized measures.
+- A notebook/article explaining the intended cancellation and remaining defect.
+- A record of correction scales, derivative growth, precision needs, and any obstacles to further stages.
+
+Completion criteria:
+- Every included correction is tied to a specific source definition and target defect.
+- Improvement is assessed against numerical error, not just visual agreement.
+- If a correction is not constructively evaluable from the available specification, document the obstacle rather than substitute an unlabelled surrogate.
+- Additional stages are attempted only while they yield interpretable evidence. Finite improvement is not claimed to verify the infinite construction.
+
+D7 — Conditioning and robustness report; first research decision
+----------------------------------------------------------------
+Status: Planned; conditional expansion after D3/D6.
+Related topics: Task 16 and the research criteria in Task 14.
+Depends on: Resolved baseline diagnostics from D3; D6 for correction-level comparisons.
+
+Outputs:
+- Controlled sensitivity experiments in precision, differentiation, truncation, profile parameters, and admissible pulse perturbations.
+- A report identifying which observables are reliable and what limits computation.
+- A literature/novelty note deciding whether the findings support a numerical-analysis paper or remain an educational technical note.
+
+Completion criteria:
+- Numerical error and parameter perturbations are distinguished.
+- Perturbations preserve required constraints or their violations are explicitly measured.
+- Direct residual reevaluation is called algebraic sensitivity, not dynamical stability.
+- The report contains a concrete supported finding, including a useful negative result if appropriate.
+
+D8 — Independent solver benchmark, if it answers a remaining question
+---------------------------------------------------------------------
+Status: Planned; optional.
+Related topics: Task 7 and the dynamical branch of Task 16.
+Depends on: D3 and, for corrected fields, D6; D7 should identify the question.
+
+Outputs:
+- A manufactured-solution benchmark using a suitable independent incompressible solver.
+- Space/time refinement plots and error measurements while the smallest included scales remain resolved.
+- A report separating numerical viscosity, boundary effects, and truncation errors.
+- A controlled evolution of perturbed data/forcing only if dynamical sensitivity is the defined objective.
+
+Completion criteria:
+- Baseline convergence is demonstrated before interpreting perturbation runs.
+- Manufactured forcing is not confused with the original construction's forcing.
+- Results after loss of resolution are labelled inconclusive.
+
+D9 — Extended physical regime map and microscopic scale audit
+-------------------------------------------------------------
+Status: Planned; refine the scope using D1 and D5-D7 findings.
+Related topics: Tasks 8, 12, and 15.
+Depends on: D1; quantified correction/pulse scales from later work where available.
+
+Outputs:
+- An expanded article/report comparing core, gradient, pulse, and relaxation scales.
+- A regime map incorporating compressibility, thermodynamic/constitutive assumptions, and kinetic or molecular criteria for specified cases.
+- A model-selection note identifying a tractable richer-physics experiment and its expected observable.
+
+Completion criteria:
+- The map distinguishes unavailable estimates from evaluated thresholds.
+- Physical model failure and numerical under-resolution are separate.
+- The model hierarchy branches according to the actual case; relativistic hydrodynamics is not the default replacement for microscopic fluid modelling.
+
+D10 — One focused richer-physics computational study
+----------------------------------------------------
+Status: Planned; conditional research branch.
+Related topics: Task 11 or a tractable benchmark from Task 15.
+Depends on: D9's model-selection note and a validated baseline solver for the chosen model.
+
+Preferred first direction:
+A compressible mass/momentum/energy model with a documented equation of state, provided the regime map justifies it. Choose a kinetic or molecular benchmark instead if the central question concerns loss of local equilibrium or scale separation.
+
+Outputs:
+- One defined comparison with consistent initial data, forcing, thermodynamic state, and observables.
+- Validation, resolution studies, and a measured criterion for departure from the incompressible reference behavior.
+- A technical report assessing the physical cause of that departure and the evidence for a research contribution.
+
+Completion criteria:
+- New physics is distinguished from changes to the experimental setup and numerical method.
+- Incompressible pressure is not silently reused as a thermodynamic state.
+- Steep or unresolved gradients are not reported as proven singularities.
+- The chosen question is answered before expanding to additional models.
+
+D11 — Focused manuscript and archival reproducibility release
+-------------------------------------------------------------
+Status: Planned; conditional on a supported original result and literature review.
+Related topics: Task 14; selected results from D7-D10.
+Depends on: A specific novel finding with an adequate error/uncertainty assessment.
+
+Outputs:
+- A manuscript centered on the actual finding, with appropriately limited claims.
+- An organized reproducibility package containing code, parameters, data, figures, source/version records, and documented reproduction steps.
+- A clear statement of educational reconstruction versus new analysis.
+
+Completion criteria:
+- The contribution is more than numerical reproduction of a prescribed scaling law.
+- Comparisons and validation support the manuscript's claims.
+- The package regenerates the reported results, with resource requirements documented.
+- Preparing the manuscript/package is complete independently of any later submission or public archival upload.
+
+D12 — Optional exploratory notes, after the core work
+----------------------------------------------------
+Status: Deferred.
+Related topics: Tasks 9 and 10.
+Depends on: A specific motivation arising from the regime map or a separate mathematical question.
+
+Possible outputs:
+- A conceptual or computational note on a justified relativistic formulation.
+- A separate toy-PDE study of enhanced diffusion, including frame dependence, energy estimates, coefficient domain, and well-posedness questions.
+
+Completion criteria:
+- Physical theories and deliberately modified mathematical equations are kept distinct.
+- Increased diffusion is not presented as a proved cure for blow-up.
+- These branches do not delay the educational sequence or a more clearly supported research result.
+
+Progress record
+---------------
+- Planning revision: project-ideas.txt strengthened; preferred deliverables and acceptance criteria recorded here.
+- Plan review: user authorized D1 and requested separate code/ and writing/ folders.
+- 2026-09-11: D1 artifacts generated and validated; ready for user review. No public posting or manuscript submission performed. D2 has not started.

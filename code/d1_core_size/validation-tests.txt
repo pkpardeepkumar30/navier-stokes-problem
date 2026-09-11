@@ -1,0 +1,14 @@
+test_anchor_and_monotonicity (test_scaling.ScalingChecks.test_anchor_and_monotonicity) ... ok
+test_envelope_handles_both_sides_of_reference (test_scaling.ScalingChecks.test_envelope_handles_both_sides_of_reference) ... ok
+test_invalid_inputs_fail_explicitly (test_scaling.ScalingChecks.test_invalid_inputs_fail_explicitly) ... ok
+test_inverse_limit_known_hand_calculation (test_scaling.ScalingChecks.test_inverse_limit_known_hand_calculation) ... ok
+test_inverse_over_many_decades (test_scaling.ScalingChecks.test_inverse_over_many_decades) ... ok
+test_physical_length_diagnostics (test_scaling.ScalingChecks.test_physical_length_diagnostics) ... ok
+test_symbolic_logarithmic_slope (test_scaling.ScalingChecks.test_symbolic_logarithmic_slope) ... ok
+test_time_elimination_against_independent_parameterization (test_scaling.ScalingChecks.test_time_elimination_against_independent_parameterization) ... ok
+test_units_rescale_consistently (test_scaling.ScalingChecks.test_units_rescale_consistently) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.386s
+
+OK

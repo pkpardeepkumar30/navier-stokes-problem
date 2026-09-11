@@ -1,0 +1,17 @@
+# Local environments, downloaded tools, and source caches
+code/.venv/
+code/.tools/
+code/.cache/
+**/__pycache__/
+**/*.egg-info/
+**/.ipynb_checkpoints/
+**/.quarto/
+**/.pytest_cache/
+# Publishing intermediates (finished articles, figures and data remain tracked)
+**/*.aux
+**/*.log
+**/*.out
+**/*.toc
+**/*.synctex.gz
+writing/**/article_files/
+

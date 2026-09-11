@@ -1,0 +1,11 @@
+:root { --ink: #1d2b3a; --teal: #147d83; }
+body { color: var(--ink); font-size: 1.04rem; line-height: 1.65; }
+#title-block-header { border-bottom: 3px solid var(--teal); padding-bottom: 1.6rem; margin-bottom: 2.1rem; }
+h1.title { font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+.subtitle { max-width: 40rem; color: #526170; }
+a { color: #086c79; }
+.quarto-figure { margin-block: 2rem; }
+figcaption { color: #526170; line-height: 1.45; }
+.table { font-size: .88rem; }
+.table thead { border-bottom: 2px solid var(--teal); }
+@media (min-width: 992px) { #quarto-document-content { max-width: 920px; } }

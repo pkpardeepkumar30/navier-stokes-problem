@@ -2,7 +2,20 @@ PROJECT IDEAS: COMPUTATIONAL AND PHYSICAL INTERPRETATION OF THE PROPOSED OPENAI 
 
 Purpose
 -------
-This file collects possible blog posts, computational notes, and research-paper directions arising from the recent OpenAI Navier-Stokes blow-up construction. Each task is intended to be independently actionable by an AI research/coding agent.
+This file collects blog posts, computational notes, and research directions arising from the proposed OpenAI forced incompressible Navier-Stokes blow-up construction. The audience is computational scientists, engineers, and advanced undergraduate students.
+
+The central contribution is a reproducible explanation: readers should be able to follow a derivation, change parameters, reproduce a figure, and identify the limits of its physical interpretation.
+
+Task numbers are stable topic identifiers, not execution order. See deliverables.txt for the preferred order, dependencies, expected outputs, and completion criteria. The user has reviewed the plan and authorized D1, the core-size and physical-validity study in Task 8.
+
+Scientific framing and scope
+----------------------------
+- Keep two questions separate: whether the proposed mathematical construction establishes its stated result, and how far that construction can represent a real fluid.
+- Loss of a physical approximation does not refute a theorem about that approximation's equations. Likewise, a mathematical singularity does not establish that a realizable fluid experiment reaches it.
+- State the exact forcing, initial-data, domain, viscosity, and regularity assumptions relevant to each discussion. Do not describe a forced result as a resolution of an unforced case.
+- Record the paper version/date and source locations used. Treat reconstruction of selected mechanisms as distinct from an independent audit of the full proof or its formalization.
+- Separate educational reproduction from original research. Research directions need a specific unanswered question, a comparison or benchmark, and evidence beyond reproducing an imposed power law.
+- Treat asymptotic formulas as asymptotic; expose profile constants, admissible parameters, and the range in which the approximation is being used.
 
 General pedagogical style for all explanatory pieces
 ----------------------------------------------------
@@ -17,6 +30,20 @@ Each section should follow this structure:
    - asymptotic statements from the proof,
    - numerical verification,
    - purely illustrative visualizations.
+7. State which physical assumptions and numerical resolution limits apply to the figure.
+8. End with what the experiment establishes, what it does not establish, and a link to the relevant source equations.
+
+Computational and publishing approach
+-------------------------------------
+- Keep two main folders: code/ for reusable functions, per-deliverable studies, notebooks, parameters, and numerical data; writing/ for per-deliverable blog/LaTeX sources, rendered articles, source notes, and figures. Use matching identifiers such as d1_core_size/ and keep downloaded tools/caches out of Git.
+- Use Python initially: NumPy/SciPy for calculations, SymPy where symbolic work is useful, Matplotlib for figures and initial animations, and Jupyter with Quarto for executable articles.
+- Keep reusable calculations in small modules; notebooks and articles should call the same functions used to generate their figures and tables.
+- Introduce interactive plotting, automatic differentiation, arbitrary precision, or acceleration only when an experiment needs them.
+- Keep Julia/SciML available for a later solver-focused workload if a concrete benefit justifies another language. Reuse a suitable established solver before building a large CFD code.
+- Record units, parameter choices, fluid-property sources and conditions, dependency versions, and random seeds where relevant. Provide a documented command to regenerate each deliverable.
+- Use logarithmic time-to-collapse or similarity variables where appropriate. Do not rely on subtracting nearly equal floating-point times near the singularity.
+- Validate nontrivial calculations with dimensional checks, analytical limits, independent derivative checks, and precision/resolution studies appropriate to the claim.
+- Export figure data with the figures so that readers can inspect results without rerunning the entire project.
 
 TASK 1 — Computational companion to the OpenAI blow-up construction
 -------------------------------------------------------------------
@@ -25,19 +52,21 @@ Build a computationally accessible reconstruction of the main mechanisms in the 
 
 Subtasks:
 - Extract the leading-order similarity variables and base-flow formulas from the paper.
-- Implement velocity, pressure, vorticity, and relevant coordinate transforms in Julia or Python.
+- Define operational measures of core radius, axial extent, characteristic speed, and maximum speed before comparing them.
+- Implement velocity, pressure, vorticity, and relevant coordinate transforms in Python.
 - Plot the collapsing vortex at several times t -> T.
 - Verify numerically the predicted scaling of:
   - core radius,
   - axial length scale,
   - maximum velocity,
   - vorticity.
-- Compute kinetic energy and demonstrate bounded/decaying energy despite diverging pointwise velocity.
+- Compute core energy separately from total localized-flow energy; do not infer decay of total energy from decay of the core contribution.
+- Maintain an inventory of core, annulus, envelope, and oscillation scales; the visible core need not be the smallest dynamically relevant scale.
 - Evaluate the Navier-Stokes residual of the base construction.
 - Plot individual PDE terms and identify which residual terms are problematic.
 - Implement the first oscillatory correction/stress-realization mechanism.
 - Quantify residual reduction before and after correction.
-- Reproduce as many successive correction levels as practical.
+- Add correction levels only while they answer a defined question and remain numerically interpretable; document finite truncation explicitly.
 - Build a reproducible repository/notebook with one computational experiment per proof block.
 - Produce a blog/tutorial first; decide later whether the results support a computational-analysis paper.
 
@@ -50,6 +79,7 @@ Subtasks:
 - Start from elementary examples of functions becoming taller and narrower.
 - Derive the relation between amplitude growth and shrinking support.
 - Translate the argument to cylindrical volume elements.
+- Include the shrinking axial extent as well as the radius when estimating the volume of the intense-flow region.
 - Insert the scaling laws from the OpenAI construction.
 - Plot maximum velocity versus core size.
 - Plot kinetic energy versus time.
@@ -57,6 +87,9 @@ Subtasks:
   - physical-space collapse,
   - similarity-coordinate stationary profile.
 - Explain why L-infinity blow-up does not imply L2 blow-up.
+- Distinguish material stretching from the changing extent of an Eulerian region of intense flow. A material parcel and a similarity-defined core are different objects.
+- Distinguish instantaneous streamlines, particle pathlines, and schematic arrows. Use physical particle tracking only when the evaluated time-dependent field supports it.
+- Show a scale bar, time coordinate, velocity normalization, and any visual exaggeration or independent rescaling used in an animation.
 - Develop figures suitable for undergraduate engineering students.
 
 TASK 3 — Convex-integration-style stress realization, made computational
@@ -79,6 +112,7 @@ Subtasks:
 - Map the toy example to the specific stress-realization argument in the OpenAI paper.
 - Quantify the error between target stress and numerically realized stress.
 - Explain which parts are standard convex-integration ideas and which parts are special to the OpenAI construction.
+- Check divergence and averaging errors as well as stress error. A pointwise matrix decomposition is not, by itself, a construction of a globally admissible oscillatory field.
 
 TASK 4 — Why the base vortex is not enough: residual analysis
 -------------------------------------------------------------
@@ -89,11 +123,15 @@ Subtasks:
 - Implement:
   R = du/dt + (u dot grad)u - nu Laplacian(u) + grad(p).
 - Evaluate each term separately.
+- Report absolute residual norms and a normalized cancellation measure, with its denominator explicitly defined from the individual PDE terms.
+- Specify the integration domain and coordinate Jacobian for each norm. Avoid interpreting a shrinking-domain norm as pointwise regularity.
 - Plot their magnitudes versus T - t.
 - Identify which terms cancel analytically and which leave a singular residual.
 - Estimate asymptotic residual exponents numerically.
 - Explain the residual as a manufactured-solution source term.
 - Show why simply defining f = R is insufficient if f is not smooth enough.
+- Assess selected derivatives of the residual where feasible. Small velocity residuals at sampled times do not demonstrate smooth extension of every derivative.
+- Compare analytical/symbolic derivatives with an independent numerical method on resolved cases; investigate cancellation error before interpreting fitted exponents.
 - Use this as the transition into the oscillatory correction machinery.
 
 TASK 5 — Shear amplification versus viscous damping
@@ -105,6 +143,7 @@ Subtasks:
 - Start with undergraduate shear-flow/wavevector intuition.
 - Explain how shear changes wavevectors.
 - Track the time evolution of wave number k(t).
+- Track the shortest instantaneous physical wavelength and the number of grid points resolving it.
 - Track pulse amplitude A(t).
 - Compare amplification rate with viscous damping proportional to nu |k|^2.
 - Use the heat-equation example:
@@ -114,6 +153,7 @@ Subtasks:
 - Numerically reproduce one pulse life cycle:
   seed -> amplification -> useful stress -> viscous decay.
 - Relate the toy result to the shearing-wave construction in the paper.
+- Compare pulse time scales with physical relaxation times when extending the physical-validity discussion beyond the core.
 
 TASK 6 — Successive correction layers as an asymptotic numerical experiment
 ----------------------------------------------------------------------------
@@ -128,6 +168,8 @@ Subtasks:
 - Fit the asymptotic scaling of each residual with T - t.
 - Verify that each added block cancels the intended previous-order defect.
 - Distinguish exact cancellation from numerical approximation.
+- Separate small relative residuals from small absolute residuals, and track the velocity correction and its derivatives separately.
+- Explain that finite-order residual improvement cannot establish convergence of an infinite correction scheme or smoothness of all derivatives.
 - Explore whether arbitrary-precision arithmetic is needed near T.
 - Test sensitivity to differentiation method:
   analytic derivatives,
@@ -150,32 +192,54 @@ Subtasks:
 - Determine when the collapsing scales become under-resolved.
 - Compare physical coordinates with similarity-coordinate computation.
 - Study how numerical viscosity destroys or alters the oscillatory correction fields.
+- Verify boundary conditions and divergence constraints. Compare against a resolved manufactured solution before any perturbation or stability experiment.
+- Distinguish verification using f_N from evolving the original smooth forcing; these are different experiments with different claims.
 - Treat this as optional validation, not as proof of the theorem.
 
-TASK 8 — Physical interpretation: when does the classical model stop making sense?
+TASK 8 — First study: core size versus speed and which assumption fails first
 ----------------------------------------------------------------------------------
 Goal:
-Estimate how far one can physically interpret the mathematical blow-up before classical incompressible fluid mechanics becomes invalid.
+Estimate core size as speed increases, then identify where physical assumptions become questionable under explicitly stated dimensional calibrations. Produce the first notebook and article without solving Navier-Stokes numerically.
 
 Subtasks:
-- Use the paper's velocity/core-size scaling.
-- Choose illustrative reference scales and estimate the core size needed for:
+- Extract and cite the leading radius and dominant azimuthal/axial speed scalings from Section 2.1 of the paper:
+  r_c scales as tau^(1/2), U scales as tau^(-1/2-h), with 0 < h < 0.01.
+  Here tau is nondimensional time remaining to the singularity; verify any further restrictions on h before choosing a construction-specific value.
+- Eliminate tau to obtain the calibrated leading-order relation:
+  r_c / r_0 approximately equals (U / U_0)^(-1/(1+2h)).
+  Distinguish this power-law model from exact profile evaluations and unknown multiplicative constants.
+- Define the radius and speed diagnostics and choose r_0, U_0 at a nonzero-speed reference stage within the collapsing regime, not at the initial state at rest.
+- Explain why speed alone cannot determine a unique radius in metres. Restore units consistently with kinematic viscosity and the dimensionless profile:
+  U_* = L_* / t_*, nu_hat = nu_physical * t_* / L_*^2.
+  A radius-speed pair is an illustrative calibration until compatibility with the chosen profile and viscosity has been checked.
+- Begin with the general dimensionless curve. Add a small set of transparent calibrations and distinguish physical fluid-property markers from a fully calibrated construction.
+- Estimate radii for:
+  - a low-Mach screening threshold,
   - sonic speeds,
   - hypersonic speeds,
   - 0.01c,
   - 0.1c,
-  - c.
+  - c only as a formal classical extrapolation, never an attainable fluid speed.
 - Plot velocity versus core size on log-log axes.
-- Mark molecular/atomic length scales.
-- Discuss when continuum assumptions become questionable.
-- Discuss when incompressibility breaks down.
-- Discuss when constant viscosity becomes physically implausible.
-- Make clear that these are illustrative dimensional calibrations of a nondimensional construction, not predictions of a real fluid experiment.
+- Invert the relation to estimate the formal speed at a selected molecular or atomic length. Show sensitivity to reference scales, exponent choices, and profile constants.
+- Mark atomic and molecular reference bands with species and definitions, rather than declaring one universal molecular cutoff.
+- For gases, evaluate Kn = lambda / L_grad using a relevant local gradient length, not automatically the overall core radius. Document any core-radius proxy. Source lambda at specified temperature and pressure; distinguish mean free path from molecular diameter and spacing.
+- For liquids, discuss molecular spacing, correlation/relaxation scales, and whether a meaningful averaging volume exists. Do not transplant a dilute-gas mean-free-path criterion without justification.
+- Assess Ma = U_char / c_s in a physically specified frame using relevant flow velocity differences. Treat Ma around 0.3 as a screening guide for ordinary low-speed gas flows, not a universal transition.
+- Where data permit, compare a local deformation rate with a molecular relaxation time. Loss of temporal scale separation can matter as well as length scales.
+- Explain that compressibility, heating, viscosity changes, or other constitutive effects may intervene before atomic dimensions; do not impose the same ordering for all calibrations.
+- Distinguish failure of a local continuum description from occasional success of an averaged hydrodynamic observable at molecular scales.
+- Shade regions beyond the chosen model's validity as formal extrapolations. Mark numerical resolution only if a numerical grid is actually used; direct power-law evaluation has no CFD mesh limit.
+- Include a brief inventory of unresolved correction wavelengths/time scales. Do not require reconstruction of all corrections for this first deliverable or claim core-size screening validates the full flow.
+- Deliver a derivation, a radius-speed plot, threshold and sensitivity tables, source references, and an explicit statement of what was calculated and what remains uncalibrated.
 
 TASK 9 — Relativistic interpretation of the blow-up mechanism
 -------------------------------------------------------------
 Goal:
 Ask what replaces classical Navier-Stokes once velocities become relativistic.
+
+Priority:
+Optional later research branch, after the ordinary-fluid regime map. It is not the automatic successor when continuum assumptions fail.
 
 Subtasks:
 - Introduce the Lorentz factor:
@@ -192,11 +256,15 @@ Subtasks:
 - Briefly introduce causal viscous relativistic hydrodynamics (e.g. Israel-Stewart type models).
 - Ask whether an OpenAI-like collapsing mechanism can survive in a relativistic formulation.
 - Treat this as a research-question section rather than a settled conclusion.
+- Establish that a hydrodynamic approximation is justified for the chosen relativistic system before comparing it with the classical vortex concept.
 
 TASK 10 — Mathematical regularization by velocity-dependent diffusion
 ---------------------------------------------------------------------
 Goal:
 Explore a deliberately modified PDE in which diffusion strengthens strongly as velocity approaches a chosen high-speed scale.
+
+Priority:
+Separate optional mathematical branch; not a physical repair of the original construction.
 
 Subtasks:
 - Study a model such as:
@@ -208,6 +276,10 @@ Subtasks:
 - Compare convection and diffusion scalings.
 - Determine whether strengthened diffusion can prevent amplitude blow-up.
 - Examine whether the modified equation remains mathematically well posed.
+- Check behavior under Galilean boosts: dependence on absolute |u| introduces a preferred frame even in classical mechanics. State that frame if retaining the toy model.
+- If pursuing a constitutive interpretation, compare with dependence on temperature, density, or objective strain-rate invariants and an appropriate symmetric viscous stress.
+- Derive the energy balance and identify which norms diffusion controls. A stronger diffusion coefficient or a bounded numerical run does not by itself prove regularity or a velocity bound.
+- For gamma-based coefficients, specify the domain |u| < c and analyze what happens as the coefficient becomes singular; do not numerically evaluate beyond its definition.
 - Explicitly state that such a model is a mathematical regularization, not necessarily a Lorentz-invariant physical theory.
 - Compare results with proper relativistic hydrodynamics.
 
@@ -219,6 +291,7 @@ Investigate how the incompressible collapsing-vortex mechanism changes when dens
 Subtasks:
 - Start from compressible mass, momentum, and energy equations.
 - Include a simple ideal-gas EOS first.
+- Specify consistent density, temperature, pressure, energy, forcing, and boundary conditions. An incompressible pressure multiplier is not automatically a thermodynamic pressure field.
 - Construct an initial vortex inspired by the incompressible scaling.
 - Track:
   density,
@@ -234,30 +307,36 @@ Subtasks:
   heating,
   shocks.
 - Identify which term first destroys the incompressible similarity scaling.
+- First verify recovery of an appropriate low-Mach baseline. Define a quantitative departure criterion before attributing changes to new physics.
 - Examine the role of temperature-dependent viscosity and conductivity.
 - Test whether singular behavior migrates from velocity to gradients, density, temperature, or shock formation.
+- Separate unresolved gradients and steep viscous shock layers from evidence of mathematical singularity; require resolution studies for such interpretations.
 - Compare numerical diagnostics with the incompressible construction.
 - This could become a separate computational research paper.
 
-TASK 12 — Model hierarchy: incompressible -> compressible -> relativistic
+TASK 12 — Model hierarchy and a map of physical regimes
 ------------------------------------------------------------------------
 Goal:
-Build one coherent computational narrative showing how progressively richer physics changes the collapsing-vortex picture.
+Build a coherent narrative showing which model is appropriate as velocity, length, time scales, and thermodynamic conditions change. The hierarchy branches rather than following one universal sequence.
 
 Subtasks:
-- Define the same qualitative initial/collapsing vortex concept across three model levels.
+- Define comparable vortex concepts across models, documenting which initial data, forcing, and observables can actually be matched.
 - Level 1: incompressible Navier-Stokes.
 - Level 2: compressible Navier-Stokes + energy + EOS.
-- Level 3: relativistic hydrodynamics.
+- Microscopic branch: kinetic, fluctuating-hydrodynamic, molecular, or hybrid descriptions when local equilibrium or scale separation fails (Task 15).
+- Relativistic branch: an appropriate relativistic model only when the system and speeds justify it (Task 9).
 - Compare the dominant balancing mechanisms at each level.
 - Track the same nondimensional diagnostics:
   Mach number,
+  Knudsen number where applicable,
   Reynolds number,
-  gamma,
+  relaxation time relative to deformation time,
+  gamma where applicable,
   core radius,
   maximum velocity,
   energy density.
 - Identify where one model's assumptions fail and the next model becomes necessary.
+- Label numerical under-resolution separately from physical model failure. A finer mesh cannot restore a failed continuum approximation.
 - Produce a "regime map" rather than claiming one universal physical singularity mechanism.
 
 TASK 13 — Educational blog series: "Lego blocks of a Navier-Stokes blow-up proof"
@@ -266,6 +345,7 @@ Goal:
 Turn the entire project into a sequence of short, self-contained computational explanations.
 
 Possible article sequence:
+- How small does a collapsing vortex become, and which fluid assumption fails first?
 - Why can a function blow up but keep finite energy?
 - How does a vortex core collapse?
 - Why does incompressibility force stretching?
@@ -277,7 +357,9 @@ Possible article sequence:
 - How do correction layers progressively remove residuals?
 - Why is the final forcing smooth?
 - When does the classical fluid model become physically unrealistic?
-- What changes in compressible or relativistic flow?
+- How sensitive is residual cancellation to truncation and finite precision?
+- What changes in compressible flow, and when is a kinetic or molecular description needed?
+- What would a relativistic version require? (Optional later article.)
 
 Subtasks:
 - Make each article runnable as a notebook.
@@ -288,50 +370,110 @@ Subtasks:
   What mechanism achieved it?
   What did the computation verify?
 - Cross-link each article to the exact section/equation of the OpenAI paper.
+- Publish each useful installment as it is completed rather than waiting for the full reconstruction. Follow deliverables.txt for the actual release order.
+- Provide static accessible figures alongside animations; an animation should answer a defined question and disclose its coordinate and color scaling.
 
 TASK 14 — Possible publication-level paper
 ------------------------------------------
-Tentative theme:
-"A Computational Reconstruction and Physical Interpretation of the Proposed Navier-Stokes Blow-Up Construction"
+Candidate themes, to be chosen after results and a literature review:
+- Computational conditioning, truncation, and residual cancellation in the proposed construction.
+- A calibrated map of physical validity that includes the correction scales and relaxation times.
+- Departure from a constructed incompressible vortex mechanism in a specified compressible model.
 
-Minimum ingredients for a serious paper:
+A tutorial reconstruction can stand alone as educational work. Do not promise a research paper solely from reproducing the stated scaling laws.
+
+Shared foundations:
 - Faithful extraction of the analytical construction.
 - Quantitative verification of the main similarity scalings.
 - Finite-energy/unbounded-amplitude demonstration.
 - Independent residual evaluation.
 - Numerical stress-realization verification.
-- Residual reduction across at least the first few correction layers.
+- Residual reduction across explicitly identified correction layers if relevant to the selected research question.
 - Precision/resolution studies.
 - Clear distinction between mathematical construction and physical realizability.
 - Optional solver-based manufactured-solution validation.
-- A discussion section on compressibility, constitutive assumptions, and relativistic limits.
+- A focused discussion of physical validity and constitutive assumptions, with relativistic extensions only if relevant.
 - Reproducible code and figure-generation scripts.
 
-Suggested workflow for an agent
+Research decision criteria:
+- A precise claim beyond reproduction, positioned against primary literature.
+- A resolved benchmark and an uncertainty/error budget appropriate to that claim.
+- Evidence separating algebraic sensitivity from dynamical stability, physical effects from discretization, and finite experiments from theorem-level conclusions.
+- Publish negative findings or computational limits when they answer the question; stop expansion when additional correction levels no longer add interpretable evidence.
+
+TASK 15 — Kinetic, molecular, and relaxation-scale interpretation
+----------------------------------------------------------------
+Goal:
+Identify what a continuum description loses as the flow's relevant spatial or temporal scales approach microscopic ones.
+
+Subtasks:
+- Extend the first regime map to the smallest resolved envelope and oscillation scales, not only the core radius.
+- For a specified gas, assess local-equilibrium and Knudsen criteria and consider a kinetic description where indicated.
+- For a specified liquid, assess molecular occupancy, correlations, relaxation times, and fluctuations in a proposed averaging volume.
+- Compare deterministic hydrodynamics, fluctuating hydrodynamics, and molecular or hybrid approaches as appropriate to the chosen observable.
+- Distinguish changing the constitutive model from changing the physical state; account for thermodynamic changes when updating microscopic scales.
+- Begin with estimates and a literature-supported model-selection note. Undertake molecular dynamics or kinetic simulations only after defining a small, tractable benchmark and a concrete question.
+- Do not assume a molecular simulation can reproduce an entire macroscopic collapse, or that an atomistic model automatically resolves every relevant physical effect.
+
+TASK 16 — Robustness, conditioning, and sensitivity of the reconstruction
+------------------------------------------------------------------------
+Goal:
+Determine which conclusions survive finite precision, finite correction order, parameter uncertainty, and controlled perturbations.
+
+Subtasks:
+- Start with resolved baseline fields and reproducible residual diagnostics from Tasks 4 and 6.
+- Vary arithmetic precision, derivative method, correction truncation, and sampling resolution one at a time before studying interactions.
+- Perturb profile parameters and pulse amplitudes/phases while tracking divergence and admissibility constraints.
+- Measure absolute residual growth, normalized cancellation, smallest resolved scales, and changes in observables.
+- Inspect the magnitude, bandwidth, and required precision of any proposed forcing protocol rather than equating mathematical smoothness with experimental feasibility.
+- Label direct reevaluation of perturbed fields as algebraic sensitivity. Claims about dynamical stability require evolving perturbed admissible data/forcing with an independently verified solver.
+- Quantify how long a perturbed trajectory remains close using a specified norm and resolution criterion if a dynamical study is undertaken.
+- Use these findings to decide whether there is a publishable numerical-analysis question; do not infer generic instability or stability from a few trials.
+
+Suggested workflow
 -------------------------------
 Phase A:
-- Read the OpenAI paper carefully.
-- Build a glossary of notation.
-- Extract only the leading-order construction.
-- Verify every exponent and definition against the paper.
+- After the user's review of these planning files, extract and verify the source equations and units needed for Task 8.
+- Build the small glossary and reference ledger required for the first deliverable; do not block it on a full-proof reconstruction.
+- Produce the core-size/physical-validity notebook and article, including calibration sensitivity and explicit limits.
 
 Phase B:
-- Implement direct evaluation of the analytical fields.
-- Produce the first collapse, energy, and residual figures.
+- Produce the finite-energy and collapse explanation, followed by the base-flow residual study.
+- Deepen the glossary and source ledger as each mechanism is implemented.
+- Release articles and figures alongside their computations.
 
 Phase C:
-- Implement the oscillatory/stress mechanism.
-- Quantify stress realization and residual cancellation.
+- Explain zero-mean stress generation and the pulse amplification/damping mechanism.
+- Implement their connection to the selected paper profiles only as far as the stated experiment requires.
 
 Phase D:
-- Add successive correction layers only as far as they produce useful computational insight.
+- Add selected correction layers and study conditioning and robustness.
+- Undertake independent solver verification if it resolves a specific remaining question.
 
 Phase E:
-- Write the explanatory blog series using the pedagogical structure above.
+- Extend the physical regime map with compressibility, thermodynamics, and microscopic scales.
+- Select a tractable richer-physics experiment based on the regime map. Keep relativistic and artificial-diffusion branches optional.
 
 Phase F:
-- Decide whether the computational results are substantial enough to justify a formal paper.
+- Compare findings with the literature and decide which, if any, support a focused research paper.
+- Maintain deliverables.txt as the roadmap and progress record; educational outputs remain useful regardless of that decision.
 
 Important methodological rule
 -----------------------------
 Do not present numerical experiments as a proof of the theorem. The computational goal is to reconstruct, verify, visualize, and physically interpret the mechanisms used in the analytical argument.
+
+Starting references
+-------------------
+Record versions and precise equation/page references in each deliverable. These are starting sources, not a completed literature review.
+- OpenAI paper, especially Section 2.1 for the initial scaling study:
+  https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf
+- Official repository and stated theorem scope:
+  https://github.com/openai/NavierStokesAndEuler
+- NIST study documenting its air mean-free-path convention and reference conditions:
+  https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf
+- Molecular-dynamics comparison illustrating the distinction between averaged transport prediction and microscopic description:
+  https://arxiv.org/abs/1501.01476
+- NASA-hosted discussion of low-Mach incompressible modelling:
+  https://ntrs.nasa.gov/api/citations/19960045736/downloads/19960045736.pdf
+- Executable Python articles with Quarto:
+  https://quarto.org/docs/computations/python.html

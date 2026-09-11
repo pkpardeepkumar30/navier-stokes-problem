@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "python": "3.13.0",
+  "platform": "Windows",
+  "rendered_formats": [
+    "html",
+    "latex"
+  ],
+  "scientific_checks": "passed; see validation-tests.txt",
+  "notebook": {
+    "fresh_kernel": true,
+    "executed_code_cells": 8,
+    "error_outputs": 0
+  },
+  "quarto": "1.10.18",
+  "html_checks": "figures embedded; inline Python evaluated",
+  "artifact_checks": {
+    "embedded_figures": 3,
+    "local_links_resolve": true,
+    "latex_figure_paths_resolve": true,
+    "pdf_compiled": false
+  },
+  "dependencies": {
+    "numpy": "2.5.3",
+    "matplotlib": "3.11.1",
+    "sympy": "1.14.0",
+    "nbformat": "5.11.1",
+    "nbclient": "0.11.0",
+    "nbconvert": "7.17.1",
+    "ipykernel": "7.3.0",
+    "pypdf": "6.18.0",
+    "PyYAML": "6.0.3"
+  },
+  "parameters_sha256": "3bd72f12cb61f453f78d105e2e083e41f2efc5006519b2856737694d2d560a70",
+  "elapsed_seconds": 72.604
+}

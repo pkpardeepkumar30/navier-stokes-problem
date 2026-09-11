@@ -1,0 +1,22 @@
+{
+  "air_density_kg_m3": 1.19162651225477,
+  "air_sound_speed_m_s": 344.98376845874935,
+  "air_kinematic_viscosity_m2_s": 1.5377720965041955e-05,
+  "air_mean_thermal_speed_m_s": 465.2696256178799,
+  "air_collision_time_proxy_s": 1.4464731049362042e-10,
+  "air_mean_spacing_m": 3.430271734678855e-09,
+  "water_kinematic_viscosity_m2_s": 8.92632706778893e-07,
+  "water_mean_spacing_m": 3.107360588479975e-10,
+  "water_number_density_m3": 3.332921159582993e+28,
+  "necessary_h_ceiling": 4.5399929762484854e-05,
+  "radius_at_0_01c_m": 3.33564095198152e-10,
+  "radius_at_0_1c_m": 3.335640951981517e-11,
+  "exponent_ceiling_relative_effect_at_0_01c": 0.0013549315688758945,
+  "air_reference_reynolds": 65.0291419823062,
+  "water_reference_reynolds": 1120.2816034027555,
+  "inverse_law_proxy_not_constructed_solution": true,
+  "profile_viscosity_compatibility_established": false,
+  "liquid_relaxation_evaluated": false,
+  "source_sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+  "parameters_sha256": "3bd72f12cb61f453f78d105e2e083e41f2efc5006519b2856737694d2d560a70"
+}
