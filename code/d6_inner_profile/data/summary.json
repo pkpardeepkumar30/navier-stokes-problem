@@ -1,0 +1,22 @@
+{
+  "radial_degree": 22,
+  "decimal_digits": 80,
+  "minimum_sampled_Phi": 0.22209240343894704,
+  "maximum_sampled_angular_relative": 2.6492614634014165e-22,
+  "maximum_sampled_axial_relative": 4.565304620944678e-38,
+  "maximum_sampled_pressure_relative": 1.7386224795277881e-16,
+  "highest_degree_scan_defects": {
+    "angular_relative": 2.6492614634014165e-22,
+    "axial_relative": 4.565304620944678e-38,
+    "pressure_relative": 1.7386224795277881e-16
+  },
+  "eta_of_validation_Z_zero": -0.00014516132444900473,
+  "chi_at_validation_Z_zero": 0.009270691436685793,
+  "condition_B2_satisfied": false,
+  "pressure_storage_max_relative_increment_loss": 1.0,
+  "axis_pressure_from_prepared_outer_profile": false,
+  "joined_inner_annular_profile": false,
+  "first_q_power_correction_computed": false,
+  "scope": "source leading inner equations with declared validation axis data; no fully joined paper realization",
+  "parameters_sha256": "d78ff44cc5d621df48c41a3697f25acb9f762fd8adfc7c30719f4e7d1a8ed5aa"
+}

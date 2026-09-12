@@ -1,0 +1,13 @@
+test_axis_values_and_first_coefficients (test_inner.InnerChecks.test_axis_values_and_first_coefficients) ... ok
+test_degree_refinement_of_direct_balances (test_inner.InnerChecks.test_degree_refinement_of_direct_balances) ... ok
+test_independently_centered_eta_expansions (test_inner.InnerChecks.test_independently_centered_eta_expansions) ... ok
+test_invalid_inputs (test_inner.InnerChecks.test_invalid_inputs) ... ok
+test_large_lambda_comparison_has_expected_orders (test_inner.InnerChecks.test_large_lambda_comparison_has_expected_orders) ... ok
+test_physical_coordinate_divergence_and_leading_momentum (test_inner.InnerChecks.test_physical_coordinate_divergence_and_leading_momentum) ... ok
+test_precision_refinement (test_inner.InnerChecks.test_precision_refinement) ... ok
+test_regular_axis_and_sampled_positivity (test_inner.InnerChecks.test_regular_axis_and_sampled_positivity) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 22.767s
+
+OK

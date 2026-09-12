@@ -1,0 +1,18 @@
+{
+  "air_sound_speed_m_s": 344.98376845874935,
+  "air_mean_thermal_speed_m_s": 465.2696256178799,
+  "air_collision_time_proxy_s": 1.4464731049362042e-10,
+  "water_mean_spacing_m": 3.107360588479975e-10,
+  "air_mach_screen_speed_m_s": 103.4951305376248,
+  "water_mach_screen_speed_m_s": 449.00976599999996,
+  "beta_for_simultaneous_air_screens": 0.6965222285182147,
+  "air_core_radius_at_mach_screen_m": 9.66229033970307e-06,
+  "water_core_radius_at_mach_screen_m": 2.227123051038494e-06,
+  "ceiling_bare_carrier_ratio_decrease_percent": 0.07812296302007748,
+  "formal_endpoint_speed_m_s": 29979245.8,
+  "actual_paper_gradient_evaluated": false,
+  "actual_paper_pulse_wavelength_evaluated": false,
+  "liquid_relaxation_evaluated": false,
+  "full_dimensional_profile_calibration": false,
+  "parameters_sha256": "bff76f5f3747e6dc53bf6dff7b2d745b93dc9a909dae8a3d4e183251d62a8017"
+}

@@ -1,0 +1,51 @@
+{
+  "pressure_center_normalized": -3.314622729794656,
+  "pressure_initial_branch_fraction": 0.7542336500404307,
+  "log_P_star": 18.389056098930652,
+  "P_star": 96887018.40819263,
+  "tail_start_log_radius": 1236.6169135533503,
+  "tail_start_log10_radius": 537.0559017844506,
+  "final_tail_log10_contribution": -629.7295023256618,
+  "Q_target": 7.429804677881472e-11,
+  "waiting_length": 27.25272361810115,
+  "baseline_max_pressure_difference": 8.881784197001252e-16,
+  "baseline_relative_Q_difference": 6.994405055138486e-15,
+  "inner_radial_Lambda": 9.387094336029458e+17,
+  "final_inner_handoff": {
+    "radial_degree": 16,
+    "eta": 0.2,
+    "Y": 1.0,
+    "Phi": 0.7686606062855599,
+    "U": 0.8374443902336132,
+    "angular_relative": 3.860236095417719e-30,
+    "axial_relative": 2.237276579722073e-72,
+    "pressure_relative": 1.362436529216269e-25
+  },
+  "handoff_quadrature_change": [
+    {
+      "quantity": "Phi",
+      "absolute_change": 3.404862838905872e-19,
+      "relative_change": 4.429604966175351e-19
+    },
+    {
+      "quantity": "U",
+      "absolute_change": 4.481459579371731e-18,
+      "relative_change": 5.351351840952191e-18
+    },
+    {
+      "quantity": "Pi",
+      "absolute_change": 7.390303911116256,
+      "relative_change": 2.568997551279566e-16
+    }
+  ],
+  "B2_sufficient": true,
+  "B2_eta_band_bound": 3.174605357047782e-15,
+  "B2_H_lower": 0.019999999999985713,
+  "B2_chi_lower": 0.9999750006249843,
+  "full_outer_hierarchy_certified": false,
+  "outer_moments_and_stress_cone_computed": false,
+  "global_inner_amplitude_and_exit_certified": false,
+  "joined_profile": false,
+  "first_q_power_correction_computed": false,
+  "parameters_sha256": "4bf7dbb94cb2ef44ad7d8bd64d2b52787950d1e0743e9d0f307c343df4f91e4c"
+}

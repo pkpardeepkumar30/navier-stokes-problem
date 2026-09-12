@@ -1,0 +1,94 @@
+{
+  "scope": "D9 physical screens and bare carrier-power audit",
+  "sources": [
+    {
+      "id": "openai-ns",
+      "title": "Finite time blowup for Navier-Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "bytes": 2959204,
+      "locators": [
+        "Section 2.1 pp.3-4",
+        "Lemma 4.8 p.35",
+        "p.81 after Eq.7.22"
+      ],
+      "cached_path": "code/.cache/sources/navier-stokes.pdf",
+      "pages": 166,
+      "creation_date_metadata": "D:20260908190626Z"
+    },
+    {
+      "id": "nist-air",
+      "title": "Slip Correction Measurements of Certified PSL Nanoparticles",
+      "url": "https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "5a44701000cb8ec2252461829c403e0c17cf6c890b6af93d00a281aa862ad696",
+      "bytes": 1407060,
+      "locators": [
+        "Equation (11) and Table 3, printed p.35, PDF p.5"
+      ],
+      "cached_path": "code/.cache/sources/nist-air.pdf",
+      "pages": 24,
+      "creation_date_metadata": "D:20050302203318Z"
+    },
+    {
+      "id": "iapws-water",
+      "title": "SR6-08(2011): Properties of Liquid Water at 0.1 MPa",
+      "url": "https://iapws.org/technical-guidance/release/LiquidWater.download",
+      "accessed": "2026-09-12",
+      "sha256": "fda79dde9f441a90da755477c6533e23065e4f90c7f59a505f64c394d775bd45",
+      "bytes": 174149,
+      "locators": [
+        "Table 8 p.11"
+      ],
+      "cached_path": "code/.cache/sources/liquid-water.pdf",
+      "pages": 12,
+      "creation_date_metadata": "D:20120921155928-06'00'"
+    },
+    {
+      "id": "codata",
+      "title": "CODATA 2022 recommended constants",
+      "url": "https://physics.nist.gov/cuu/Constants/Table/allascii.txt",
+      "accessed": "2026-09-12",
+      "sha256": "77fb90e66c40db3e6eb16630bc9c88e4c7c8beddbe5e71be406f2f26e3f67e67",
+      "bytes": 40801,
+      "locators": [
+        "c, N_A, k_B, Bohr radius"
+      ],
+      "cached_path": "code/.cache/sources/codata.txt"
+    },
+    {
+      "id": "nasa-19960045736",
+      "url": "https://ntrs.nasa.gov/api/citations/19960045736/downloads/19960045736.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "5ef5e9082497cc010ef3a6297f81c90f301620eacfceb6413042e1823f124594",
+      "locator": "Printed p.36: air low-Mach convention",
+      "review": "local PDF text; direct download after web reader 403"
+    },
+    {
+      "id": "nasa-20000004526",
+      "url": "https://ntrs.nasa.gov/api/citations/20000004526/downloads/20000004526.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "c76118ce0f4a6e23fd3e8aff16220536e99022cdd1126a51bd1ea52f5d054e5a",
+      "locator": "Section 3 Eq.12, PDF p.7: Knudsen definition and screen",
+      "review": "local PDF text; direct download after web reader 403"
+    }
+  ],
+  "additional_sources": [
+    {
+      "id": "water-molar-mass",
+      "url": "https://webbook.nist.gov/cgi/cbook.cgi?Name=water",
+      "value": "18.0153 g/mol"
+    },
+    {
+      "id": "sound-derivation",
+      "url": "https://www.grc.nasa.gov/www/k-12/BGP/snddrv.html",
+      "use": "ideal-gas sound-speed equation"
+    }
+  ],
+  "source_page_visual_review": [
+    "OpenAI p.81",
+    "NIST PDF p.5",
+    "IAPWS p.11"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "study": "D10: stationary compressible and constant-density Euler vortex balance",
+  "air": {
+    "temperature_K": 296.15,
+    "pressure_Pa": 101300.0,
+    "gas_constant_J_kg_K": 287.05,
+    "heat_capacity_ratio": 1.4,
+    "dynamic_viscosity_Pa_s": 1.83245e-05,
+    "mean_free_path_m": 6.73e-08,
+    "source": "https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf",
+    "locator": "Equation (11) and Table 3, printed p. 35 / PDF p. 5",
+    "notes": "Dry-air reference. Mean free path uses the NIST paper's convention. Density and sound speed are ideal-gas estimates using rounded R and gamma assumptions, not additional measured NIST values. Properties are frozen for screening, not evolved along collapse."
+  },
+  "radius_m": 0.001,
+  "radius_interpretation": "fixed radius of peak speed, independent of the D1 collapse anchor",
+  "d9_input_snapshot_sha256": "bff76f5f3747e6dc53bf6dff7b2d745b93dc9a909dae8a3d4e183251d62a8017",
+  "profile_mach_values": [
+    0.1,
+    0.3,
+    0.6,
+    0.8
+  ],
+  "pressure_profile_mach_values": [
+    0.3,
+    0.8
+  ],
+  "audit_mach_values": [
+    0.3,
+    0.6,
+    0.8
+  ],
+  "mach_definition": "peak swirl speed divided by EXTERIOR sound speed; local Mach is separately evaluated",
+  "mach_scan_limits": [
+    0.01,
+    0.8
+  ],
+  "mach_scan_samples": 181,
+  "profile_outer_radius_over_a": 6.0,
+  "profile_samples": 1601,
+  "density_deficit_marker": 0.05,
+  "sutherland_temperature_K": 110.4,
+  "solver": {
+    "peak_mach": 0.6,
+    "outer_radius_over_a": 3.0,
+    "interval_counts": [
+      24,
+      48,
+      96,
+      192,
+      384
+    ],
+    "outer_radius_scan": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0
+    ],
+    "domain_scan_step": 0.0078125
+  },
+  "residual_steps_over_a": [
+    0.02,
+    0.01,
+    0.005,
+    0.0025
+  ],
+  "thermodynamics": "calorically perfect ideal gas; spatially uniform entropy; exact steady Euler equilibrium",
+  "physical_limits": "no viscosity, heat conduction, time evolution, phase change, or calibrated OpenAI flow; local mean-free-path variation is an approximation using NIST Eq.11"
+}

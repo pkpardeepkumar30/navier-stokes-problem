@@ -1,0 +1,21 @@
+{
+  "scope": "Axis-pressure integral of the ideal azimuthal schedule in Lemma A.5, with declared finite parameters",
+  "sources": [
+    {
+      "title": "OpenAI Navier-Stokes paper",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "locators": [
+        "Appendix A.2, Eqs.A.5-A.13, pp.129-130",
+        "Appendix A.3-A.4, especially A.21-A.23, pp.131-134",
+        "Proposition A.7, pp.139-140",
+        "Axis selection condition B.2, p.144"
+      ],
+      "visual_review": "Rendered PDF p.130 inspected",
+      "local_cache": "code/.cache/sources/navier-stokes.pdf"
+    }
+  ],
+  "omitted_bumps": "Pressure-preserving angular corrections omitted exactly as prescribed in Lemma A.5; their intervals remain",
+  "qualification": "Displayed scalar inequalities and a sufficient B.2 bound evaluated; full hierarchy and stress cone not certified"
+}

@@ -1,0 +1,60 @@
+{
+  "five_percent_density_marker_mach": 0.193274350610968,
+  "density_marker_speed_m_s": 66.67651382018933,
+  "mach_point_three_density_deficit": 0.11787066383319156,
+  "constant_density_zero_center_pressure_mach": 0.7249427969270031,
+  "positive_temperature_mach_limit": 1.3562437855552416,
+  "max_thermodynamic_kn_proxy": 0.00017563556346249074,
+  "max_collision_shear_ratio": 5.858349477914026e-05,
+  "max_local_mach": 0.8616567233317961,
+  "minimum_temperature_K": 193.10754707223728,
+  "finest_radial_density_error": 4.5989878572072485e-12,
+  "radial_refinement_error_ratios": [
+    16.987376695309077,
+    16.49512194897174,
+    16.247533113921474,
+    16.122199691000386
+  ],
+  "finest_conservative_residual_max": 4.773589856732485e-11,
+  "representative_states": [
+    {
+      "peak_mach_using_exterior_sound": 0.1,
+      "speed_m_s": 34.49837684587494,
+      "center_density_ratio": 0.9864639585304248,
+      "center_temperature_K": 294.5399616730037,
+      "center_compressible_pressure_ratio": 0.9811009844246188,
+      "center_incompressible_pressure_ratio": 0.9809720272007867,
+      "maximum_local_mach": 0.10010025081956188
+    },
+    {
+      "peak_mach_using_exterior_sound": 0.3,
+      "speed_m_s": 103.4951305376248,
+      "center_density_ratio": 0.8821293361668084,
+      "center_temperature_K": 281.6596550570334,
+      "center_compressible_pressure_ratio": 0.8389675655594567,
+      "center_incompressible_pressure_ratio": 0.8287482448070802,
+      "maximum_local_mach": 0.302762598083838
+    },
+    {
+      "peak_mach_using_exterior_sound": 0.6,
+      "speed_m_s": 206.9902610752496,
+      "center_density_ratio": 0.5801271342896885,
+      "center_temperature_K": 238.1886202281335,
+      "center_compressible_pressure_ratio": 0.4665868028815196,
+      "center_incompressible_pressure_ratio": 0.3149929792283207,
+      "maximum_local_mach": 0.6238084522695029
+    },
+    {
+      "peak_mach_using_exterior_sound": 0.8,
+      "speed_m_s": 275.9870147669995,
+      "center_density_ratio": 0.3433355515046828,
+      "center_temperature_K": 193.10754707223728,
+      "center_compressible_pressure_ratio": 0.22387535429263244,
+      "center_incompressible_pressure_ratio": -0.2177902591496521,
+      "maximum_local_mach": 0.8616567233317961
+    }
+  ],
+  "scope": "steady inviscid Euler equilibrium; no time evolution or blowup arrest",
+  "research_classification": "known benchmark family; educational comparison; no novelty claim",
+  "parameters_sha256": "e2ce7253f2c68298a1f48f9ee1062d5fd923f8e6c5bc8ca5969189d0a3c07126"
+}

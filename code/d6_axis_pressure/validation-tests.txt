@@ -1,0 +1,14 @@
+test_axis_condition_bound_and_scale_independence (test_pressure.PressureChecks.test_axis_condition_bound_and_scale_independence) ... ok
+test_eta_coefficients_against_direct_high_precision_differentiation (test_pressure.PressureChecks.test_eta_coefficients_against_direct_high_precision_differentiation) ... ok
+test_independent_adaptive_pressure_integral (test_pressure.PressureChecks.test_independent_adaptive_pressure_integral) ... ok
+test_invalid_schedule_and_inputs (test_pressure.PressureChecks.test_invalid_schedule_and_inputs) ... ok
+test_pressure_sign_bound_and_eta_derivatives (test_pressure.PressureChecks.test_pressure_sign_bound_and_eta_derivatives) ... ok
+test_quadrature_refinement_of_pressure_and_terminal_datum (test_pressure.PressureChecks.test_quadrature_refinement_of_pressure_and_terminal_datum) ... ok
+test_smooth_step_symmetry_and_derivative (test_pressure.PressureChecks.test_smooth_step_symmetry_and_derivative) ... ok
+test_source_trace_enters_inner_equations (test_pressure.PressureChecks.test_source_trace_enters_inner_equations) ... ok
+test_terminal_schedule_against_independent_ode (test_pressure.PressureChecks.test_terminal_schedule_against_independent_ode) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.746s
+
+OK

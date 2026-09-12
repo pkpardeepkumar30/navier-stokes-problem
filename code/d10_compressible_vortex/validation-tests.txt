@@ -1,0 +1,13 @@
+test_all_four_conservative_euler_equations (test_compressible.CompressibleChecks.test_all_four_conservative_euler_equations) ... ok
+test_density_marker_and_local_gradient (test_compressible.CompressibleChecks.test_density_marker_and_local_gradient) ... ok
+test_eos_entropy_and_peak_normalization (test_compressible.CompressibleChecks.test_eos_entropy_and_peak_normalization) ... ok
+test_independent_enthalpy_integral (test_compressible.CompressibleChecks.test_independent_enthalpy_integral) ... ok
+test_nonlinear_radial_solver_converges_fourth_order (test_compressible.CompressibleChecks.test_nonlinear_radial_solver_converges_fourth_order) ... ok
+test_outer_boundary_error_is_separate (test_compressible.CompressibleChecks.test_outer_boundary_error_is_separate) ... ok
+test_rest_limit_and_positivity_rejection (test_compressible.CompressibleChecks.test_rest_limit_and_positivity_rejection) ... ok
+test_small_mach_density_and_pressure_orders (test_compressible.CompressibleChecks.test_small_mach_density_and_pressure_orders) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.090s
+
+OK

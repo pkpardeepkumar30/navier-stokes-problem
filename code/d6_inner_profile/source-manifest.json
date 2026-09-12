@@ -1,0 +1,20 @@
+{
+  "scope": "Source-defined leading inner equations with analytic validation axis data; no joined profile or q correction",
+  "sources": [
+    {
+      "title": "OpenAI Navier-Stokes paper",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "locators": [
+        "Eqs.4.3-4.18, pp.25-29",
+        "Lemma 4.8 and Proposition 4.10, pp.35-37",
+        "Appendix B, pp.144-149; especially B.2, B.3, B.5, B.13, B.15, B.16 and B.19"
+      ],
+      "visual_review": "Rendered PDF p.147 inspected",
+      "local_cache": "code/.cache/sources/navier-stokes.pdf"
+    }
+  ],
+  "axis_pressure": "Explicit analytic test input -100/(1+eta^2)^2; not an outer-profile integral",
+  "admissibility": "B.2 explicitly fails; remaining global parameter, exit and joining conditions uncertified"
+}

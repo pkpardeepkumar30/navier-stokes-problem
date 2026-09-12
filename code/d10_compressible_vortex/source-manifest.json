@@ -1,0 +1,36 @@
+{
+  "scope": "Known stationary isentropic Euler vortex; no OpenAI profile reconstruction",
+  "sources": [
+    {
+      "title": "A Survey of the Isentropic Euler Vortex Problem using High-Order Methods",
+      "authors": [
+        "Seth C. Spiegel",
+        "H. T. Huynh",
+        "James R. DeBonis"
+      ],
+      "url": "https://ntrs.nasa.gov/api/citations/20150018403/downloads/20150018403.pdf",
+      "sha256": "ca65b519326b36ce02dccc80b9613baad6c7f30d6eccaa9512c22a20570b62e1",
+      "accessed": "2026-09-12",
+      "locators": [
+        "Section III Eqs.16-19 pp.4-5",
+        "Section IV Eqs.20-23 pp.5-6"
+      ],
+      "visual_review": "PDF p.5; p.6 text checked for normalization"
+    },
+    {
+      "title": "NASA isentropic relations",
+      "url": "https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html",
+      "accessed": "2026-09-12"
+    },
+    {
+      "title": "NIST air reference",
+      "url": "https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "5a44701000cb8ec2252461829c403e0c17cf6c890b6af93d00a281aa862ad696",
+      "locators": [
+        "Eq.11 and Table 3, PDF p.5"
+      ]
+    }
+  ],
+  "normalization": "Source Gaussian sigma=1, source radius=a, beta=sqrt(e)*M_star; source mean advection Mach=0"
+}

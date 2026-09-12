@@ -1,0 +1,56 @@
+{
+  "study": "D6 stage B: leading inner equations with explicit validation axis data",
+  "axis_data": {
+    "h": 1e-06,
+    "offset_j": 0.02,
+    "regularization_sigma": 0.2,
+    "radial_scale_Lambda": 512.0,
+    "amplitude_C": 10000.0,
+    "pressure_magnitude": 100.0
+  },
+  "axis_pressure": "Pi0(eta)=-100/(1+eta^2)^2; analytic test datum, not trace of an assembled outer profile",
+  "qualification": "Full hierarchy and joining conditions not satisfied or certified; B.2 is explicitly checked and fails for these validation data",
+  "eta_centers": [
+    -0.6,
+    0.0,
+    0.05,
+    0.2
+  ],
+  "maximum_Y": 4.1,
+  "radial_samples": 61,
+  "radial_degree": 22,
+  "decimal_digits": 80,
+  "reference_degree": 24,
+  "degree_scan": {
+    "eta": 0.2,
+    "Y": 4.1,
+    "degrees": [
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22
+    ]
+  },
+  "lambda_scan": {
+    "eta": 0.2,
+    "Y": 1.0,
+    "values": [
+      128,
+      256,
+      512,
+      1024,
+      2048
+    ],
+    "degree": 18
+  },
+  "storage_Y": 2.0,
+  "units": "dimensionless source similarity variables; no SI calibration",
+  "order_interpretation": "radial Taylor degree of the leading field; not the q^(2nh) correction index",
+  "physical_finite_difference_test": "separate local test at Lambda=64, eta=.05, Y=.4, q=.8, 70 digits and step 2e-5"
+}

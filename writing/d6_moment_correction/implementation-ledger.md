@@ -1,13 +1,17 @@
 # D6 implementation ledger
 
-The finite moment-repair substep is implemented. D6's full order-one PDE residual
+The finite moment-repair substep, a local leading-inner solver, and the
+ideal-schedule axis-pressure integral are implemented.
+D6's full order-one PDE residual
 comparison is still incomplete. This ledger identifies the missing inputs rather
 than presenting the educational fields from D2-D5 as paper corrections.
 
 | Component | Source | Current computational state |
 | --- | --- | --- |
 | Explicit heat exterior | Eq. (4.29), p.33 | Evaluated in D3 as a normalized family; matching constants/boundary not calibrated |
-| Axis data and analytic inner leading profile | Appendix B, pp.144-145; Eq. (4.13) | Not evaluated; needs the outer pressure trace and choices including h, C, Lambda, j0 |
+| Analytic leading-inner numerical engine | Eq. (4.13); Appendix B, especially B.5 and B.15 | Evaluated in D6 stage B with analytic validation axis data; radial degree, precision, overlap and physical-coordinate checks |
+| Ideal-schedule axis pressure | Lemma A.5, Eq. (A.21) | Evaluated in D6 stage C with logarithmic contributions, analytic tails, quadrature refinement and eta coefficients supplied to the inner engine |
+| Construction-specific axis choices | Lemma 4.8; Appendix B.1 | Stage C satisfies an explicit sufficient B.2 bound for its selected pressure schedule; full outer hierarchy and global inner amplitude/exit conditions remain uncertified |
 | Joined annular profile and moments | Theorem 4.6; Appendix A | Not assembled; actual support radii and reserved intervals are unassigned |
 | First inner correction | Eqs. (5.2)-(5.7), pp.46-48; Lemma 5.1 | Coupled system identified; not numerically solved |
 | Extension cutoff and discrepancies | Eqs. (5.10)-(5.15), pp.49-51 | Source definitions recorded; no actual inner extension to integrate yet |
@@ -45,11 +49,27 @@ The source manifest records the commit independently of that ignored cache.
 
 ## Next concrete work
 
-First prepare a numerical representation of a single leading inner profile, using
-source-consistent outer pressure data and an explicit parameter ledger. Validate
-regularity, incompressibility, and leading balances before joining the annulus.
-Only then generate d_U,d_E from an actual first inner correction.
+The [stage-B study](../d6_inner_profile/article.html) supplies a local radial
+coefficient engine for the leading inner equations. Its analytic pressure test
+datum has not been matched to an exterior. Its small local equation defects do
+not establish the construction's admissibility or cancel the full PDE residual.
 
-The D6 stage-A lambda scan also supplies a well-defined conditioning problem for D7:
-separate near-degenerate moment weights, large required coefficients, and floating-point
-loss. Improvements to this small linear solve can proceed while profile assembly is developed.
+The [stage-C pressure study](../d6_axis_pressure/article.html) now evaluates the
+ideal-schedule pressure and supplies its eta coefficients to a local inner
+calculation. Its algebraic pressure bounds also give a sufficient B.2 check.
+The [pressure specification](../d6_inner_profile/outer-pressure-next-step.md)
+records why pressure-preserving later corrections were not required first.
+
+Next address the global axis-amplitude representation and complex-neighborhood
+bound B.16, then the inner exit inequality B.19 on the full eta interval; the
+[global-axis specification](../d6_axis_pressure/global-axis-next-step.md) sets
+out the required representation and checks. The
+stage-C local handoff with C=1e4 is not a globally admissible amplitude choice.
+Outer parameter thresholds and moment/stress-cone checks remain distinct.
+Only after adequate leading-profile assembly should the first inner correction
+and its actual extension discrepancies support a full before/after PDE comparison.
+
+The D6 stage-A lambda scan supplied the completed D7 conditioning study:
+it separates near-degenerate moment weights, large required coefficients, and
+floating-point loss. Its improved linear solve is available for later actual
+discrepancy data.

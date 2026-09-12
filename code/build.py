@@ -28,7 +28,11 @@ STUDIES = {
     "d4": ("d4_mean_stress", 3, "test_stress.py"),
     "d5": ("d5_shearing_wave", 3, "test_shear.py"),
     "d6": ("d6_moment_correction", 3, "test_moments.py"),
+    "d6b": ("d6_inner_profile", 3, "test_inner.py"),
+    "d6c": ("d6_axis_pressure", 3, "test_pressure.py"),
     "d7": ("d7_conditioning", 3, "test_conditioning.py"),
+    "d9": ("d9_regime_map", 4, "test_regimes.py"),
+    "d10": ("d10_compressible_vortex", 4, "test_compressible.py"),
 }
 sys.path.insert(0, str(CODE / "src"))
 

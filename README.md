@@ -25,6 +25,11 @@ The first study evaluates an anchored scaling surrogate, not a CFD solution. Wit
 | D4: zero-mean motion and mean stress | [Article](writing/d4_mean_stress/article.html) | [Notebook](code/d4_mean_stress/study.ipynb) | Complete |
 | D5: shear growth and viscous decay | [Article](writing/d5_shearing_wave/article.html) | [Notebook](code/d5_shearing_wave/study.ipynb) | Complete for the Kelvin-wave example |
 | D6 stage A: finite moment correction | [Article](writing/d6_moment_correction/article.html) | [Notebook](code/d6_moment_correction/study.ipynb) | Stage A complete; full PDE comparison pending |
+| D6 stage B: leading inner profile | [Article](writing/d6_inner_profile/article.html) | [Notebook](code/d6_inner_profile/study.ipynb) | Local engine validated; source pressure supplied in stage C |
+| D6 stage C: source axis pressure | [Article](writing/d6_axis_pressure/article.html) | [Notebook](code/d6_axis_pressure/study.ipynb) | Ideal-schedule pressure and local handoff; global construction pending |
+| D7: conditioning and retained precision | [Article](writing/d7_conditioning/article.html) | [Notebook](code/d7_conditioning/study.ipynb) | Complete for the isolated moment operator |
+| D9: physical regime map | [Article](writing/d9_regime_map/article.html) | [Notebook](code/d9_regime_map/study.ipynb) | Complete for declared scale scenarios |
+| D10: compressible vortex equilibrium | [Article](writing/d10_compressible_vortex/article.html) | [Notebook](code/d10_compressible_vortex/study.ipynb) | Complete for the stationary Euler comparison |
 
 Each article folder contains source and review notes documenting its checks and limits.
 
@@ -40,7 +45,11 @@ code/
   d4_mean_stress/     same layout for the stress study
   d5_shearing_wave/   same layout for the wave study
   d6_moment_correction/  finite correction substep and dependency ledger
+  d6_inner_profile/  local leading-inner solver and convergence studies
+  d6_axis_pressure/  ideal-schedule integral and inner-solver handoff
   d7_conditioning/   precision and sensitivity experiments
+  d9_regime_map/     gas/liquid screens and scale audit
+  d10_compressible_vortex/  density, pressure, and radial convergence
   build.py             reproducible build
 writing/
   d1_core_size/        article, LaTeX source, source notes, figures
@@ -49,7 +58,11 @@ writing/
   d4_mean_stress/     article and figures
   d5_shearing_wave/   article and figures
   d6_moment_correction/  article, figures, and implementation ledger
+  d6_inner_profile/  leading-inner article, figures, and scope audit
+  d6_axis_pressure/  pressure article, figures, and source audit
   d7_conditioning/   article, figures, and research decision
+  d9_regime_map/     article, figures, and model selection
+  d10_compressible_vortex/  equilibrium comparison and research decision
 ```
 
 Each new piece gets matching `dN_<topic>/` folders under code and writing. Repository-wide planning stays in [project-ideas.txt](project-ideas.txt) and the ordered [deliverables.txt](deliverables.txt).

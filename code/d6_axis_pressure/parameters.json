@@ -1,0 +1,31 @@
+{
+  "study": "D6 stage C: axis pressure from the source's ideal azimuthal schedule",
+  "schedule": {
+    "M_d": 2.0,
+    "intermediate_lambda": 0.02,
+    "h": 1e-9,
+    "interpolation_length": 100.0,
+    "terminal_c": 0.01,
+    "log_amplitude_margin": 1.0
+  },
+  "amplitude_definition": "log(P_star)=exp(M_d)+10+log_amplitude_margin",
+  "quadrature_order": 128,
+  "reference_order": 256,
+  "quadrature_scan": [8, 16, 32, 64, 128],
+  "eta_samples": 101,
+  "inner_handoff": {
+    "eta": 0.2,
+    "Y": 1.0,
+    "degrees": [4, 8, 12, 16],
+    "digits": 70,
+    "offset_j": 0.02,
+    "regularization_sigma": 0.0001,
+    "Lambda_over_P_squared": 100.0,
+    "amplitude_C": 10000.0
+  },
+  "B2_delta": 1.0,
+  "tail_cut_offsets": [0, 5, 10, 20],
+  "units": "dimensionless source similarity quantities; no physical SI calibration",
+  "scope": "Declared finite schedule satisfying the displayed scalar hierarchy; sufficient large/small thresholds and full stress-cone construction are not certified",
+  "precision": "Binary64 quadrature with logarithmic contribution storage; 70-digit eta/radial algebra does not upgrade quadrature accuracy"
+}

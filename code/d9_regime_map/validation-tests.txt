@@ -1,0 +1,13 @@
+test_carrier_against_independent_scale_parameter (test_regimes.RegimeChecks.test_carrier_against_independent_scale_parameter) ... ok
+test_gradient_assumption_reverses_screen_order (test_regimes.RegimeChecks.test_gradient_assumption_reverses_screen_order) ... ok
+test_independent_timescale_ratios (test_regimes.RegimeChecks.test_independent_timescale_ratios) ... ok
+test_invalid_physical_inputs (test_regimes.RegimeChecks.test_invalid_physical_inputs) ... ok
+test_inverse_limit_constant_reynolds_and_carrier_ratio (test_regimes.RegimeChecks.test_inverse_limit_constant_reynolds_and_carrier_ratio) ... ok
+test_screen_crossing_against_root_search (test_regimes.RegimeChecks.test_screen_crossing_against_root_search) ... ok
+test_thermal_speed_against_maxwell_integral (test_regimes.RegimeChecks.test_thermal_speed_against_maxwell_integral) ... ok
+test_volume_count_and_unit_invariance (test_regimes.RegimeChecks.test_volume_count_and_unit_invariance) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.005s
+
+OK
