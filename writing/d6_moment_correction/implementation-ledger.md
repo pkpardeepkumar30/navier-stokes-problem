@@ -1,7 +1,9 @@
 # D6 implementation ledger
 
-The finite moment-repair substep, a local leading-inner solver, and the
-ideal-schedule axis-pressure integral are implemented.
+The finite moment-repair substep, a local leading-inner solver, the
+ideal-schedule axis-pressure integral, and a logarithmic axis-amplitude
+representation with an analytic complex-neighborhood bound are implemented.
+The leading inner source/shear/exit conditions have targeted numerical checks.
 D6's full order-one PDE residual
 comparison is still incomplete. This ledger identifies the missing inputs rather
 than presenting the educational fields from D2-D5 as paper corrections.
@@ -11,7 +13,9 @@ than presenting the educational fields from D2-D5 as paper corrections.
 | Explicit heat exterior | Eq. (4.29), p.33 | Evaluated in D3 as a normalized family; matching constants/boundary not calibrated |
 | Analytic leading-inner numerical engine | Eq. (4.13); Appendix B, especially B.5 and B.15 | Evaluated in D6 stage B with analytic validation axis data; radial degree, precision, overlap and physical-coordinate checks |
 | Ideal-schedule axis pressure | Lemma A.5, Eq. (A.21) | Evaluated in D6 stage C with logarithmic contributions, analytic tails, quadrature refinement and eta coefficients supplied to the inner engine |
-| Construction-specific axis choices | Lemma 4.8; Appendix B.1 | Stage C satisfies an explicit sufficient B.2 bound for its selected pressure schedule; full outer hierarchy and global inner amplitude/exit conditions remain uncertified |
+| Construction-specific axis choices | Lemma 4.8; Appendix B.1 | Stage C satisfies an explicit sufficient B.2 bound for its selected pressure schedule; full outer hierarchy remains uncertified |
+| Global axis-amplitude bound | Eq. B.16, pp.147–148 | Stage D gives an exact-rational sufficient envelope on an explicit complex rectangle and an upward-rounded log(C) |
+| Inner source, shear and exit | Eqs. B.17–B.19, pp.148–150 | Stage D passes declared samples for Lambda/P_star^2=1e24 and resolves a failed narrow band at 1e16; no uniform series remainder or between-sample bound |
 | Joined annular profile and moments | Theorem 4.6; Appendix A | Not assembled; actual support radii and reserved intervals are unassigned |
 | First inner correction | Eqs. (5.2)-(5.7), pp.46-48; Lemma 5.1 | Coupled system identified; not numerically solved |
 | Extension cutoff and discrepancies | Eqs. (5.10)-(5.15), pp.49-51 | Source definitions recorded; no actual inner extension to integrate yet |
@@ -60,11 +64,20 @@ calculation. Its algebraic pressure bounds also give a sufficient B.2 check.
 The [pressure specification](../d6_inner_profile/outer-pressure-next-step.md)
 records why pressure-preserving later corrections were not required first.
 
-Next address the global axis-amplitude representation and complex-neighborhood
-bound B.16, then the inner exit inequality B.19 on the full eta interval; the
-[global-axis specification](../d6_axis_pressure/global-axis-next-step.md) sets
-out the required representation and checks. The
-stage-C local handoff with C=1e4 is not a globally admissible amplitude choice.
+The [stage-D study](../d6_global_axis/article.html) now supplies the global
+logarithmic amplitude and a sufficient complex-neighborhood B.16 bound.
+It checks the inner source/shear/exit conditions on a broad grid and two
+targeted scales. It resolves a pressure-dependent parameter band whose
+19 baseline coordinates all merge into one binary64 value. The larger
+declared Lambda passes the sampled signs and exit threshold after degree,
+precision and pressure-input checks. These samples do not establish
+uniform inner control. The earlier stage-C C=1e4 handoff remains a local
+experiment; stage D supplies its own globally bounded amplitude.
+
+Next quantify the inner approximation and exit margins between the
+declared samples before making any uniform claim; the
+[continuation specification](../d6_global_axis/continuation-next-step.md)
+separates that question from numerical profile assembly.
 Outer parameter thresholds and moment/stress-cone checks remain distinct.
 Only after adequate leading-profile assembly should the first inner correction
 and its actual extension discrepancies support a full before/after PDE comparison.

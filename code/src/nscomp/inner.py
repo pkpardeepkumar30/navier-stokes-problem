@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 import math
 import mpmath as mp
+from .axis_bounds import logarithmic_axis_value
 
 
 class _Jet:
@@ -61,6 +62,8 @@ class _Jet:
         return _Jet([(i+1)*self.c[i+1] for i in range(len(self.c)-1)]+[mp.mpf(0)])
 
     def value(self,offset=0,derivative=0):
+        if offset == 0:
+            return mp.factorial(derivative)*self.c[derivative] if derivative<len(self.c) else mp.mpf(0)
         coeff=self.c
         for _ in range(derivative):
             coeff=[(i+1)*coeff[i+1] for i in range(len(coeff)-1)]
@@ -79,6 +82,7 @@ class AxisData:
     radial_scale_Lambda: float = 64.
     amplitude_C: float = 1e4
     pressure_magnitude: float = 100.
+    log_amplitude_C: str | None = None
 
     def __post_init__(self):
         if not 0 < self.h < .01 or not 0 < self.offset_j <= .05:
@@ -88,6 +92,10 @@ class AxisData:
                 raise ValueError(f"{name} must be positive")
         if self.radial_scale_Lambda<1 or self.amplitude_C<=1:
             raise ValueError("Require Lambda>=1 and C>1")
+        if self.log_amplitude_C is not None:
+            value=mp.mpf(str(self.log_amplitude_C))
+            if not mp.isfinite(value) or value<=0:
+                raise ValueError("log_amplitude_C must be finite and positive")
 
 
 class InnerSeries:
@@ -124,7 +132,11 @@ class InnerSeries:
             def zeta_scalar(w):
                 H=D*w+(1-w*w)*(4*w+mp.mpf(str(data.offset_j)))
                 return -(1-2*h*w*w)*H/(H*H+sig*sig)
-            g0=mp.exp(lam*mp.quad(zeta_scalar,[0,mp.mpf(str(eta_center))]))/amp
+            if data.log_amplitude_C is None:
+                g0=mp.exp(lam*mp.quad(zeta_scalar,[0,mp.mpf(str(eta_center))]))/amp
+                self.log_g0=mp.log(g0)
+            else:
+                self.log_g0,g0=logarithmic_axis_value(data,eta_center,digits)
             g=[g0]
             # g_eta = xi*g, an analytic coefficient recurrence with no numerical differentiation.
             for n in range(njet):
@@ -200,7 +212,13 @@ class InnerSeries:
             chosen=self.order if order is None else order
             pi_increment=mp.fsum(self.Pi[i].value(delta)*Y**i for i in range(1,chosen+1))
             v0_over_X=(2*eta*U+W-1)/L
+            p1=-2*Y*py/phi
+            ns=-2*lam*uy
+            log_abs_p2=(mp.log(Y/(2*lam))/2+mp.log(abs(ns))-mp.log(abs(g*phi))
+                        if Y>0 and ns else mp.ninf)
+            Sq=-2*L*lam*(Y*pyy+2*py)/phi
             return dict(Phi=phi,U=U,Pi=Pi,pressure_increment=pi_increment,F=g*phi,V0_over_X=v0_over_X,
+                p1=p1,n_s=ns,log_abs_p2=log_abs_p2,Sq=Sq,
                 angular_balance=residual(angular_terms),axial_balance=residual(axial_terms),
                 pressure_balance=residual(pressure_terms),
                 angular_relative=relative(angular_terms),axial_relative=relative(axial_terms),

@@ -1,7 +1,10 @@
 # Next D6 component: global axis amplitude and the inner exit
 
-Source review: 2026-09-12. This is a specification, not a completed bound or
-computed global profile. The relevant source is Appendix B, especially
+Source review: 2026-09-12. This specification preceded
+[stage D](../d6_global_axis/article.html), which now implements the logarithmic
+amplitude and an analytic B.16 bound, and supplies targeted numerical exit
+checks. Uniform inner/exit control remains open; this specification is
+retained to show the intended scope. The relevant source is Appendix B, especially
 [B.16 on p.147 and B.17–B.19 on pp.148–149](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf).
 
 Stage C supplies a source-schedule pressure datum and a sufficient B.2 bound.

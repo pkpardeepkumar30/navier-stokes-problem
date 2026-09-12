@@ -1,9 +1,10 @@
 # Computational studies
 
-Select a deliverable with --study d1 through --study d7, --study d6b, --study d6c, --study d9,
-or --study d10 when running code/build.py. D6b is the leading-inner numerical
-study; d6c computes the ideal-schedule axis pressure, and d6 remains the finite
-moment-repair study.
+Select a deliverable with --study d1 through --study d7, --study d6b, --study d6c,
+--study d6d, --study d9, or --study d10 when running code/build.py. D6b is the
+leading-inner numerical study; d6c computes the ideal-schedule axis pressure;
+d6d bounds the complex axis amplitude and samples the inner exit conditions.
+D6 remains the finite moment-repair study.
 The default remains D1. D2's full build also regenerates its offline animation;
 see [D2 reproduction notes](d2_finite_energy/README.md).
 

@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "parameter_and_article_hashes_match": true,
+  "cached_paper_hash_matches_manifest": true,
+  "inline_computed_values_present": true,
+  "profile_rows": 306,
+  "eta_entries_including_shared_center": 51,
+  "distinct_eta_decimal_coordinates": 50,
+  "positive_Phi_and_source_margin_at_all_profile_samples": true,
+  "positive_p1_at_all_positive_Y_profile_samples": true,
+  "csv_datasets": 8,
+  "notebook_code_cells": 6,
+  "project_scientific_tests": 102,
+  "utf8_and_replacement_character_check": "passed",
+  "figure_visual_inspection": "all three PNGs inspected directly",
+  "browser_visual_inspection": false,
+  "pdf_compiled": false,
+  "uniform_inner_certificate": false
+}

@@ -30,6 +30,7 @@ STUDIES = {
     "d6": ("d6_moment_correction", 3, "test_moments.py"),
     "d6b": ("d6_inner_profile", 3, "test_inner.py"),
     "d6c": ("d6_axis_pressure", 3, "test_pressure.py"),
+    "d6d": ("d6_global_axis", 3, "test_axis_bounds.py"),
     "d7": ("d7_conditioning", 3, "test_conditioning.py"),
     "d9": ("d9_regime_map", 4, "test_regimes.py"),
     "d10": ("d10_compressible_vortex", 4, "test_compressible.py"),

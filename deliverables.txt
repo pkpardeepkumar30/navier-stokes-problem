@@ -5,7 +5,7 @@ Purpose and current status
 --------------------------
 This file is the ordered delivery roadmap for project-ideas.txt. Task numbers there identify topics; the D-numbers here identify outputs in the preferred order.
 
-Current status: D1 complete and accepted; D2-D5, the scoped D7 report, D9, and the stationary D10 comparison built and validated; D6 stage A complete, full PDE comparison pending. Work is returning to D6's inner-profile dependency. The user authorized continuing through the ordered roadmap. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
+Current status: D1 complete and accepted; D2-D5, the scoped D7 report, D9, and the stationary D10 comparison built and validated. D6 stages A-D are implemented within their stated scopes; stage D adds an analytic complex-amplitude bound and sampled inner-exit checks. D6's full joined/corrected PDE comparison remains pending. The user authorized continuing through the ordered roadmap. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
 
 The order favors a useful public result early, then a progressively deeper computational explanation. D1-D6 form the educational core. Later items are conditional research or verification work, not prerequisites for releasing the early articles. D7's initial conditioning work can begin alongside D3 and D6.
 
@@ -171,7 +171,7 @@ Completion criteria:
 
 D6 — Selected correction levels and residual improvement
 --------------------------------------------------------
-Status: In progress overall; stages A (moment repair), B (local inner engine), and C (ideal-schedule axis pressure) built and validated.
+Status: In progress overall; stages A (moment repair), B (local inner engine), C (ideal-schedule axis pressure), and D (complex amplitude and sampled inner exit) built and validated within their declared scopes.
 Related topics: Tasks 6 and 1.
 Depends on: D3-D5 and the exact source definitions of the selected corrections.
 
@@ -199,9 +199,25 @@ d6_axis_pressure; they contain an article, notebook, seven CSV datasets, three
 figures, parameters, source notes and validation. Nine component checks and all
 92 project scientific checks passed. Six notebook code cells and HTML/LaTeX
 exports passed; figures, inline values, links and source/parameter hashes checked.
-Full parameter thresholds, global amplitude/exit conditions, outer moment/stress
-construction, joining, and the first q-power correction remain unverified or
-unimplemented as recorded in the ledger.
+Stage C's local handoff retains a local amplitude choice; stage D addresses the
+global amplitude separately. Full parameter thresholds, outer moment/stress
+construction, joining, and the first q-power correction remain separate.
+
+Stage D: an exact-rational envelope on an explicit complex rectangle gives a
+sufficient B.16 bound, with log(C) rounded upward. Multiprecision coordinates
+resolve a pressure-dependent parameter band missed by binary64; the comparison
+Lambda/P_star^2=1e16 fails sampled shear/source signs, while the declared 1e24
+case passes. All 19 coordinates in the finest baseline band round to one
+binary64 value. The smallest reported exit lower bound is 3, above 2.2.
+Matching d6_global_axis code/writing folders contain the executed six-cell
+notebook, article/LaTeX exports, eight CSV datasets, two summary/bound JSON
+files, three PNG/SVG figures, parameters, source/review notes, and validation.
+Ten component checks and all 102 project scientific checks passed. Degree,
+precision, and pressure-input sensitivity are recorded separately.
+The amplitude envelope is analytic; inner source/shear/exit results are
+sampled numerical evidence. Uniform inner remainders and between-sample
+bounds remain unestablished. No joined profile or first q-power correction
+has been computed.
 
 Outputs:
 - A reproducible comparison of the base field with at least the first implementable correction stage.
@@ -353,7 +369,7 @@ Progress record
 
 Continuation checkpoint
 -----------------------
-- Active deliverable: D6 global axis-amplitude and exit conditions; stages A-C are complete within their declared scopes. The full PDE comparison remains incomplete.
+- Active deliverable: D6 inner/annular continuation; stages A-D are complete within their declared scopes. Stage D supplies an analytic amplitude bound and targeted numerical exit checks. The full PDE comparison remains incomplete.
 - D2 complete: full build and article/animation checks passed; see its validation and review records.
 - D3 complete for the explicit exterior: ten checks, six notebook code cells, three figures, four CSV datasets, and article exports passed. Full inner/annular assembly remains outside the evaluated example.
 - D4 complete: ten checks, six notebook code cells, three figures, six CSV datasets, HTML and LaTeX exports passed. Review notes record scope and rendering limits.
@@ -361,9 +377,10 @@ Continuation checkpoint
 - D6 stage A complete: seven checks, six notebook code cells, three figures, six CSV datasets, article exports and source/review/implementation notes. Full order-one PDE residual improvement still requires an assembled leading inner/annular profile and its first inner correction.
 - D6 stage B complete: eight checks, six notebook code cells, three figures, four CSV datasets, article exports and source/review notes. Local leading-inner convergence is validated; B.2 fails for the declared test data. All 83 scientific checks passed across the project.
 - D6 stage C complete: source-defined ideal-schedule pressure, local inner handoff and a sufficient B.2 bound; nine component checks, six notebook code cells, three figures, seven CSV datasets, article exports and source/review notes. All 92 project scientific checks passed. Stage B was rebuilt with its original checks and the new article link.
+- D6 stage D complete for the stated component: logarithmic amplitude and analytic complex-rectangle B.16 envelope; sampled B.17-B.19 checks at 51 eta coordinates and a targeted scale/precision study. Ten component checks and all 102 project tests passed. Six notebook cells, eight CSV datasets, three PNG/SVG figures, article exports, and source/review/continuation notes are in d6_global_axis. Uniform inner/exit certification remains open.
 - D7 complete for the isolated moment operator: seven checks, six notebook code cells, three figures, three CSV datasets, article exports, and research decision. The full D1-D7 scientific suite passed 59 checks. D8 is deferred pending a specific PDE question.
 - D9 complete: eight checks, six notebook code cells, four figures, five CSV datasets, article exports, and physical-model selection. Missing actual gradients, phase wavelengths, and liquid relaxation are explicitly recorded.
 - D10 complete for the selected stationary comparison: eight checks, six notebook cells, four figures, five CSV datasets, article exports, and a research decision. All 75 scientific checks passed across the project. D11 is deferred pending an original supported result.
-- Next: address a global logarithmic axis-amplitude representation and the complex-neighborhood bound B.16, followed by the inner exit inequality B.19 over eta in [-1,1]. The current local handoff's C=1e4 is not a globally admissible amplitude choice. writing/d6_axis_pressure/global-axis-next-step.md specifies this next component. Outer hierarchy/moment/stress checks, annular joining and the first correction remain separate later dependencies.
+- Next: quantify inner convergence and exit margins on the broad, chi-transition and pressure-dependent patches; control interpolation and radial remainder before making a uniform assertion. Proceed with a bounded numerical annular-continuation experiment using explicit matching constants and reserved support intervals. Full proof formalization is not a prerequisite for numerical work. writing/d6_global_axis/continuation-next-step.md separates these scopes and the remaining outer hierarchy/moment/stress checks, joined-profile assembly and first correction.
 - Authorization: continue ordered work without requesting approval for routine local implementation. Keep code and writing separate; do not publish, submit, message others, commit, or push without authorization.
 - This file is a durable checkpoint, not a scheduled background job. Credit refills do not themselves trigger a new run here.

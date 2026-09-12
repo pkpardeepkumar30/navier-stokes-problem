@@ -1,0 +1,15 @@
+test_centered_jet_values_against_polynomial_derivatives (test_axis_bounds.AxisBoundsChecks.test_centered_jet_values_against_polynomial_derivatives) ... ok
+test_exact_rectangle_bound_and_upward_rounding (test_axis_bounds.AxisBoundsChecks.test_exact_rectangle_bound_and_upward_rounding) ... ok
+test_global_and_transition_samples (test_axis_bounds.AxisBoundsChecks.test_global_and_transition_samples) ... ok
+test_insufficient_scale_failure_survives_refinement (test_axis_bounds.AxisBoundsChecks.test_insufficient_scale_failure_survives_refinement) ... ok
+test_invalid_logarithm_and_bound (test_axis_bounds.AxisBoundsChecks.test_invalid_logarithm_and_bound) ... ok
+test_log_input_matches_moderate_original_amplitude (test_axis_bounds.AxisBoundsChecks.test_log_input_matches_moderate_original_amplitude) ... ok
+test_logarithmic_amplitude_retains_precision (test_axis_bounds.AxisBoundsChecks.test_logarithmic_amplitude_retains_precision) ... ok
+test_primitive_against_independent_split_quadrature (test_axis_bounds.AxisBoundsChecks.test_primitive_against_independent_split_quadrature) ... ok
+test_repaired_critical_band_and_pressure_sensitivity (test_axis_bounds.AxisBoundsChecks.test_repaired_critical_band_and_pressure_sensitivity) ... ok
+test_shear_diagnostics_against_independent_radial_difference (test_axis_bounds.AxisBoundsChecks.test_shear_diagnostics_against_independent_radial_difference) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 16.789s
+
+OK

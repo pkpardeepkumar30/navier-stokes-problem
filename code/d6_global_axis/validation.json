@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "study": "d6d",
+  "python": "3.13.0",
+  "platform": "Windows",
+  "rendered_formats": [
+    "html",
+    "latex"
+  ],
+  "scientific_checks": "passed; see validation-tests.txt",
+  "notebook": {
+    "fresh_kernel": true,
+    "executed_code_cells": 6,
+    "error_outputs": 0
+  },
+  "quarto": "1.10.18",
+  "html_checks": "figures embedded; inline Python evaluated",
+  "artifact_checks": {
+    "embedded_figures": 3,
+    "local_links_resolve": true,
+    "latex_figure_paths_resolve": true,
+    "pdf_compiled": false
+  },
+  "article_source_sha256": "54b0070c8bb1c8780c6e78f551a2e7eb21e04aebd23f398855f93249bc74e24f",
+  "dependencies": {
+    "numpy": "2.5.3",
+    "matplotlib": "3.11.1",
+    "sympy": "1.14.0",
+    "scipy": "1.18.1",
+    "mpmath": "1.3.0",
+    "Pillow": "12.3.0",
+    "nbformat": "5.11.1",
+    "nbclient": "0.11.0",
+    "nbconvert": "7.17.1",
+    "ipykernel": "7.3.0",
+    "pypdf": "6.18.0",
+    "PyYAML": "6.0.3"
+  },
+  "parameters_sha256": "dac166f42b2974d1055ea943519cee82e48589e754aa33ca82ea588093b2163c",
+  "elapsed_seconds": 375.613,
+  "editorial_rerender": {
+    "reason": "Define parameters and identify the convex-integration connection as a conceptual comparison",
+    "rendered_formats": [
+      "html",
+      "latex"
+    ],
+    "article_links_figures_and_inline_code_rechecked": true,
+    "scientific_and_notebook_checks": "retained from the completed build; equations and numerical inputs unchanged; denominator-bound metadata field renamed and project tests repeated",
+    "verify_only_after_completed_renders": true,
+    "elapsed_seconds": 0.051
+  }
+}

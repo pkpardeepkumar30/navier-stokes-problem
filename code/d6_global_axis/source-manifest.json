@@ -1,0 +1,23 @@
+{
+  "scope": "A sufficient complex-neighborhood amplitude envelope and sampled leading-inner inequalities",
+  "sources": [
+    {
+      "title": "OpenAI Navier-Stokes paper",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "accessed": "2026-09-12",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "locators": [
+        "Appendix B.1, axis data and B.2, pp.144-145",
+        "Equations B.13-B.16, pp.147-148",
+        "Equations B.17-B.19 and their estimates, pp.148-150",
+        "Lemma A.5 / A.21, ideal-schedule pressure input",
+        "Introduction pp.2-5 and Sections 7-9, oscillatory mechanism context"
+      ],
+      "visual_review": "Rendered p.149 inspected for B.19; p.147 inspected during the earlier leading-inner source audit",
+      "local_cache": "code/.cache/sources/navier-stokes.pdf"
+    }
+  ],
+  "new_derivation": "Rational rectangle envelope for B.16, documented in writing/d6_global_axis/source-notes.md",
+  "pressure_input": "Same ideal schedule and finite quadrature implementation as D6 stage C",
+  "qualification": "Analytic amplitude bound; numerical inner/exit samples. No uniform inner remainder, full outer hierarchy, joined profile, or first q-power correction."
+}

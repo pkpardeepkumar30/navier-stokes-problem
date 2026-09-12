@@ -1,0 +1,3 @@
+Lambda_over_P_squared,scaled_offset,low_degree,high_degree,low_digits,high_digits,scaled_p1_low,scaled_p1_high,scaled_p1_relative_change,Sq_margin_absolute_change
+1e+16,0.5,12,18,65,90,-611052.4968396937,-611052.4968396937,7.701529618224443e-51,1.376597259225361e-44
+1e+24,20,12,18,65,90,11.47508712030517,11.47508712030517,9.018339894869434e-44,5.286626363171304e-49

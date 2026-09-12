@@ -27,6 +27,7 @@ The first study evaluates an anchored scaling surrogate, not a CFD solution. Wit
 | D6 stage A: finite moment correction | [Article](writing/d6_moment_correction/article.html) | [Notebook](code/d6_moment_correction/study.ipynb) | Stage A complete; full PDE comparison pending |
 | D6 stage B: leading inner profile | [Article](writing/d6_inner_profile/article.html) | [Notebook](code/d6_inner_profile/study.ipynb) | Local engine validated; source pressure supplied in stage C |
 | D6 stage C: source axis pressure | [Article](writing/d6_axis_pressure/article.html) | [Notebook](code/d6_axis_pressure/study.ipynb) | Ideal-schedule pressure and local handoff; global construction pending |
+| D6 stage D: axis amplitude and inner exit | [Article](writing/d6_global_axis/article.html) | [Notebook](code/d6_global_axis/study.ipynb) | Analytic amplitude bound and sampled exit checks; uniform inner control pending |
 | D7: conditioning and retained precision | [Article](writing/d7_conditioning/article.html) | [Notebook](code/d7_conditioning/study.ipynb) | Complete for the isolated moment operator |
 | D9: physical regime map | [Article](writing/d9_regime_map/article.html) | [Notebook](code/d9_regime_map/study.ipynb) | Complete for declared scale scenarios |
 | D10: compressible vortex equilibrium | [Article](writing/d10_compressible_vortex/article.html) | [Notebook](code/d10_compressible_vortex/study.ipynb) | Complete for the stationary Euler comparison |
@@ -47,6 +48,7 @@ code/
   d6_moment_correction/  finite correction substep and dependency ledger
   d6_inner_profile/  local leading-inner solver and convergence studies
   d6_axis_pressure/  ideal-schedule integral and inner-solver handoff
+  d6_global_axis/    complex amplitude bound and targeted exit checks
   d7_conditioning/   precision and sensitivity experiments
   d9_regime_map/     gas/liquid screens and scale audit
   d10_compressible_vortex/  density, pressure, and radial convergence
@@ -60,6 +62,7 @@ writing/
   d6_moment_correction/  article, figures, and implementation ledger
   d6_inner_profile/  leading-inner article, figures, and scope audit
   d6_axis_pressure/  pressure article, figures, and source audit
+  d6_global_axis/    amplitude/exit article, figures, and bound derivation
   d7_conditioning/   article, figures, and research decision
   d9_regime_map/     article, figures, and model selection
   d10_compressible_vortex/  equilibrium comparison and research decision
