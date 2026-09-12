@@ -1,0 +1,23 @@
+{
+  "peak_time": 3.9949997622309743,
+  "peak_speed_ratio": 3.6326140232901247,
+  "peak_energy_ratio": 13.195884642204067,
+  "turn_time": 4.0,
+  "shortest_wavelength": 0.3919343310572741,
+  "longest_wavelength": 6.283185307179586,
+  "final_speed_ratio": 0.0002268402112030213,
+  "final_vorticity_ratio": 0.0008819869188235046,
+  "time_sample_spacing": 0.01,
+  "finest_rk4_amplitude_error": 1.3199634199207448e-08,
+  "finest_rk4_constraint_defect": 2.5642754586385763e-10,
+  "refinement_error_ratios": [
+    17.147823490099483,
+    17.31187414920577,
+    16.760825401248624,
+    16.393254457589567
+  ],
+  "integrated_energy_budget_error": 3.599370801410373e-12,
+  "snapshot_minimum_axis_samples_per_wavelength": 32.0,
+  "paper_pulse_reconstructed": false,
+  "parameters_sha256": "3411cfd55ff8d88d9aa0e903b04e81687ee460b8a4da019995a8c1fe3407d747"
+}

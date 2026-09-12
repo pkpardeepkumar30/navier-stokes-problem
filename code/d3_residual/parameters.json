@@ -1,0 +1,26 @@
+{
+  "study": "D3: momentum residual in the explicit heat exterior and a Gaussian toy",
+  "units": "dimensionless; viscosity one unless explicitly changed",
+  "heat_exterior": {
+    "h": 0.000001,
+    "amplitude": 1.0,
+    "quadrature_order": 64,
+    "interpretation": "normalized Eq. (4.29) family on positive radius; matching boundary and full-profile parameters not constructed"
+  },
+  "gaussian": {"h": 0.0, "a0": 1.0, "b0": 2.0, "u0": 1.0, "density": 1.0},
+  "reference": {"tau": 0.1, "xi": 16.0, "gaussian_R": 1.0, "gaussian_Z": 0.5},
+  "scan": {"time_min": 1e-8, "samples": 81, "xi_min": 4.0, "xi_max": 256.0},
+  "quadrature": {"orders": [8, 12, 16, 24, 32, 48, 64, 96, 128], "test_zeta": 0.5, "reference_digits": 60},
+  "finite_difference": {"radius": 2.1, "tau": 0.12, "relative_step_max": 0.1, "relative_step_min": 1e-8},
+  "scope": {
+    "full_background_assembled": false,
+    "inner_and_annular_profiles_evaluated": false,
+    "viscosity": 1.0,
+    "pressure_normalization": "p approaches zero at radial infinity",
+    "residual_sign": "partial_t u + (u dot grad)u - viscosity*Laplacian(u) + grad(p)",
+    "coordinate_note": "xi=r^2/(2*tau) for midplane markers; the paper's s=r^2/2 is distinct from the D2 time ratio",
+    "normalized_metric": "abs(component residual) / sum(abs(component terms)); inactive all-zero components recorded as zero",
+    "absolute_norms": "pointwise Euclidean force and Gaussian L2 force over 0<r<8a, |z|<8b",
+    "no_proof_claim": "finite quadrature and pointwise checks do not prove smooth extension of a full force"
+  }
+}

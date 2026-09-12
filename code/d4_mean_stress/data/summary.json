@@ -1,0 +1,25 @@
+{
+  "grid_size": 128,
+  "constant_mean_velocity_max": 4.319868030996932e-17,
+  "constant_stress_relative_error": 1.0229607239180594e-14,
+  "constant_divergence_max": 8.810729923425242e-13,
+  "envelope_mean_velocity_max": 3.7470027081099033e-16,
+  "envelope_stress_max_error": 1.3322676295501878e-15,
+  "envelope_divergence_max": 7.540634783254063e-13,
+  "envelope_force_max_error": 4.313216450668733e-14,
+  "transport_force_max_error": 4.1022740759899534e-14,
+  "envelope_covariance_min_eigenvalue": 0.0,
+  "projected_force_max": 0.4273690888063061,
+  "net_mean_force_max": 2.5478751053409354e-17,
+  "analytic_finite_frequency_correction_max": 0.0012500000000000002,
+  "paper_stress_reconstructed": false,
+  "time_integration": false,
+  "parameters_sha256": "2cb2ad708a2fe091911ba10e428ca2e5b661d4dc52b2d6e68841563298c7ad69",
+  "coarsest_grid_stress_relative_error": 0.9486832980505139,
+  "frequency_scan_correction_ratios": [
+    3.999999999999667,
+    4.000000000001155,
+    3.999999999998579,
+    3.9999999999928946
+  ]
+}

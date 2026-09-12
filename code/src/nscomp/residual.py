@@ -140,3 +140,18 @@ def gaussian_terms(radius, z, tau, model=None, viscosity=1.0):
     return dict(time=time, transport=transport, pressure=pressure,
                 minus_viscosity=viscous, residual=residual,
                 component_scale=scale, component_normalized=normalized)
+
+
+def gaussian_force_l2(tau, model=None, viscosity=1.0, order=64, cutoff=8):
+    """L2 norm by cylindrical quadrature on 0<r<cutoff*a, |z|<cutoff*b."""
+    model = model or CoreEnergyScaling()
+    if np.ndim(tau) != 0:
+        raise ValueError("L2 quadrature takes scalar tau")
+    nodes, weights = np.polynomial.legendre.leggauss(order)
+    a, b, U = model.widths_and_speed(tau)
+    r = a*cutoff*(nodes+1)/2
+    z = b*cutoff*nodes
+    force = gaussian_terms(r[:,None], z[None,:], tau, model, viscosity)["residual"]
+    jacobian = 2*np.pi*r[:,None]
+    measure = jacobian * (weights*a*cutoff/2)[:,None] * (weights*b*cutoff)[None,:]
+    return float(np.sqrt(np.sum(np.sum(force*force,axis=-1)*measure)))

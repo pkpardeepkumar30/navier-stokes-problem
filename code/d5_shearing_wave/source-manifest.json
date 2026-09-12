@@ -1,0 +1,34 @@
+{
+  "scope": "D5 exact planar Kelvin-wave specialization, not a reconstructed OpenAI pulse",
+  "sources": [
+    {
+      "title": "Plane shearing waves of arbitrary form: exact solutions of the Navier-Stokes equations",
+      "authors": [
+        "Nishant K. Singh",
+        "S. Sridhar"
+      ],
+      "url": "https://arxiv.org/pdf/1101.5507v2",
+      "version": "v2, 12 October 2017",
+      "accessed": "2026-09-11",
+      "sha256": "94d326350eec011608524ba52078b4f67a42dc21854804b836a7fdc47c2a5321",
+      "bytes": 185558,
+      "pages": 6,
+      "cached_path": "code/.cache/sources/singh-sridhar-1101.5507v2.pdf",
+      "locators": [
+        "Equations (1)-(7), pages 1-2"
+      ],
+      "source_page_visually_checked": "p.2 rendered with pdftoppm"
+    },
+    {
+      "title": "Finite time blowup for Navier-Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "accessed": "2026-09-11",
+      "locators": [
+        "Section 2.2",
+        "Equations (7.5),(7.22)",
+        "Reference 19"
+      ]
+    }
+  ]
+}

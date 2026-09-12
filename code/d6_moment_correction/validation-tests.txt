@@ -1,0 +1,12 @@
+test_all_five_physical_moment_changes (test_moments.MomentChecks.test_all_five_physical_moment_changes) ... ok
+test_bump_normalization_and_support (test_moments.MomentChecks.test_bump_normalization_and_support) ... ok
+test_distinct_powers_can_be_ill_conditioned (test_moments.MomentChecks.test_distinct_powers_can_be_ill_conditioned) ... ok
+test_invalid_degenerate_setup (test_moments.MomentChecks.test_invalid_degenerate_setup) ... ok
+test_linear_response_to_discrepancies (test_moments.MomentChecks.test_linear_response_to_discrepancies) ... ok
+test_powers_against_adaptive_quadrature (test_moments.MomentChecks.test_powers_against_adaptive_quadrature) ... ok
+test_reference_moments_cancel (test_moments.MomentChecks.test_reference_moments_cancel) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.409s
+
+OK

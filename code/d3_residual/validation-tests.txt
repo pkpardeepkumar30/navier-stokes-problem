@@ -1,0 +1,15 @@
+test_cartesian_divergence_of_axisymmetric_swirl (test_residual.ResidualChecks.test_cartesian_divergence_of_axisymmetric_swirl) ... ok
+test_gaussian_force_growth_at_fixed_similarity_marker (test_residual.ResidualChecks.test_gaussian_force_growth_at_fixed_similarity_marker) ... ok
+test_gaussian_force_l2_scaling_and_quadrature (test_residual.ResidualChecks.test_gaussian_force_l2_scaling_and_quadrature) ... ok
+test_gaussian_time_laplacian_and_pressure (test_residual.ResidualChecks.test_gaussian_time_laplacian_and_pressure) ... ok
+test_h_zero_limit_is_steady_inverse_radius (test_residual.ResidualChecks.test_h_zero_limit_is_steady_inverse_radius) ... ok
+test_heat_residual_is_small_component_by_component (test_residual.ResidualChecks.test_heat_residual_is_small_component_by_component) ... ok
+test_invalid_exterior_domain (test_residual.ResidualChecks.test_invalid_exterior_domain) ... ok
+test_pressure_integral_derivative (test_residual.ResidualChecks.test_pressure_integral_derivative) ... ok
+test_profile_against_high_precision_integral (test_residual.ResidualChecks.test_profile_against_high_precision_integral) ... ok
+test_radial_and_time_derivatives_independently (test_residual.ResidualChecks.test_radial_and_time_derivatives_independently) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.872s
+
+OK

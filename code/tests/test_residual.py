@@ -2,11 +2,18 @@
 import unittest
 import numpy as np
 import mpmath as mp
+import sympy as sp
 from nscomp.energy import CoreEnergyScaling, gaussian_swirl
-from nscomp.residual import HeatExterior, gaussian_pressure, gaussian_terms
+from nscomp.residual import HeatExterior, gaussian_pressure, gaussian_terms, gaussian_force_l2
 
 
 class ResidualChecks(unittest.TestCase):
+    def test_cartesian_divergence_of_axisymmetric_swirl(self):
+        x,y,z,t=sp.symbols("x y z t",real=True)
+        factor=sp.Function("F")(x*x+y*y,z,t)
+        divergence=sp.diff(-y*factor,x)+sp.diff(x*factor,y)
+        self.assertEqual(sp.simplify(divergence),0)
+
     def test_profile_against_high_precision_integral(self):
         mp.mp.dps = 45
         for h in (1e-6, 0.005):
@@ -93,6 +100,12 @@ class ResidualChecks(unittest.TestCase):
                 HeatExterior().velocity(r,1)
         with self.assertRaises(ValueError):
             HeatExterior(h=-1)
+
+    def test_gaussian_force_l2_scaling_and_quadrature(self):
+        reference = gaussian_force_l2(1, order=80)
+        for tau in (1, 1e-3, 1e-6):
+            norm = gaussian_force_l2(tau, order=64)
+            self.assertAlmostEqual(norm/(reference*tau**(-0.75)), 1, delta=3e-12)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,26 @@
+{
+  "study": "D6 stage A: the source-defined five-moment repair",
+  "units": "dimensionless profile coordinates R=sqrt(2X); moment components retain their separate weight conventions",
+  "lambda": 0.1,
+  "patch_amplitude": 1.0,
+  "eta": 0.0,
+  "u_bump_centers": [2.0, 3.0],
+  "e_bump_centers": [4.0, 5.0, 6.0],
+  "bump_halfwidth": 0.12,
+  "quadrature_order": 96,
+  "reference_order": 384,
+  "d_u": [1.0, -0.4],
+  "d_e": [0.3, -0.2, 0.1],
+  "quadrature_orders": [12, 24, 48, 96, 192],
+  "lambda_scan": [0.1, 0.03, 0.01, 0.003, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001, 0.00000001],
+  "scope": {
+    "source_step": "Equations (5.14)-(5.16), Lemma 5.2; positive-order signed profile repair",
+    "discrepancies": "prescribed test inputs, not moments computed from an assembled inner solution",
+    "patch": "representative ordered disjoint bumps on positive radii; not located in the actual uncomputed paper annulus",
+    "pressure_shape": "reserved-patch E0=e_star*f(eta)*R^(-1-2lambda), U0=0, f=1/(1+eta^2)",
+    "pde_residual_evaluated": false,
+    "full_order_one_correction": false,
+    "h": "not needed for the isolated finite moment solve; full hierarchy not assigned",
+    "conditioning": "2-norm matrix condition number in the stated dimensionless coordinates; row-equilibrated condition exported too"
+  }
+}

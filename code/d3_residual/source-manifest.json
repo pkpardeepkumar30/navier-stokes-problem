@@ -1,0 +1,24 @@
+{
+  "scope": "D3 explicit exterior and residual audit, not a full-profile reconstruction",
+  "sources": [
+    {
+      "id": "openai-ns",
+      "title": "Finite time blowup for Navier-Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "accessed": "2026-09-11",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "bytes": 2959204,
+      "locators": [
+        "Equation (3.1) p.6",
+        "Equations (4.2)-(4.7) pp.25-26",
+        "Equations (4.25),(4.29) p.33",
+        "Appendix B pp.144-145"
+      ],
+      "cached_path": "code/.cache/sources/navier-stokes.pdf",
+      "pages": 166,
+      "creation_date_metadata": "D:20260908190626Z"
+    }
+  ],
+  "source_page_visually_checked": "PDF p.33 rendered with pdftoppm",
+  "toy_models": "Derived within this study; no external profile data"
+}

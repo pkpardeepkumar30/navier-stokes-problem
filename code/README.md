@@ -1,10 +1,10 @@
 # Computational studies
 
-Select a deliverable with --study d1 or --study d2 when running code/build.py.
+Select a deliverable with --study d1 through --study d6 when running code/build.py.
 The default remains D1. D2's full build also regenerates its offline animation;
 see [D2 reproduction notes](d2_finite_energy/README.md).
 
-Run commands from the repository root. The initial implementation uses Python 3.13; the package declares Python 3.11 or newer. The exact verified environment is in `requirements-lock.txt` and D1's `validation.json`.
+Run commands from the repository root. The implementation uses Python 3.13; the package declares Python 3.11 or newer. The exact environment is in `requirements-lock.txt` and each study's `validation.json`.
 
 ```powershell
 py -3.13 -m venv code/.venv
@@ -46,7 +46,7 @@ For only the exported D1 data and figures:
 
 Add future studies as `d2_<topic>/`, `d3_<topic>/`, etc. Put a routine in `src/nscomp/` only when it has a clear reusable responsibility; keep study-specific parameters and outputs with the study. Do not create top-level folders for each new post.
 
-The notebook and article use the same numerical functions. Figures are generated in `writing/d1_core_size/figures/`, so each written piece carries its own publication assets. CSV numeric values use SI units unless the column explicitly says otherwise.
+The notebook and article use the same numerical functions. Figures are generated in the matching `writing/dN_<topic>/figures/` folder, so each written piece carries its own publication assets. D1 uses SI values; later installments use explicitly dimensionless examples. Consult each study's parameter file for units and scope.
 
 ## Changing the experiment
 

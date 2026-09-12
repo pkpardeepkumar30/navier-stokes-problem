@@ -1,0 +1,22 @@
+{
+  "study": "D4: zero-mean fluctuations, mean momentum flux, and mean force",
+  "units": "dimensionless Cartesian periodic examples; no physical calibration",
+  "domain": {"length": 6.283185307179586, "grid_size": 128, "endpoint": false},
+  "constant": {"lambda_plus": 3.0, "lambda_minus": 1.0, "n": 8, "m": 9},
+  "envelope": {"epsilon": 0.4, "k": 8, "slope": 1},
+  "resolution_scan": [16, 20, 24, 32, 48, 64, 96, 128],
+  "frequency_scan": [2, 4, 8, 16, 32],
+  "frequency_scan_grid": 256,
+  "scope": {
+    "constant_average": "normalized integral over the full 2pi by 2pi torus",
+    "envelope_average": "normalized x integral at fixed y",
+    "stress_sign": "Q_ij = mean(w_i*w_j), positive momentum covariance per unit density",
+    "mean_force_sign": "F_i = -sum_j partial_j Q_ij on the right side of the mean momentum equation",
+    "pressure_convention": "pressure divided by density; p=-a(y)^2/2 cancels the vertical wave force",
+    "time_integration": false,
+    "paper_stress_reconstruction": false,
+    "paper_cone_evaluated": false,
+    "spatial_derivatives": "Fourier differentiation on endpoint-excluded periodic grids; even-grid Nyquist derivative set to zero",
+    "errors": "float64 max component absolute errors unless explicitly marked Frobenius-relative; no display floor in exported data"
+  }
+}

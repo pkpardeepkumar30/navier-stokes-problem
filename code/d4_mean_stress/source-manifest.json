@@ -1,0 +1,22 @@
+{
+  "scope": "D4 periodic covariance toys and source admissibility map",
+  "sources": [
+    {
+      "id": "openai-ns",
+      "title": "Finite time blowup for Navier-Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "accessed": "2026-09-11",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "cached_path": "code/.cache/sources/navier-stokes.pdf",
+      "pages": 166,
+      "locators": [
+        "Section 2.2 pp.5-6",
+        "Section 3.2 pp.9-10",
+        "Equations (4.20),(4.26) pp.30-33",
+        "Proposition 7.5 / Equations (7.23)-(7.26) p.82"
+      ]
+    }
+  ],
+  "source_page_visually_checked": "PDF p.82 rendered with pdftoppm",
+  "toy_models": "Derived within the study; no fitted paper fields"
+}

@@ -1,0 +1,35 @@
+{
+  "scope": "D6 stage A: isolated finite moment repair with prescribed discrepancies",
+  "sources": [
+    {
+      "title": "Finite time blowup for Navier-Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "accessed": "2026-09-11",
+      "locators": [
+        "Eqs. (5.1)-(5.7), pp.46-48",
+        "Eqs. (5.9)-(5.11), p.49",
+        "Eqs. (5.14)-(5.16), pp.51-52",
+        "Appendix B, pp.144-145"
+      ],
+      "source_page_visually_checked": "p.52 rendered with pdftoppm"
+    },
+    {
+      "title": "NavierStokesAndEuler repository inventory",
+      "url": "https://github.com/openai/NavierStokesAndEuler/tree/f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+      "commit": "f9e8bc5b38b6e212696e8a30e3e91517af887bbd",
+      "accessed": "2026-09-11",
+      "file_count": 2669,
+      "tree_truncated": false,
+      "extensions_inspected": [
+        ".py",
+        ".jl",
+        ".csv",
+        ".npz",
+        ".ipynb"
+      ],
+      "matching_files": 0,
+      "formal_proof_review_performed": false
+    }
+  ]
+}

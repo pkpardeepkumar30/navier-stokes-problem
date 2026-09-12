@@ -1,0 +1,202 @@
+---
+title: "What force does a collapsing vortex require?"
+subtitle: "Reading a Navier–Stokes residual as a balance of accelerations"
+date: 2026-09-11
+lang: en
+jupyter: python3
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    theme: cosmo
+    css: ../d1_core_size/article.css
+  latex:
+    documentclass: article
+    fontsize: 11pt
+    geometry: margin=25mm
+execute:
+  echo: false
+  warning: false
+  error: false
+---
+
+```{python}
+#| label: setup
+from nscomp.d3 import load_parameters, models, generate, term_table
+p = load_parameters()
+exterior, toy = models(p)
+summary = generate()
+```
+
+**Prescribing a shrinking, accelerating vortex also prescribes the force needed to sustain it.** The Navier–Stokes momentum residual tells us what that force would have to be. A velocity field that looks plausible, is divergence free, and has finite energy can still require a force that becomes unbounded.
+
+That is the missing question after the [previous article's energy calculation](../d2_finite_energy/article.html). There we chose a smooth vortex whose peak grows as its width shrinks. We showed how its energy can decrease. We did not ask whether the acceleration, pressure, and viscosity actually balance with an acceptable external force.
+
+This distinction matters in the proposed OpenAI construction. The paper seeks a velocity that becomes unbounded while the required external force remains smooth through the singular time. Its leading background alone leaves a residual that must be treated by additional corrections. [OpenAI, Section 2 and Equation (3.1)](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+
+We will calculate the individual terms for two explicit fields: the paper's outer heat-flow formula, where the momentum terms cancel, and our prescribed Gaussian vortex, where they do not. This evaluates a concrete part of the paper's flow and an educational comparison. The joined inner core and annulus are not reconstructed in this installment.
+
+## A residual is a force balance you can inspect
+
+Imagine a one-kilogram cart accelerating at three metres per second squared. If the forces already accounted for supply only two newtons, one newton remains to be explained. A residual plays the same role in a differential equation.
+
+For incompressible Navier–Stokes, write
+
+$$
+\mathbf R(\mathbf u,p)=
+\underbrace{\partial_t\mathbf u}_{\text{local acceleration}}
++\underbrace{(\mathbf u\cdot\nabla)\mathbf u}_{\text{transport}}
+-\underbrace{\nu\Delta\mathbf u}_{\text{viscous term}}
++\underbrace{\nabla p}_{\text{pressure term}}.
+$$
+
+Pressure here is divided by the constant density. Each term has the units of acceleration in a dimensional formulation; $\mathbf R$ is the external force **per unit mass** required by the chosen velocity and pressure.
+
+For a specified force $\mathbf f$, the momentum equation says $\mathbf R=\mathbf f$. When checking that equation, the defect is $\mathbf R-\mathbf f$. When no external force is intended, the residual should vanish.
+
+Incompressibility is a separate condition, $\nabla\cdot\mathbf u=0$. Satisfying it does not make the momentum residual vanish.
+
+## A circular flow still has transport acceleration
+
+Both examples have only an azimuthal velocity,
+
+$$
+\mathbf u=u_\theta(r,z,t)\,\mathbf e_\theta.
+$$
+
+The cylindrical components are independent of angle. Nevertheless, a particle moving around a circle changes its velocity direction. Its transport acceleration has the radial component
+
+$$
+\big[(\mathbf u\cdot\nabla)\mathbf u\big]_r
+=-\frac{u_\theta^2}{r}.
+$$
+
+This is the familiar inward centripetal acceleration. Treating the cylindrical components as if they were Cartesian scalar fields would miss it.
+
+We choose pressure to provide the corresponding balance:
+
+$$
+\partial_r p=\frac{u_\theta^2}{r},
+\qquad
+p(r,z,t)=-\int_r^\infty\frac{u_\theta(s,z,t)^2}{s}\,ds.
+$$
+
+The radial transport and pressure terms therefore cancel. The other directions still need checking. In particular, the angular component of the vector Laplacian is
+
+$$
+(\Delta\mathbf u)_\theta
+=\partial_{rr}u_\theta+\frac1r\partial_r u_\theta
+-\frac{u_\theta}{r^2}+\partial_{zz}u_\theta.
+$$
+
+The $-u_\theta/r^2$ term is another geometric contribution that matters.
+
+## Two fields, two different balances
+
+### The explicit outer flow from the paper
+
+Equation (4.29) provides an outer swirl that is independent of height and solves the radial heat equation at viscosity one:
+
+$$
+\partial_t u_\theta
+=\partial_{rr}u_\theta+\frac1r\partial_r u_\theta-\frac{u_\theta}{r^2}.
+$$
+
+For this field, local angular acceleration balances viscosity. Its pressure is independent of height as well, so there is no axial pressure force. Together with the radial balance above, these identities give **zero momentum residual** on the exterior domain. [OpenAI, Theorem 4.6(v), page 33](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+
+We evaluate that explicit family with normalization $c_\infty=1$ and $h=10^{-6}$. These choices do not assemble a full paper profile: its matching boundary and other parameter constraints remain uncalibrated. The formula is used only at positive radius. Continuing it to the axis would produce a singular field, and its independence of height prevents finite whole-space energy.
+
+### The smooth Gaussian from the previous article
+
+Our toy swirl is
+
+$$
+u_\theta=U R\exp\left(\frac{1-R^2-Z^2}{2}\right),
+\qquad R=\frac r a,\quad Z=\frac z b.
+$$
+
+In the $h=0$ limiting example, $a=\sqrt{\tau}$, $b=2\sqrt{\tau}$, and $U=\tau^{-1/2}$, with $\tau=1-t$. Its pressure integral can be evaluated explicitly:
+
+$$
+p=-\frac{U^2}{2}\exp(1-R^2-Z^2).
+$$
+
+This pressure cancels the radial acceleration. But the angular time derivative does not cancel the viscous term, and the pressure varies with height. There is both an angular and, away from the midplane, an axial force left over.
+
+![The exterior has equal and opposite radial transport and pressure terms, and equal and opposite angular time and viscous terms. The Gaussian toy has angular terms of the same sign in the residual, so a nonzero force remains. Each panel has its own vertical scale and represents its stated sample location.](figures/01_momentum_terms.png){#fig-terms fig-alt="Signed acceleration terms cancel in the exterior's radial and angular balances, while the Gaussian toy's angular terms add."}
+
+The following table makes the signs and magnitudes explicit. We use $\tau=0.1$. The exterior sample is at $r^2/(2\tau)=16$; the Gaussian sample is at $R=1$, $Z=0.5$. These are separate examples, rather than a pointwise comparison of two approximations to the same solution.
+
+```{python}
+#| output: asis
+print(term_table(p))
+```
+
+## The required force can grow faster than the speed
+
+At a fixed similarity location in the Gaussian example, the speed scales as $\tau^{-1/2}$. The angular residual and axial pressure gradient scale as $\tau^{-3/2}$. For the marker used here, the pointwise force magnitude therefore grows by a factor of one thousand whenever the remaining time decreases by a factor of one hundred.
+
+Integrating the squared force over space gives another useful measure. The volume scale is $\tau^{3/2}$, so
+
+$$
+\|\mathbf R\|_{L^2}^2
+\ \text{scales like}\ \tau^{-3}\tau^{3/2}=\tau^{-3/2},
+\qquad
+\|\mathbf R\|_{L^2}\ \text{scales like}\ \tau^{-3/4}.
+$$
+
+The force norm grows even though this toy's kinetic energy decreases. Thus its finite-energy concentration does not produce the smooth external force sought in the paper.
+
+![The left panel shows growth of the Gaussian toy's pointwise force and its L2 norm. The right compares angular residuals relative to the magnitudes of the angular terms. The heat exterior's exact residual is zero; its small computed remainder reflects numerical error.](figures/02_required_force.png){#fig-force fig-alt="The Gaussian force grows as time remaining decreases; the exterior has a near-roundoff relative angular residual while the toy's normalized residual stays of order one."}
+
+The Gaussian integral is evaluated on $0<r<8a$, $|z|<8b$, with quadrature refinement checks. This captures its rapidly decaying force field for the reported calculation. The exterior curve is a pointwise check along shrinking-radius markers; it is not a whole-space energy or force estimate.
+
+## Check the arithmetic before interpreting the cancellation
+
+We report the absolute residual as well as a normalized value. For each cylindrical component $j$, define
+
+$$
+\epsilon_j=
+\frac{|R_j|}
+{|(\partial_t\mathbf u)_j|
++|((\mathbf u\cdot\nabla)\mathbf u)_j|
++|(-\nu\Delta\mathbf u)_j|
++|(\nabla p)_j|}.
+$$
+
+A small value indicates strong cancellation relative to the terms in that component. If every term is zero, we record zero by convention. We keep the components separate because large radial terms could otherwise hide an inaccurate angular balance.
+
+The exterior's profile is evaluated by numerical quadrature. Increasing its order improves the derivative and residual until floating-point error dominates. We compare selected values with 60-digit integration, and independently differentiate the velocity and pressure with respect to physical coordinates. Pressure's radial cancellation is imposed analytically; the derivative of its separately computed integral provides a check on that implementation.
+
+![Increasing quadrature order initially improves the exterior's profile derivative and angular cancellation. In the independent finite-difference check, making the step too small eventually loses accuracy because nearly equal velocity values are subtracted. The small time derivative is more sensitive than the radial derivative.](figures/03_numerical_checks.png){#fig-checks fig-alt="Quadrature errors decrease to a floating-point plateau, while finite-difference errors first improve and then worsen as the step decreases."}
+
+In this run, the largest normalized angular residual along the exterior time scan is approximately **`{python} f'{summary["heat_max_angular_normalized_residual"]:.2g}'`**. A small relative value can coexist with an increasing absolute numerical remainder when the individual terms grow. Both measures are exported in the data.
+
+These checks verify a finite computation against known identities. They do not show that an arbitrary residual and every one of its derivatives extend smoothly through a singular time.
+
+## What this adds to the construction story
+
+The residual gives us a concrete way to ask what a prescribed flow requires. Our Gaussian vortex passes the earlier divergence and energy checks but needs an unbounded force. The explicit heat exterior satisfies its local balances, but it supplies only one part of the full construction.
+
+The paper's next challenge is to join an appropriate inner flow to its exterior and deal with the remaining imbalance in the connecting region. Its oscillatory corrections use averaged velocity products to supply the missing momentum transport. The next installment will explain how a velocity oscillation with zero mean can still have a nonzero mean stress.
+
+The [executed notebook](../../code/d3_residual/study.ipynb), [parameters](../../code/d3_residual/parameters.json), [CSV data](../../code/d3_residual/data/), and [source audit](source-notes.md) record exactly which fields and checks are included.
+
+## Technical note: the exterior formula
+
+To avoid confusing the paper's squared-radius variable with the previous article's time ratio, write $\sigma=r^2/2$ here. Equation (4.29) is
+
+$$
+u_\theta=c_\infty\sigma^{-A}\mathcal H(2\tau/\sigma),
+\qquad A=\frac12+h,
+$$
+
+$$
+\mathcal H(\zeta)=\frac1{\Gamma(1+h)}
+\int_0^\infty e^{-v}v^h(1+\zeta v)^{-h}\,dv.
+$$
+
+Differentiation under the integral gives the needed derivatives. The quadrature uses the weight $e^{-v}v^h$. We evaluate pressure by changing its radial integral to a finite interval. The source notes give the derivative formulas and normalization.
+
+The chosen $h=10^{-6}$ is below the necessary ceiling discussed in D1, but we do not claim it satisfies the full construction's parameter hierarchy. The exterior formula can be studied as an explicit family without asserting that its chosen normalization has been joined to a completed inner profile.

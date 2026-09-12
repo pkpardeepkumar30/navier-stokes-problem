@@ -24,6 +24,11 @@ CODE = ROOT / "code"
 STUDIES = {
     "d1": ("d1_core_size", 3, "test_scaling.py"),
     "d2": ("d2_finite_energy", 4, "test_energy.py"),
+    "d3": ("d3_residual", 3, "test_residual.py"),
+    "d4": ("d4_mean_stress", 3, "test_stress.py"),
+    "d5": ("d5_shearing_wave", 3, "test_shear.py"),
+    "d6": ("d6_moment_correction", 3, "test_moments.py"),
+    "d7": ("d7_conditioning", 3, "test_conditioning.py"),
 }
 sys.path.insert(0, str(CODE / "src"))
 
@@ -143,7 +148,7 @@ def main():
             report["article_source_sha256"] = hashlib.sha256((ARTICLE/"article.qmd").read_bytes()).hexdigest()
         report["dependencies"] = {
             name: importlib.metadata.version(name)
-            for name in ["numpy", "matplotlib", "sympy", "nbformat", "nbclient", "nbconvert", "ipykernel", "pypdf", "PyYAML"]
+            for name in ["numpy", "matplotlib", "sympy", "scipy", "mpmath", "Pillow", "nbformat", "nbclient", "nbconvert", "ipykernel", "pypdf", "PyYAML"]
         }
         report["parameters_sha256"] = hashlib.sha256((STUDY/"parameters.json").read_bytes()).hexdigest()
         # Freeze exact installed dependencies, excluding this editable local package.

@@ -1,0 +1,22 @@
+{
+  "study": "D5: transient amplification and viscous decay of a Kelvin wave",
+  "units": "dimensionless; lengths in L_ref, time in T_ref, speed in L_ref/T_ref, viscosity in L_ref^2/T_ref",
+  "wave": {"shear": 1.0, "viscosity": 0.005, "kx": 1.0, "ky0": 4.0, "initial_speed": 1.0},
+  "time": {"end": 20.0, "samples": 2001},
+  "snapshots": {"times": [0.0, 4.0, 12.0], "domain_length": 6.283185307179586, "grid_size": 256},
+  "refinement_steps": [0.4, 0.2, 0.1, 0.05, 0.025],
+  "scope": {
+    "background": "U=(S*y,0), an unbounded affine Couette flow",
+    "phase": "kx*x+(ky0-S*kx*t)*y",
+    "averages": "uniform phase average; also x average over a full kx period at fixed y",
+    "boundary": "exact unbounded-plane solution; snapshots show a window, not periodic walls in laboratory coordinates",
+    "energy": "perturbation phase-averaged kinetic energy per unit mass; not total whole-space energy",
+    "pressure": "kinematic pressure P(t)*cos(phase), P=2*S*kx*B_y/|k|^2",
+    "heat_reference": "same initial perturbation with zero background shear and the same viscosity",
+    "physical_conversion": "multiply reported wavelength by L_ref for dimensional wavelength; no fluid or physical anchor is assigned",
+    "paper_pulse_reconstructed": false,
+    "spatial_localization": false,
+    "external_seed_force": false,
+    "numerical_time_integration": "independent fixed-step RK4 of the projected two-component amplitude equation"
+  }
+}

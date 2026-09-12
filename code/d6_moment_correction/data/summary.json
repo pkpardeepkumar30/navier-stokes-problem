@@ -1,0 +1,13 @@
+{
+  "maximum_absolute_moment_remainder": 3.8469227803261674e-14,
+  "maximum_relative_moment_remainder": 1.2823075934420558e-13,
+  "baseline_condition_U": 53.656650057855785,
+  "baseline_condition_E": 10937.529592732695,
+  "baseline_max_axial_coefficient": 8.871540288773014,
+  "smallest_lambda": 1e-08,
+  "smallest_lambda_condition_U": 534574257.3717533,
+  "smallest_lambda_relative_moment_remainder": 9.715621945849406e-08,
+  "pde_residual_evaluated": false,
+  "full_order_one_correction": false,
+  "parameters_sha256": "901302090ae15300633922189ff409845e1af134bd4f1c4ff620bf1e15920bb6"
+}

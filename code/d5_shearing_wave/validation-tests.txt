@@ -1,0 +1,13 @@
+test_damping_integral_against_quadrature (test_shear.ShearChecks.test_damping_integral_against_quadrature) ... ok
+test_energy_budget_by_time_differences (test_shear.ShearChecks.test_energy_budget_by_time_differences) ... ok
+test_heat_limit (test_shear.ShearChecks.test_heat_limit) ... ok
+test_incompressibility_and_phase_average (test_shear.ShearChecks.test_incompressibility_and_phase_average) ... ok
+test_inviscid_vorticity_and_peak (test_shear.ShearChecks.test_inviscid_vorticity_and_peak) ... ok
+test_primitive_momentum_with_physical_finite_differences (test_shear.ShearChecks.test_primitive_momentum_with_physical_finite_differences) ... ok
+test_rk4_refinement_and_divergence_constraint (test_shear.ShearChecks.test_rk4_refinement_and_divergence_constraint) ... ok
+test_wavelength_and_late_decay (test_shear.ShearChecks.test_wavelength_and_late_decay) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.045s
+
+OK

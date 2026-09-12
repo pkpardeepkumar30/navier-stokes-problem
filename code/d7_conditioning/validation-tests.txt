@@ -1,0 +1,12 @@
+test_accurate_algorithm_does_not_remove_input_sensitivity (test_conditioning.ConditioningChecks.test_accurate_algorithm_does_not_remove_input_sensitivity) ... ok
+test_more_precision_resolves_original_moment_rows (test_conditioning.ConditioningChecks.test_more_precision_resolves_original_moment_rows) ... ok
+test_reference_precision_and_quadrature_refinement (test_conditioning.ConditioningChecks.test_reference_precision_and_quadrature_refinement) ... ok
+test_rounding_coefficients_changes_physical_moment_error (test_conditioning.ConditioningChecks.test_rounding_coefficients_changes_physical_moment_error) ... ok
+test_small_lambda_accuracy_against_independent_reference (test_conditioning.ConditioningChecks.test_small_lambda_accuracy_against_independent_reference) ... ok
+test_transformation_agrees_when_original_is_resolved (test_conditioning.ConditioningChecks.test_transformation_agrees_when_original_is_resolved) ... ok
+test_transformed_rows_remain_well_conditioned (test_conditioning.ConditioningChecks.test_transformed_rows_remain_well_conditioned) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 3.346s
+
+OK

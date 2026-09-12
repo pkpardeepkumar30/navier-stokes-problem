@@ -1,0 +1,138 @@
+---
+title: "Accurate coefficients can still give an inaccurate correction"
+subtitle: "Separate the formula, the stored digits, and the sensitivity of the problem"
+date: 2026-09-11
+lang: en
+jupyter: python3
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    theme: cosmo
+    css: ../d1_core_size/article.css
+  latex:
+    documentclass: article
+    fontsize: 11pt
+    geometry: margin=25mm
+execute:
+  echo: false
+  warning: false
+  error: false
+---
+
+```{python}
+#| label: setup
+from nscomp.d7 import load_parameters, generate
+p = load_parameters()
+summary = generate()
+```
+
+**Computing correction coefficients accurately is only one part of a reliable calculation. You must also retain enough digits to apply them, and understand how uncertain inputs change the answer.** These three questions can have very different answers.
+
+The [previous article](../d6_moment_correction/article.html) exposed a concrete example. Two weighted integrals became almost identical as a parameter decreased. Cancelling their prescribed discrepancies required increasingly large positive and negative coefficients. The resulting moment cancellation lost accuracy.
+
+Before interpreting that loss as a failure of a fluid construction, we should determine where it comes from. Is the equation difficult to evaluate? Are accurate coefficients being rounded too aggressively? Or is the underlying problem sensitive even when solved accurately?
+
+We answer those questions for the two-moment axial correction, using the original formula, an equivalent formulation designed to avoid subtraction error, and independently integrated high-precision references. This is a numerical audit of one finite operator. It is not a dynamical stability test of the Navier–Stokes flow.
+
+## Two moment weights become almost the same
+
+The axial correction coefficients satisfy
+
+$$
+B\boldsymbol\alpha=-\mathbf d,\qquad
+B_{1j}=\int Rb_j(R)\,dR,\quad
+B_{2j}=\int R^{1-2\lambda}b_j(R)\,dR.
+$$
+
+These are the axial equations from the five-moment repair. [OpenAI, Equation (5.16), pages 51–52](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+
+We keep the two smooth, unit-integral bumps centered at $R=2,3$, with halfwidth $0.12$. The first experiment keeps $\mathbf d=(1,-0.4)$ fixed and varies $\lambda$.
+
+For small positive $\lambda$,
+
+$$
+R^{1-2\lambda}
+=R\,e^{-2\lambda\log R}
+\approx R-2\lambda R\log R.
+$$
+
+The difference between the two moment rows is proportional to $\lambda$. If the computer first rounds both rows to ordinary double precision, that small difference can lose most of its meaningful digits.
+
+The mathematical matrix remains invertible for these positive parameters. At $\lambda=10^{-18}$, however, the implementation of its original form produces identical floating-point rows, and the numerical solve reports a singular matrix.
+
+## Evaluate the difference before losing it
+
+Replace the second equation by its difference from the first, divided by $-2\lambda$. Its new weight is
+
+$$
+g_\lambda(R)=
+\frac{R^{1-2\lambda}-R}{-2\lambda}
+=R\frac{\operatorname{expm1}(-2\lambda\log R)}{-2\lambda}.
+$$
+
+The function $\operatorname{expm1}(x)$ evaluates $e^x-1$ accurately when $x$ is small, avoiding the subtraction of an already rounded value close to one. [NumPy documentation](https://numpy.org/doc/stable/reference/generated/numpy.expm1.html)
+
+As $\lambda$ approaches zero, this weight tends to $R\log R$. It stays distinct from the first weight $R$.
+
+The right-hand side must undergo the same transformation:
+
+$$
+\widetilde B\boldsymbol\alpha
+=\binom{-d_1}{(d_2-d_1)/(2\lambda)}.
+$$
+
+This is the same exact linear system in a different form. Its evaluation preserves the small difference that the original computation lost.
+
+![The equivalent expm1 formulation retains accurate coefficients throughout the parameter scan, while the original float64 system loses digits and eventually becomes singular. The transformed rows have a moderate condition number. Nonfinite condition estimates from the original floating-point matrix are omitted from the plotted curve and retained in the CSV data.](figures/01_equivalent_formulations.png){#fig-formulations fig-alt="The original solve loses coefficient accuracy as lambda decreases, while the equivalent expm1 formulation remains accurate against a high-precision reference."}
+
+At $\lambda=10^{-12}$, the original coefficient error is approximately **`{python} f'{summary["selected_raw_coefficient_error"]:.2g}'`** relative to the reference. The transformed calculation reduces it to about **`{python} f'{summary["selected_stable_coefficient_error"]:.2g}'`**. Across the displayed scan, the largest relative coefficient error from the transformed calculation is **`{python} f'{summary["largest_stable_coefficient_relative_error"]:.2g}'`**.
+
+The reference uses 70-digit arithmetic and independent adaptive integration of the original moment weights. A further 90-digit check at the smallest $\lambda$ confirms the reference's convergence.
+
+## Accurate coefficients still need enough stored digits
+
+At $\lambda=10^{-12}$, the two correction coefficients are of order $10^{12}$, while the moments we want to cancel are of order one. Their contributions nearly cancel.
+
+Double precision can represent each coefficient to a small relative error while still losing an absolute amount large enough to spoil that cancellation. For example, a relative error of $10^{-16}$ in a number of order $10^{12}$ corresponds to an absolute error of order $10^{-4}$.
+
+That is what the computation shows. Although the transformed coefficients have nearly full double-precision relative accuracy, their original moment remainder is about **`{python} f'{summary["selected_stable_original_moment_remainder"]:.2g}'`** at this parameter.
+
+![High relative accuracy in stored coefficients does not guarantee small original moment remainders when large contributions cancel. Higher-precision coefficients preserve the cancellation only if their additional digits are retained. The left plot floors remainders below 1e-60 for display; the underlying values are exported.](figures/02_precision_and_storage.png){#fig-storage fig-alt="Moment cancellation deteriorates when large coefficients are stored in float64, while retaining higher precision preserves substantially smaller remainders."}
+
+The right panel repeats the original solve at 20, 30, 40, and 50 decimal digits. Keeping those digits improves the moment remainder. Rounding the resulting coefficients back to float64 restores approximately the same error floor.
+
+Thus, for a future assembled correction, higher-precision arithmetic may need to continue through coefficient storage, profile evaluation, and residual evaluation. A high-precision solve followed by low-precision storage can discard the improvement.
+
+## Better arithmetic does not remove input sensitivity
+
+The transformed matrix has well-separated rows, but its second right-hand side contains division by $\lambda$. Uncertainty in $d_2-d_1$ can therefore remain strongly amplified.
+
+To test this separately, choose $\lambda=10^{-10}$ and start from $\mathbf d=(1,1)$. Perturb only the second supplied discrepancy. The bump supports and positive parameter remain unchanged, and both the original and perturbed problems are solved with the accurate formulation.
+
+![A small relative change in the supplied discrepancies produces a much larger relative change in the correction coefficients. The accurate algorithm reveals this response rather than eliminating it. The dashed line indicates equal relative changes and serves only as a comparison.](figures/03_input_sensitivity.png){#fig-sensitivity fig-alt="Measured coefficient changes are about seven billion times larger than the relative input changes in the selected sensitive example."}
+
+For this declared perturbation direction, the measured ratio of relative output change to relative input change is about **`{python} f'{summary["sensitivity_amplification_range"][0]:.2g}'`**. The exported data record the actual floating-point input change as well as the nominal perturbation.
+
+This is sensitivity of an algebraic map. It does not mean a velocity perturbation grows by that factor under Navier–Stokes evolution. Nor have these perturbed discrepancy vectors been obtained from admissible full paper profiles.
+
+## What should future calculations report?
+
+This experiment motivates three separate checks:
+
+- **Coefficient accuracy:** compare against a reference or a converged independent evaluation.
+- **Accuracy after applying the correction:** reevaluate the original weighted moments or differential residual using the coefficients as actually stored.
+- **Sensitivity to inputs:** perturb the supplied data in a declared way while preserving the constraints being tested.
+
+The distinction between rounding error and problem conditioning is standard numerical analysis. The finite-precision and perturbation framework in [Higham's *Accuracy and Stability of Numerical Algorithms*](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) provides the broader context.
+
+Here, seven checks cover algebraic equivalence at a well-resolved parameter, independent high-precision references, quadrature and precision refinement, coefficient storage, and controlled input sensitivity. The [source notes](source-notes.md) specify every error measure.
+
+## Research decision at this stage
+
+The supported result is a useful numerical-analysis note: one source-defined moment operator needs careful evaluation and, in severe cases, more retained precision. The proposed change uses an elementary row transformation and a standard numerical function. We make no claim of a new general algorithm or a new result about blowup.
+
+The [research decision note](research-decision.md) records what further evidence would support a paper. The central missing link is still a constructed leading profile and its actual correction discrepancies. That would show whether the sensitive parameter and input regimes examined here arise in the chosen realization, and whether the numerical improvements enable a meaningful full residual calculation.
+
+The [executed notebook](../../code/d7_conditioning/study.ipynb), [parameters](../../code/d7_conditioning/parameters.json), and [CSV data](../../code/d7_conditioning/data/) reproduce the three experiments.

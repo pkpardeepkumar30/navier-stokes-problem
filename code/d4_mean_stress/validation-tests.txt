@@ -1,0 +1,15 @@
+test_exact_symbolic_streamfunction (test_stress.StressChecks.test_exact_symbolic_streamfunction) ... ok
+test_finite_frequency_correction (test_stress.StressChecks.test_finite_frequency_correction) ... ok
+test_invalid_periodic_carriers (test_stress.StressChecks.test_invalid_periodic_carriers) ... ok
+test_mean_force_from_independent_transport (test_stress.StressChecks.test_mean_force_from_independent_transport) ... ok
+test_nyquist_sampling_can_lose_stress (test_stress.StressChecks.test_nyquist_sampling_can_lose_stress) ... ok
+test_prescribed_covariance_and_energy (test_stress.StressChecks.test_prescribed_covariance_and_energy) ... ok
+test_pressure_removes_only_gradient (test_stress.StressChecks.test_pressure_removes_only_gradient) ... ok
+test_resolved_fourier_divergence (test_stress.StressChecks.test_resolved_fourier_divergence) ... ok
+test_sine_averages (test_stress.StressChecks.test_sine_averages) ... ok
+test_spatial_covariance_and_positive_eigenvalues (test_stress.StressChecks.test_spatial_covariance_and_positive_eigenvalues) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.696s
+
+OK

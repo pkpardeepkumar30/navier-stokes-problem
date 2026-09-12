@@ -1,0 +1,18 @@
+{
+  "reference_digits": 70,
+  "largest_stable_coefficient_relative_error": 4.810002379309584e-16,
+  "raw_singular_lambda_values": [
+    1e-18
+  ],
+  "selected_lambda": 1e-12,
+  "selected_raw_coefficient_error": 0.00018642319405954487,
+  "selected_stable_coefficient_error": 6.454998881227127e-17,
+  "selected_stable_original_moment_remainder": 0.00030517578124921054,
+  "sensitivity_amplification_range": [
+    7129318346.785803,
+    7129318346.789186
+  ],
+  "classification": "educational numerical-analysis note; no novel research claim",
+  "dynamical_stability": false,
+  "parameters_sha256": "e7d2a4d324e4a7a5d346f1031b97875bd3b78f4ccc3355dca059c50145f74ecf"
+}

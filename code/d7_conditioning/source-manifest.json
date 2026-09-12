@@ -1,0 +1,32 @@
+{
+  "scope": "D7 arithmetic and sensitivity audit of the isolated axial moment solve",
+  "sources": [
+    {
+      "title": "Finite time blowup for Navier-Stokes",
+      "url": "https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+      "sha256": "0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f",
+      "accessed": "2026-09-11",
+      "locators": [
+        "Equation (5.16), pages 51-52"
+      ],
+      "source_page_review": "p.52 visually checked during D6"
+    },
+    {
+      "title": "NumPy expm1",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.expm1.html",
+      "accessed": "2026-09-11"
+    },
+    {
+      "title": "mpmath numerical integration",
+      "url": "https://mpmath.org/doc/current/calculus/integration.html",
+      "accessed": "2026-09-11"
+    },
+    {
+      "title": "Accuracy and Stability of Numerical Algorithms, second edition",
+      "author": "Nicholas J. Higham",
+      "url": "https://epubs.siam.org/doi/book/10.1137/1.9780898718027",
+      "accessed": "2026-09-11",
+      "review_scope": "publisher's chapter/excerpt page; not an exhaustive literature review"
+    }
+  ]
+}

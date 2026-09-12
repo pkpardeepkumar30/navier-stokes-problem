@@ -5,7 +5,7 @@ Purpose and current status
 --------------------------
 This file is the ordered delivery roadmap for project-ideas.txt. Task numbers there identify topics; the D-numbers here identify outputs in the preferred order.
 
-Current status: D1 complete and accepted; D2 in progress. The user authorized continuing through the ordered roadmap. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
+Current status: D1 complete and accepted; D2-D5 built and validated; D6 in progress. The user authorized continuing through the ordered roadmap. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
 
 The order favors a useful public result early, then a progressively deeper computational explanation. D1-D6 form the educational core. Later items are conditional research or verification work, not prerequisites for releasing the early articles. D7's initial conditioning work can begin alongside D3 and D6.
 
@@ -71,9 +71,17 @@ No Navier-Stokes time integration, full profile reconstruction, all-order correc
 
 D2 — Finite-energy blow-up and the geometry of a shrinking core
 --------------------------------------------------------------
-Status: In progress.
+Status: Complete; local artifacts ready for review.
 Related topics: Tasks 2 and 13; selected geometry from Task 1.
 Depends on: D1's source/scaling note.
+
+Delivered: writing/d2_finite_energy/article.html, article.qmd, article.tex, source-notes.md,
+four PNG/SVG figures, and animations/core_collapse.html with 72 embedded frames and
+playback controls. code/d2_finite_energy/ contains the executed notebook, parameters,
+five CSV datasets, source/animation manifests, reproduction notes, and validation records.
+Eight scientific checks and seven notebook code cells passed. Article assets/links and
+animation handlers passed checks; frames were decoded and representative frames visually
+inspected. See writing/d2_finite_energy/review-notes.md for browser/PDF review limits.
 
 Outputs:
 - An article and notebook progressing from a tall, narrow toy function to anisotropic cylindrical scaling.
@@ -89,9 +97,17 @@ Completion criteria:
 
 D3 — A computational explanation of the base-flow residual
 ----------------------------------------------------------
-Status: Planned.
+Status: Complete for the selected explicit exterior; local artifacts ready for review.
 Related topics: Tasks 1 and 4.
 Depends on: The relevant source/profile audit extending D1; D2 supplies pedagogical context.
+
+Delivered: writing/d3_residual/article.html, article.qmd, article.tex, source/review notes,
+and three PNG/SVG figures. code/d3_residual/ contains the executed notebook, parameters,
+four CSV datasets, source manifest, reproduction notes, and validation records.
+Ten scientific checks and six notebook code cells passed; article exports and references checked.
+The paper field evaluated is Eq. (4.29)'s explicit heat exterior, compared with the Gaussian
+manufactured toy. The joined inner/annular background remains unevaluated and is a dependency
+for correction-level work, not something established by this exterior calculation.
 
 Outputs:
 - Reusable evaluation of the selected base velocity, pressure, and required derivatives, with explicit profile choices and limitations.
@@ -107,9 +123,17 @@ Completion criteria:
 
 D4 — How zero-mean oscillations generate mean stress
 ---------------------------------------------------
-Status: Planned.
+Status: Complete; local artifacts ready for review.
 Related topics: Task 3.
 Depends on: D3 for the motivating residual; the toy experiment is otherwise self-contained.
+
+Delivered: writing/d4_mean_stress/article.html, article.qmd, article.tex, source/review
+notes, and three PNG/SVG figures. code/d4_mean_stress/ contains the executed notebook,
+parameters, six CSV datasets, source manifest, and validation records. Ten scientific
+checks and six notebook code cells passed. HTML/LaTeX assets and links checked;
+all three figures visually inspected. The experiment realizes a constant covariance
+and a varying mean force with exact periodic divergence-free toy fields. The paper's
+actual stress and admissibility cone are mapped to source equations, not numerically reconstructed.
 
 Outputs:
 - An article/notebook starting from averages of sine and sine squared.
@@ -124,9 +148,16 @@ Completion criteria:
 
 D5 — One pulse: shear amplification, stress generation, viscous decay
 ---------------------------------------------------------------------
-Status: Planned.
+Status: Complete for the explicit Kelvin/Couette wave; local artifacts ready for review.
 Related topics: Task 5; selected mechanisms from Tasks 3 and 15.
 Depends on: D4 and a source audit of the chosen pulse model.
+
+Delivered: writing/d5_shearing_wave/article.html, article.qmd, article.tex,
+source/review notes, and three PNG/SVG figures. code/d5_shearing_wave/ contains
+the executed notebook, parameters, four CSV datasets, source manifest, and validation records.
+Eight scientific checks and six notebook code cells passed. The baseline speed grows
+by 3.63 before decaying; an independent RK4 amplitude calculation converges at fourth order.
+This is an exact unbounded-plane Kelvin wave, not a localized rotating paper pulse.
 
 Outputs:
 - An article/notebook following wavevector, amplitude, stress, and damping through one pulse life cycle.
@@ -140,9 +171,16 @@ Completion criteria:
 
 D6 — Selected correction levels and residual improvement
 --------------------------------------------------------
-Status: Planned.
+Status: In progress overall; stage A (source-defined five-moment repair) built and validated.
 Related topics: Tasks 6 and 1.
 Depends on: D3-D5 and the exact source definitions of the selected corrections.
+
+Stage A delivered: writing/d6_moment_correction/article.html, article.qmd, article.tex,
+source/review notes, implementation ledger, and three PNG/SVG figures. The matching
+code folder contains the executed notebook, inputs, six CSV datasets, source manifest,
+and validation records. Seven scientific checks and six notebook code cells passed.
+This implements Eq. (5.16) for prescribed test discrepancies. Full order-one PDE
+residual improvement remains uncomputed; its missing inputs are itemized in the ledger.
 
 Outputs:
 - A reproducible comparison of the base field with at least the first implementable correction stage.
@@ -158,7 +196,7 @@ Completion criteria:
 
 D7 — Conditioning and robustness report; first research decision
 ----------------------------------------------------------------
-Status: Planned; conditional expansion after D3/D6.
+Status: In progress for the finite moment solve's conditioning; broader expansion conditional.
 Related topics: Task 16 and the research criteria in Task 14.
 Depends on: Resolved baseline diagnostics from D3; D6 for correction-level comparisons.
 
@@ -268,8 +306,12 @@ Progress record
 
 Continuation checkpoint
 -----------------------
-- Active deliverable: D2, code/d2_finite_energy/ and writing/d2_finite_energy/.
-- Implemented: reusable energy.py, d2.py generation, parameters, eight scientific checks, three static figures, animation player template.
-- Next: finish and inspect animation; write the notebook and reader-friendly article/source audit; extend build.py to select deliverables; render and validate D2; then proceed to D3 source/profile audit.
+- Active deliverable: D7 conditioning study; D6 stage A is validated and its overall PDE comparison remains incomplete.
+- D2 complete: full build and article/animation checks passed; see its validation and review records.
+- D3 complete for the explicit exterior: ten checks, six notebook code cells, three figures, four CSV datasets, and article exports passed. Full inner/annular assembly remains outside the evaluated example.
+- D4 complete: ten checks, six notebook code cells, three figures, six CSV datasets, HTML and LaTeX exports passed. Review notes record scope and rendering limits.
+- D5 complete: eight checks, six notebook code cells, three figures, four CSV datasets, HTML and LaTeX exports passed. Kelvin-wave scope and physical-coordinate conventions recorded.
+- D6 stage A complete: seven checks, six notebook code cells, three figures, six CSV datasets, article exports and source/review/implementation notes. Full order-one PDE residual improvement still requires an assembled leading inner/annular profile and its first inner correction.
+- Next: D7 isolates the near-degenerate axial moment block, compares raw float64 and an equivalent expm1-based row transformation against high-precision quadrature, then separates arithmetic error from sensitivity to supplied discrepancies. This is a bounded numerical-analysis study, not dynamical stability or a claimed new paper result.
 - Authorization: continue ordered work without requesting approval for routine local implementation. Keep code and writing separate; do not publish, submit, message others, commit, or push without authorization.
 - This file is a durable checkpoint, not a scheduled background job. Credit refills do not themselves trigger a new run here.

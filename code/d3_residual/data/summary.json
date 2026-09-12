@@ -1,0 +1,13 @@
+{
+  "heat_max_angular_normalized_residual": 5.5554809508181615e-15,
+  "heat_max_sampled_residual_magnitude": 2.764863893389702e-10,
+  "heat_max_raw_laplacian_relative_difference": 8.011840080257571e-10,
+  "gaussian_reference_force_magnitude": 3.149918299259421,
+  "gaussian_reference_force_l2": 15.905536191376514,
+  "gaussian_force_growth_factor": 999999999999.9999,
+  "gaussian_l2_growth_factor": 1000000.0000000001,
+  "best_time_finite_difference_error": 1.0476579248575035e-07,
+  "last_quadrature_derivative_relative_error": 3.774758283725532e-15,
+  "full_background_assembled": false,
+  "parameters_sha256": "8bc48f636e5cb62d0a22a65573989e9d830dc1a9bfff46830e1f415235620150"
+}

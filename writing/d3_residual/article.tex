@@ -1,0 +1,547 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  english,
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={What force does a collapsing vortex require?},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{What force does a collapsing vortex require?}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Reading a Navier--Stokes residual as a balance of
+accelerations}
+\author{}
+\date{2026-09-11}
+\begin{document}
+\maketitle
+
+
+\textbf{Prescribing a shrinking, accelerating vortex also prescribes the
+force needed to sustain it.} The Navier--Stokes momentum residual tells
+us what that force would have to be. A velocity field that looks
+plausible, is divergence free, and has finite energy can still require a
+force that becomes unbounded.
+
+That is the missing question after the
+\href{../d2_finite_energy/article.html}{previous article's energy
+calculation}. There we chose a smooth vortex whose peak grows as its
+width shrinks. We showed how its energy can decrease. We did not ask
+whether the acceleration, pressure, and viscosity actually balance with
+an acceptable external force.
+
+This distinction matters in the proposed OpenAI construction. The paper
+seeks a velocity that becomes unbounded while the required external
+force remains smooth through the singular time. Its leading background
+alone leaves a residual that must be treated by additional corrections.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
+Section 2 and Equation (3.1)}
+
+We will calculate the individual terms for two explicit fields: the
+paper's outer heat-flow formula, where the momentum terms cancel, and
+our prescribed Gaussian vortex, where they do not. This evaluates a
+concrete part of the paper's flow and an educational comparison. The
+joined inner core and annulus are not reconstructed in this installment.
+
+\subsection{A residual is a force balance you can
+inspect}\label{a-residual-is-a-force-balance-you-can-inspect}
+
+Imagine a one-kilogram cart accelerating at three metres per second
+squared. If the forces already accounted for supply only two newtons,
+one newton remains to be explained. A residual plays the same role in a
+differential equation.
+
+For incompressible Navier--Stokes, write
+
+\[
+\mathbf R(\mathbf u,p)=
+\underbrace{\partial_t\mathbf u}_{\text{local acceleration}}
++\underbrace{(\mathbf u\cdot\nabla)\mathbf u}_{\text{transport}}
+-\underbrace{\nu\Delta\mathbf u}_{\text{viscous term}}
++\underbrace{\nabla p}_{\text{pressure term}}.
+\]
+
+Pressure here is divided by the constant density. Each term has the
+units of acceleration in a dimensional formulation; \(\mathbf R\) is the
+external force \textbf{per unit mass} required by the chosen velocity
+and pressure.
+
+For a specified force \(\mathbf f\), the momentum equation says
+\(\mathbf R=\mathbf f\). When checking that equation, the defect is
+\(\mathbf R-\mathbf f\). When no external force is intended, the
+residual should vanish.
+
+Incompressibility is a separate condition, \(\nabla\cdot\mathbf u=0\).
+Satisfying it does not make the momentum residual vanish.
+
+\subsection{A circular flow still has transport
+acceleration}\label{a-circular-flow-still-has-transport-acceleration}
+
+Both examples have only an azimuthal velocity,
+
+\[
+\mathbf u=u_\theta(r,z,t)\,\mathbf e_\theta.
+\]
+
+The cylindrical components are independent of angle. Nevertheless, a
+particle moving around a circle changes its velocity direction. Its
+transport acceleration has the radial component
+
+\[
+\big[(\mathbf u\cdot\nabla)\mathbf u\big]_r
+=-\frac{u_\theta^2}{r}.
+\]
+
+This is the familiar inward centripetal acceleration. Treating the
+cylindrical components as if they were Cartesian scalar fields would
+miss it.
+
+We choose pressure to provide the corresponding balance:
+
+\[
+\partial_r p=\frac{u_\theta^2}{r},
+\qquad
+p(r,z,t)=-\int_r^\infty\frac{u_\theta(s,z,t)^2}{s}\,ds.
+\]
+
+The radial transport and pressure terms therefore cancel. The other
+directions still need checking. In particular, the angular component of
+the vector Laplacian is
+
+\[
+(\Delta\mathbf u)_\theta
+=\partial_{rr}u_\theta+\frac1r\partial_r u_\theta
+-\frac{u_\theta}{r^2}+\partial_{zz}u_\theta.
+\]
+
+The \(-u_\theta/r^2\) term is another geometric contribution that
+matters.
+
+\subsection{Two fields, two different
+balances}\label{two-fields-two-different-balances}
+
+\subsubsection{The explicit outer flow from the
+paper}\label{the-explicit-outer-flow-from-the-paper}
+
+Equation (4.29) provides an outer swirl that is independent of height
+and solves the radial heat equation at viscosity one:
+
+\[
+\partial_t u_\theta
+=\partial_{rr}u_\theta+\frac1r\partial_r u_\theta-\frac{u_\theta}{r^2}.
+\]
+
+For this field, local angular acceleration balances viscosity. Its
+pressure is independent of height as well, so there is no axial pressure
+force. Together with the radial balance above, these identities give
+\textbf{zero momentum residual} on the exterior domain.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
+Theorem 4.6(v), page 33}
+
+We evaluate that explicit family with normalization \(c_\infty=1\) and
+\(h=10^{-6}\). These choices do not assemble a full paper profile: its
+matching boundary and other parameter constraints remain uncalibrated.
+The formula is used only at positive radius. Continuing it to the axis
+would produce a singular field, and its independence of height prevents
+finite whole-space energy.
+
+\subsubsection{The smooth Gaussian from the previous
+article}\label{the-smooth-gaussian-from-the-previous-article}
+
+Our toy swirl is
+
+\[
+u_\theta=U R\exp\left(\frac{1-R^2-Z^2}{2}\right),
+\qquad R=\frac r a,\quad Z=\frac z b.
+\]
+
+In the \(h=0\) limiting example, \(a=\sqrt{\tau}\), \(b=2\sqrt{\tau}\),
+and \(U=\tau^{-1/2}\), with \(\tau=1-t\). Its pressure integral can be
+evaluated explicitly:
+
+\[
+p=-\frac{U^2}{2}\exp(1-R^2-Z^2).
+\]
+
+This pressure cancels the radial acceleration. But the angular time
+derivative does not cancel the viscous term, and the pressure varies
+with height. There is both an angular and, away from the midplane, an
+axial force left over.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={Signed acceleration terms cancel in the exterior\textquotesingle s radial and angular balances, while the Gaussian toy\textquotesingle s angular terms add.}]{figures/01_momentum_terms.png}}
+
+}
+
+\caption{\label{fig-terms}The exterior has equal and opposite radial
+transport and pressure terms, and equal and opposite angular time and
+viscous terms. The Gaussian toy has angular terms of the same sign in
+the residual, so a nonzero force remains. Each panel has its own
+vertical scale and represents its stated sample location.}
+
+\end{figure}%
+
+The following table makes the signs and magnitudes explicit. We use
+\(\tau=0.1\). The exterior sample is at \(r^2/(2\tau)=16\); the Gaussian
+sample is at \(R=1\), \(Z=0.5\). These are separate examples, rather
+than a pointwise comparison of two approximations to the same solution.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Heat exterior, radial
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Heat exterior, angular
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Gaussian toy, angular
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Gaussian toy, axial
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Local acceleration & 0 & 8.045e-07 & 10.47 & 0 \\
+Transport & -0.3494 & 0 & 0 & 0 \\
+Pressure gradient & 0.3494 & 0 & 0 & 6.157 \\
+Minus viscosity & 0 & -8.045e-07 & 88.95 & 0 \\
+Sum / required force & 0 & 8.788e-21 & 99.42 & 6.157 \\
+\end{longtable}
+}
+
+\subsection{The required force can grow faster than the
+speed}\label{the-required-force-can-grow-faster-than-the-speed}
+
+At a fixed similarity location in the Gaussian example, the speed scales
+as \(\tau^{-1/2}\). The angular residual and axial pressure gradient
+scale as \(\tau^{-3/2}\). For the marker used here, the pointwise force
+magnitude therefore grows by a factor of one thousand whenever the
+remaining time decreases by a factor of one hundred.
+
+Integrating the squared force over space gives another useful measure.
+The volume scale is \(\tau^{3/2}\), so
+
+\[
+\|\mathbf R\|_{L^2}^2
+\ \text{scales like}\ \tau^{-3}\tau^{3/2}=\tau^{-3/2},
+\qquad
+\|\mathbf R\|_{L^2}\ \text{scales like}\ \tau^{-3/4}.
+\]
+
+The force norm grows even though this toy's kinetic energy decreases.
+Thus its finite-energy concentration does not produce the smooth
+external force sought in the paper.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={The Gaussian force grows as time remaining decreases; the exterior has a near-roundoff relative angular residual while the toy\textquotesingle s normalized residual stays of order one.}]{figures/02_required_force.png}}
+
+}
+
+\caption{\label{fig-force}The left panel shows growth of the Gaussian
+toy's pointwise force and its L2 norm. The right compares angular
+residuals relative to the magnitudes of the angular terms. The heat
+exterior's exact residual is zero; its small computed remainder reflects
+numerical error.}
+
+\end{figure}%
+
+The Gaussian integral is evaluated on \(0<r<8a\), \(|z|<8b\), with
+quadrature refinement checks. This captures its rapidly decaying force
+field for the reported calculation. The exterior curve is a pointwise
+check along shrinking-radius markers; it is not a whole-space energy or
+force estimate.
+
+\subsection{Check the arithmetic before interpreting the
+cancellation}\label{check-the-arithmetic-before-interpreting-the-cancellation}
+
+We report the absolute residual as well as a normalized value. For each
+cylindrical component \(j\), define
+
+\[
+\epsilon_j=
+\frac{|R_j|}
+{|(\partial_t\mathbf u)_j|
++|((\mathbf u\cdot\nabla)\mathbf u)_j|
++|(-\nu\Delta\mathbf u)_j|
++|(\nabla p)_j|}.
+\]
+
+A small value indicates strong cancellation relative to the terms in
+that component. If every term is zero, we record zero by convention. We
+keep the components separate because large radial terms could otherwise
+hide an inaccurate angular balance.
+
+The exterior's profile is evaluated by numerical quadrature. Increasing
+its order improves the derivative and residual until floating-point
+error dominates. We compare selected values with 60-digit integration,
+and independently differentiate the velocity and pressure with respect
+to physical coordinates. Pressure's radial cancellation is imposed
+analytically; the derivative of its separately computed integral
+provides a check on that implementation.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={Quadrature errors decrease to a floating-point plateau, while finite-difference errors first improve and then worsen as the step decreases.}]{figures/03_numerical_checks.png}}
+
+}
+
+\caption{\label{fig-checks}Increasing quadrature order initially
+improves the exterior's profile derivative and angular cancellation. In
+the independent finite-difference check, making the step too small
+eventually loses accuracy because nearly equal velocity values are
+subtracted. The small time derivative is more sensitive than the radial
+derivative.}
+
+\end{figure}%
+
+In this run, the largest normalized angular residual along the exterior
+time scan is approximately \textbf{5.6e-15}. A small relative value can
+coexist with an increasing absolute numerical remainder when the
+individual terms grow. Both measures are exported in the data.
+
+These checks verify a finite computation against known identities. They
+do not show that an arbitrary residual and every one of its derivatives
+extend smoothly through a singular time.
+
+\subsection{What this adds to the construction
+story}\label{what-this-adds-to-the-construction-story}
+
+The residual gives us a concrete way to ask what a prescribed flow
+requires. Our Gaussian vortex passes the earlier divergence and energy
+checks but needs an unbounded force. The explicit heat exterior
+satisfies its local balances, but it supplies only one part of the full
+construction.
+
+The paper's next challenge is to join an appropriate inner flow to its
+exterior and deal with the remaining imbalance in the connecting region.
+Its oscillatory corrections use averaged velocity products to supply the
+missing momentum transport. The next installment will explain how a
+velocity oscillation with zero mean can still have a nonzero mean
+stress.
+
+The \href{../../code/d3_residual/study.ipynb}{executed notebook},
+\href{../../code/d3_residual/parameters.json}{parameters},
+\href{../../code/d3_residual/data/}{CSV data}, and
+\href{source-notes.md}{source audit} record exactly which fields and
+checks are included.
+
+\subsection{Technical note: the exterior
+formula}\label{technical-note-the-exterior-formula}
+
+To avoid confusing the paper's squared-radius variable with the previous
+article's time ratio, write \(\sigma=r^2/2\) here. Equation (4.29) is
+
+\[
+u_\theta=c_\infty\sigma^{-A}\mathcal H(2\tau/\sigma),
+\qquad A=\frac12+h,
+\]
+
+\[
+\mathcal H(\zeta)=\frac1{\Gamma(1+h)}
+\int_0^\infty e^{-v}v^h(1+\zeta v)^{-h}\,dv.
+\]
+
+Differentiation under the integral gives the needed derivatives. The
+quadrature uses the weight \(e^{-v}v^h\). We evaluate pressure by
+changing its radial integral to a finite interval. The source notes give
+the derivative formulas and normalization.
+
+The chosen \(h=10^{-6}\) is below the necessary ceiling discussed in D1,
+but we do not claim it satisfies the full construction's parameter
+hierarchy. The exterior formula can be studied as an explicit family
+without asserting that its chosen normalization has been joined to a
+completed inner profile.
+
+
+
+
+\end{document}
