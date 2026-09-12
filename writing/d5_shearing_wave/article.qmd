@@ -1,200 +1,94 @@
 ---
-title: "How a wave grows in shear—and why viscosity wins later"
-subtitle: "Follow the velocity, momentum flux, energy, and wavelength of one exact example"
-date: 2026-09-11
+title: "How a small wave grows, then fades"
+subtitle: "The background supplies energy; viscosity helps end the pulse"
+date: 2026-09-12
 lang: en
-jupyter: python3
 format:
   html:
     toc: true
     toc-depth: 2
     embed-resources: true
     theme: cosmo
-    css: ../d1_core_size/article.css
+    css: ../reader-style.css
   latex:
     documentclass: article
     fontsize: 11pt
     geometry: margin=25mm
-execute:
-  echo: false
-  warning: false
-  error: false
 ---
 
-```{python}
-#| label: setup
-from nscomp.d5 import load_parameters, generate
-p = load_parameters()
-summary = generate()
-```
+[Start with the paper map](../paper-map/article.html) · Main route, article 7 of 9
 
-**Viscosity can dissipate energy at every instant while a velocity disturbance grows.** Growth is possible when the disturbance receives energy from a background shear faster than viscosity removes it. As the shear changes the wave's orientation and wavelength, that balance changes too.
+The previous article explained how waves can supply useful momentum transport. But where do those waves get their energy? And how can they disappear without leaving a large force when they are switched off?
 
-This is the dynamical question behind the [previous article's oscillating velocities](../d4_mean_stress/article.html). We showed that zero-mean motion can carry momentum. But prescribing an oscillation does not explain where its energy comes from, how its stress evolves, or why its lifetime might be limited.
+The paper gives its pulses a carefully arranged life cycle. They begin with a very small seed, grow by drawing energy from the background flow, and later decay strongly enough that they can be cut off with small errors.
 
-The proposed OpenAI construction uses pulses whose growth draws on the background shear and whose later decay involves viscosity. Its pulse amplitude equation retains viscous damping explicitly. [OpenAI, Section 2.2 and Equation (7.22)](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+The important competition is between **shear**, which can amplify a disturbance, and **viscosity**, which smooths differences in velocity.
 
-We will study an explicit two-dimensional example called a *Kelvin shearing wave*. It is simple enough to derive, evaluate, and check against an independent time integrator. We will track its velocity, wavelength, momentum covariance, and energy budget together. This is a reduced illustration of growth and decay; it does not reconstruct the paper's rotating, localized pulse.
+## Begin with neighbouring lanes moving at different speeds
 
-## Start with a shear that tilts a pattern
+Imagine parallel conveyor belts running at different speeds. A disturbance that moves between them encounters different background velocities.
 
-Take a background velocity
+A fluid with neighbouring layers moving at different speeds has shear. That difference provides an energy source: an appropriately arranged disturbance can draw energy from the background.
 
-$$
-\mathbf U=(Sy,0).
-$$
+This does not mean every disturbance grows. Its direction and relationship to the shear matter. Some motions extract energy; others do not.
 
-Fluid at larger $y$ moves faster in the horizontal direction. A stripe painted across the flow therefore tilts: its upper portion moves farther than its lower portion.
+The paper designs the background and pulse orientations together to obtain the needed amplification.
 
-For a wave with phase
+## See how the wave pattern changes
 
-$$
-\phi(x,y,t)=k_xx+k_y(t)y,
-$$
+Draw a stripe across several conveyor belts. As the belts move, they carry different parts of the stripe different distances. The stripe tilts.
 
-transport by the background requires
+A wave pattern in a sheared flow changes in an analogous way. Its orientation evolves, and the spacing of its variations can become smaller in the direction across the shear.
 
-$$
-k_y(t)=k_{y0}-Sk_xt.
-$$
+This matters because viscosity acts especially strongly on closely spaced velocity differences.
 
-Indeed, $\partial_t\phi+Sy\,\partial_x\phi=0$. The phase moves with the background even though its wavevector changes.
+![The left panel illustrates stripes being tilted by different background speeds. The right uses the companion's simple straight-shear example: disturbance speed first grows and then becomes small. This example illustrates transient amplification and decay, not the exact rotating pulse mechanism of the paper.](figures/reader.png){#fig-pulse fig-alt="Initially aligned stripes tilt across a shear; a separate disturbance-speed curve rises to a peak and then decays."}
 
-We use $S=1$, $k_x=1$, and $k_{y0}=4$, all dimensionless. At $t=4$, $k_y$ passes through zero. Before that instant the wavevector gets shorter and the distance between wave crests grows. Afterward its length increases and the crests crowd together.
+## Why fine patterns are smoothed faster
 
-The wavelength measured perpendicular to the crests is
+Think of temperature differences in a metal bar. Heat has only a short distance to travel between neighbouring hot and cold bands when the bands are tightly spaced.
 
-$$
-\lambda(t)=\frac{2\pi}{\sqrt{k_x^2+k_y(t)^2}}.
-$$
+Velocity differences also diffuse through viscosity. As a useful rule, halving the variation length makes the diffusion time about four times shorter. The distance enters squared.
 
-This is a wavelength in the laboratory coordinates, not a fixed wavelength in a coordinate system that moves with the shear. To assign a dimensional length, multiply it by the chosen reference length $L_{\rm ref}$. No fluid-specific reference length is assigned here.
+You can therefore have an early stage when amplification wins and a later stage when increasingly fine variations make damping win.
 
-## One wave can be solved exactly
+In the paper, the changing wave orientation also weakens amplification. Both effects help produce growth followed by decay. The pulse cannot be understood by comparing one fixed growth rate with one fixed damping rate for its entire life.
 
-Write the perturbation vorticity as
+## How the rotating background amplifies a pulse
 
-$$
-\omega'(x,y,t)=\zeta(t)\cos\phi.
-$$
+Here is the source's physical picture in words. A fluctuation with excess circular velocity can acquire an outward motion. At a larger radius, the surrounding angular velocity is different. Under the chosen shear conditions, the fluctuation's excess relative to its surroundings can grow.
 
-The corresponding incompressible velocity is
+The effects reinforce one another. Axial shear provides an additional route to amplification, especially where the rotational contribution would be weak.
 
-$$
-\mathbf w(x,y,t)=\mathbf B(t)\sin\phi,\qquad
-\mathbf B(t)=\frac{\zeta(t)}{K^2(t)}
-\binom{-k_y(t)}{k_x},\qquad K^2=k_x^2+k_y^2.
-$$
+The paper makes these conditions quantitative and includes viscous damping. Its selected rotating pulse model has an initial amplification stage followed by decay. [Paper, Section 2.2 and Lemma 7.4](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
 
-The velocity points along the wave crests, perpendicular to the wavevector. This gives $\nabla\cdot\mathbf w=0$ and also makes its self-advection $(\mathbf w\cdot\nabla)\mathbf w$ vanish. The two-dimensional background vorticity is constant, so the perturbation vorticity obeys
+Our conveyor-belt picture explains shearing and energy exchange. It does not reproduce every feature of this rotating instability.
 
-$$
-\zeta'=-\nu K^2(t)\zeta.
-$$
+## What the simpler computation shows
 
-Its exact solution is
+The supporting experiment uses a known wave in a straight shear flow. We can calculate its changing orientation and amplitude directly, then compare with a numerical integration.
 
-$$
-\zeta(t)=\zeta_0e^{-\nu I(t)},
-\qquad
-I(t)=
-(k_x^2+k_{y0}^2)t
--Sk_xk_{y0}t^2
-+\frac{S^2k_x^2}{3}t^3.
-$$
+For its chosen dimensionless parameters, the disturbance speed rises to about **3.6 times** its initial value before decaying. Since energy depends on speed squared, the peak energy is about **13 times** its initial value.
 
-The integral $I(t)=\int_0^tK^2(s)\,ds$ records the accumulated effect of diffusion. The cubic term matters at late times because the shear makes $|k_y|$ grow approximately linearly.
+The gain comes from the background shear. It is not energy appearing from nowhere, and it is not evidence that viscosity has become negative.
 
-This is the two-dimensional specialization of a classical exact shearing-wave family; our axes are interchanged relative to the reference's background shear. [Singh and Sridhar, Equations (1)–(7)](https://arxiv.org/pdf/1101.5507v2)
+This straight-shear example demonstrates temporary amplification and eventual viscous decay. The actual paper's pulse construction uses a different, rotating and axially sheared setting. Keeping that distinction lets the simpler example teach a mechanism without pretending to reproduce the full construction.
 
-The peak perturbation speed is
+## Why the quiet tails matter
 
-$$
-U_{\rm wave}(t)=|\mathbf B(t)|=\frac{|\zeta(t)|}{K(t)}.
-$$
+Imagine stopping a loudspeaker while its signal is large. An abrupt cutoff introduces a sharp change. Turning it off after the signal has already become tiny is easier to do gently.
 
-Vorticity decreases under viscosity, but velocity also depends on the changing wavevector. While $K$ decreases, velocity can increase even though $\zeta$ decreases.
+The paper similarly applies temporal cutoffs in the pulses' small tails. The errors introduced by the cutoff must be controlled, including their space-time derivatives.
 
-## See the growth, stress, and decay together
+The seed force also has to remain compatible with the final smooth-force requirement. The source arranges exponentially small seeds and tails; merely drawing a bell-shaped amplitude curve would not establish those estimates.
 
-Choose viscosity $\nu=0.005$ and an initial peak wave speed of one. In this example, the speed reaches **`{python} f'{summary["peak_speed_ratio"]:.2f}'` times its initial value** near $t=\,$**`{python} f'{summary["peak_time"]:.3f}'`**. Its phase-averaged kinetic energy increases by approximately **`{python} f'{summary["peak_energy_ratio"]:.1f}'` times**.
+This connects the pulse's life cycle directly to the theorem's force regularity. The pulse needs to be useful in the middle and sufficiently quiet at its ends.
 
-The heat-equation reference uses the same initial perturbation and viscosity, with zero background shear. Its wavevector remains fixed, so its speed decays exponentially from the beginning. A second reference keeps the shear and sets viscosity to zero, isolating the geometric amplification.
+## Where this fits in the bigger picture
 
-![The sheared viscous wave first grows and then decays. A wave with no shear decays monotonically; an inviscid sheared wave grows more. The wavelength first increases and then decreases. The lower panels track energy production, dissipation, and the sign-changing mean momentum flux. All quantities concern the perturbation, with dimensionless units and phase averages.](figures/01_wave_lifecycle.png){#fig-lifecycle fig-alt="Wave speed grows transiently, wavelength first lengthens then shortens, and the energy budget separates shear production from viscous loss."}
+**The wave's energy comes from the background, and its designed decay makes its contribution controllable.** Averaged transport tells us what the pulse does; amplification and damping tell us how it can do that while respecting the viscous dynamics.
 
-At $t=20$, the speed is only **`{python} f'{summary["final_speed_ratio"]:.3g}'` of its initial value**. There is no singularity: this example has a finite transient peak followed by decay.
+Adding pulses still creates new errors and can disturb important weighted totals. Continue with [small local repairs that preserve those totals](../d6_moment_correction/article.html).
 
-## The energy budget says where growth comes from
+The [technical article](technical-article.html), [notebook](../../code/d5_shearing_wave/study.ipynb), and [source notes](source-notes.md) provide the exact straight-shear example and its energy accounting.
 
-Average over one wave phase. The perturbation kinetic energy per unit mass is
-
-$$
-E=\frac12\langle|\mathbf w|^2\rangle=\frac{|\mathbf B|^2}{4},
-$$
-
-and the momentum covariance is
-
-$$
-Q_{xy}=\langle w_xw_y\rangle=\frac{B_xB_y}{2}.
-$$
-
-Differentiating the exact solution gives
-
-$$
-\boxed{\frac{dE}{dt}=
-\underbrace{-S Q_{xy}}_{\text{shear production}}
--\underbrace{2\nu K^2E}_{\text{viscous dissipation}}.}
-$$
-
-Initially $Q_{xy}<0$, so $-SQ_{xy}>0$: the shear-production term supplies perturbation energy. Viscosity still removes energy. Growth occurs when production exceeds that loss.
-
-The same statement in terms of speed is
-
-$$
-\frac{d}{dt}\log U_{\rm wave}
-=\frac{Sk_xk_y}{K^2}-\nu K^2.
-$$
-
-At the speed peak these terms balance. Viscosity moves the peak slightly before the geometric turning time $t=4$. After $k_y$ becomes negative, the production term also becomes negative. Both shear exchange and viscosity then decrease the perturbation energy.
-
-This particular wave has a spatially uniform phase-averaged covariance. Its stress divergence is zero, so it does not provide the spatially varying mean force demonstrated in D4. The affine background is unbounded and has no finite whole-space energy. Its shear-production budget must not be interpreted as a closed, finite fluid reservoir or a finite-energy blowup construction.
-
-## What happens to the stripes?
-
-The following snapshots show perturbation vorticity on the same Cartesian window. The color scale uses the **initial** vorticity amplitude in every panel, so declining vorticity remains visible instead of being normalized away.
-
-![The wave changes orientation as the background shear moves the pattern. At t=4 its wavevector is shortest and its velocity is close to its maximum, although vorticity has already decreased. By t=12 the wavevector has turned, the stripes are closer together, and the perturbation is weaker. The panels use equal spatial scales and one fixed vorticity color scale. They show field snapshots, not particle trajectories.](figures/02_wave_orientation.png){#fig-orientation fig-alt="Three fixed-window vorticity snapshots show tilted stripes becoming vertical and then tilting the opposite way, with weakening color amplitude."}
-
-These are windows into an unbounded-plane solution. They do not impose walls, and the laboratory field need not be periodic across the top and bottom of a fixed window at arbitrary times. Shearing coordinates can support a different, shear-periodic description, but no boundary-value solver is used here.
-
-Over the full interval, the normal wavelength ranges from about **`{python} f'{summary["shortest_wavelength"]:.3f}'` to `{python} f'{summary["longest_wavelength"]:.3f}'` reference lengths**. The displayed snapshots use $256^2$ samples and have at least **`{python} f'{summary["snapshot_minimum_axis_samples_per_wavelength"]:.0f}'` samples per coordinate wavelength**. These sampling counts concern the displayed fields, not a claim of resolving every possible later time.
-
-## Check the dynamics independently
-
-The analytic solution generates the article's curves. To test it independently, we integrate the projected momentum equation for the two velocity amplitudes:
-
-$$
-\mathbf B'
-=-SB_y\binom{1}{0}
-+\frac{2Sk_xB_y}{K^2}\binom{k_x}{k_y}
--\nu K^2\mathbf B.
-$$
-
-The middle term comes from the pressure required to preserve incompressibility as the wavevector turns. We use classical fourth-order Runge–Kutta, without projecting away any numerical divergence error.
-
-![Halving the time step reduces the independent amplitude error approximately as a fourth-order method predicts. The second panel compares accumulated damping for a changing wavevector with damping at the fixed initial wavevector. Early wavelength growth reduces damping relative to the fixed-wavevector reference; later wavelength shortening strengthens it.](figures/03_time_accuracy_and_damping.png){#fig-accuracy fig-alt="The RK4 amplitude error decreases at fourth order, and the sheared-wave damping eventually overtakes the fixed-wavevector reference."}
-
-The plotted histories have spacing $\Delta t=0.01$. The independent refinement study uses steps from $0.4$ down to $0.025$; at the finest step, its largest vector-amplitude error is approximately **`{python} f'{summary["finest_rk4_amplitude_error"]:.2g}'`**. This is an error against the analytic solution, not an estimate from comparing two equally uncertain simulations.
-
-Further checks differentiate the velocity and pressure in physical space and time, substitute them into the primitive momentum equation, verify the phase-averaged stress, and integrate the energy budget. The [validation record](../../code/d5_shearing_wave/validation.json) and [source notes](source-notes.md) record the numerical conventions.
-
-## What carries over to the paper's pulses?
-
-The example connects three observable quantities: wave orientation controls wavelength, momentum covariance controls shear production, and accumulated squared wavenumber controls viscous attenuation.
-
-The OpenAI pulse construction additionally uses rotating and axial shear, localized envelopes, two admissible flux families, seeding, and corrections. Our two-dimensional transient growth is a different mechanism from that complete construction; its initial wavelength lengthens before shortening. [OpenAI, Sections 7.2–7.3](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
-
-There is no small parameter or source calibration here that turns this Kelvin wave into the paper's actual pulse. It is a fully specified example that explains why “viscosity is dissipative” does not imply “every disturbance decays monotonically.”
-
-The [notebook](../../code/d5_shearing_wave/study.ipynb), [parameters](../../code/d5_shearing_wave/parameters.json), and [CSV data](../../code/d5_shearing_wave/data/) support experiments with different viscosity, shear, and initial orientation. The next deliverable will examine which corrections in the original construction can actually be evaluated and what inputs they require.

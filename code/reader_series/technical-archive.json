@@ -1,0 +1,182 @@
+[
+  {
+    "source": "writing/d10_compressible_vortex/article.qmd",
+    "preserved_as": "writing/d10_compressible_vortex/technical-article.qmd",
+    "sha256": "f6723974df2e72a0f9f4ad87cdefad0067443117dc45d1b7a4e570b6980ef7a8"
+  },
+  {
+    "source": "writing/d10_compressible_vortex/article.html",
+    "preserved_as": "writing/d10_compressible_vortex/technical-article.html",
+    "sha256": "6977a95f0d2fdfdc3f527638d2ec8ef68df2cff19250bb75ff6179e7c663b088"
+  },
+  {
+    "source": "writing/d10_compressible_vortex/article.tex",
+    "preserved_as": "writing/d10_compressible_vortex/technical-article.tex",
+    "sha256": "ab429624fb47bffd9b91709ff1e9a7ce3e52857b1b83dd624d067ca9fd2c5b12"
+  },
+  {
+    "source": "writing/d1_core_size/article.qmd",
+    "preserved_as": "writing/d1_core_size/technical-article.qmd",
+    "sha256": "aad666d2180cb22f620554d1b822f736d264de7643fc821eb015eb62fb4aa458"
+  },
+  {
+    "source": "writing/d1_core_size/article.html",
+    "preserved_as": "writing/d1_core_size/technical-article.html",
+    "sha256": "2d787aa4ddfdb78ddf1c4e998aa06c633176b98a4cd980ca252efb811eda9b88"
+  },
+  {
+    "source": "writing/d1_core_size/article.tex",
+    "preserved_as": "writing/d1_core_size/technical-article.tex",
+    "sha256": "7a79be6ddedfcead412028cd065ab050f3f0e23c33518862957c8feb69e6d054"
+  },
+  {
+    "source": "writing/d2_finite_energy/article.qmd",
+    "preserved_as": "writing/d2_finite_energy/technical-article.qmd",
+    "sha256": "0963e4a65bab9742c4590e575a8983b19c33ecd2c1fd285d10251401ef828b4b"
+  },
+  {
+    "source": "writing/d2_finite_energy/article.html",
+    "preserved_as": "writing/d2_finite_energy/technical-article.html",
+    "sha256": "811e471de0ef6d1615e253fade97c61b70d6725598e2009f87c13f619db3d35f"
+  },
+  {
+    "source": "writing/d2_finite_energy/article.tex",
+    "preserved_as": "writing/d2_finite_energy/technical-article.tex",
+    "sha256": "f643b01075a3d273c7bc5db58353c90c3f1eba8c36c73e75a48dc92814860343"
+  },
+  {
+    "source": "writing/d3_residual/article.qmd",
+    "preserved_as": "writing/d3_residual/technical-article.qmd",
+    "sha256": "e5f4fd0decb837b3c6a38af71380a75ce0ba11486113e5c3707ba927584757ff"
+  },
+  {
+    "source": "writing/d3_residual/article.html",
+    "preserved_as": "writing/d3_residual/technical-article.html",
+    "sha256": "30beba1e5f6a19305b7b3783986b8b6568fc75e2033e8aa8accf3e40761dae62"
+  },
+  {
+    "source": "writing/d3_residual/article.tex",
+    "preserved_as": "writing/d3_residual/technical-article.tex",
+    "sha256": "c5383ca2d8fca0a946c0fe2377f1037875ee11c6926cf75128a62fa543b4cfe5"
+  },
+  {
+    "source": "writing/d4_mean_stress/article.qmd",
+    "preserved_as": "writing/d4_mean_stress/technical-article.qmd",
+    "sha256": "b79b826cb69b5874100311daffbc83f3eea6f42e857a85d787c70139227f7716"
+  },
+  {
+    "source": "writing/d4_mean_stress/article.html",
+    "preserved_as": "writing/d4_mean_stress/technical-article.html",
+    "sha256": "ece004334f297c112ee1d068b525370abb9e60cb29aab3bd343ba21de3b97b36"
+  },
+  {
+    "source": "writing/d4_mean_stress/article.tex",
+    "preserved_as": "writing/d4_mean_stress/technical-article.tex",
+    "sha256": "38f345b4241df9f5f8bc23941a4ab476933027ce769fc96983553ccfb9217ec0"
+  },
+  {
+    "source": "writing/d5_shearing_wave/article.qmd",
+    "preserved_as": "writing/d5_shearing_wave/technical-article.qmd",
+    "sha256": "9523090885a611d9555f3f4756a3b78a96662b9b06775bc14d274967eb256859"
+  },
+  {
+    "source": "writing/d5_shearing_wave/article.html",
+    "preserved_as": "writing/d5_shearing_wave/technical-article.html",
+    "sha256": "6e40b4c96f7fe2cb19fd55335b37d022e79ca52107980bf4a2c47f8080939a52"
+  },
+  {
+    "source": "writing/d5_shearing_wave/article.tex",
+    "preserved_as": "writing/d5_shearing_wave/technical-article.tex",
+    "sha256": "0072f37bc61baac2f99786e6be2ae422db00cfc7976b7057b95e3a3b77ff71d9"
+  },
+  {
+    "source": "writing/d6_axis_pressure/article.qmd",
+    "preserved_as": "writing/d6_axis_pressure/technical-article.qmd",
+    "sha256": "c7832878b28f027706c71bdc99e98a5ac61fb6a0ec8abaaf62ab4e58de83f6d2"
+  },
+  {
+    "source": "writing/d6_axis_pressure/article.html",
+    "preserved_as": "writing/d6_axis_pressure/technical-article.html",
+    "sha256": "6333a8b591ed7082372f17439744e64b141a92caeabacc0caf247cdf4c95c591"
+  },
+  {
+    "source": "writing/d6_axis_pressure/article.tex",
+    "preserved_as": "writing/d6_axis_pressure/technical-article.tex",
+    "sha256": "111996e73af8fe05dfc9200b3e0cf70f8f824e3e59605e089f6768574881cd44"
+  },
+  {
+    "source": "writing/d6_global_axis/article.qmd",
+    "preserved_as": "writing/d6_global_axis/technical-article.qmd",
+    "sha256": "54b0070c8bb1c8780c6e78f551a2e7eb21e04aebd23f398855f93249bc74e24f"
+  },
+  {
+    "source": "writing/d6_global_axis/article.html",
+    "preserved_as": "writing/d6_global_axis/technical-article.html",
+    "sha256": "6b079a7693822e225c7c4911ebb79396357b8a0b907c6c215c9d64ed1308f1eb"
+  },
+  {
+    "source": "writing/d6_global_axis/article.tex",
+    "preserved_as": "writing/d6_global_axis/technical-article.tex",
+    "sha256": "a9279098e56251da346115cd789a33f3d95aef91e06a3d10b221c44705c798de"
+  },
+  {
+    "source": "writing/d6_inner_profile/article.qmd",
+    "preserved_as": "writing/d6_inner_profile/technical-article.qmd",
+    "sha256": "c1feea443ccdf63b37232a440515e97d9bc20b37105dde21e6b9a99750ce46c2"
+  },
+  {
+    "source": "writing/d6_inner_profile/article.html",
+    "preserved_as": "writing/d6_inner_profile/technical-article.html",
+    "sha256": "c578ead44196d6afb71e2e5fd2147fe9d8724dd6736c716abf6d4d9915946ce7"
+  },
+  {
+    "source": "writing/d6_inner_profile/article.tex",
+    "preserved_as": "writing/d6_inner_profile/technical-article.tex",
+    "sha256": "9b388762d6bee1da2e9bd5e2220463497e73a2d78406fca1eb53f057846d31d0"
+  },
+  {
+    "source": "writing/d6_moment_correction/article.qmd",
+    "preserved_as": "writing/d6_moment_correction/technical-article.qmd",
+    "sha256": "8e27e68dbb0b96dd4c48999d251e10ef33fd155fe6e988b4d415a2c8692c6e2f"
+  },
+  {
+    "source": "writing/d6_moment_correction/article.html",
+    "preserved_as": "writing/d6_moment_correction/technical-article.html",
+    "sha256": "04fbc85cc11ebbeb02db30c0aee4f79e61101d0d7b131aa9eb810d8636b04ecf"
+  },
+  {
+    "source": "writing/d6_moment_correction/article.tex",
+    "preserved_as": "writing/d6_moment_correction/technical-article.tex",
+    "sha256": "6a071f00940ba62b5c57b733f3af8c6a607841b2f1ae7c7392116d546cc24260"
+  },
+  {
+    "source": "writing/d7_conditioning/article.qmd",
+    "preserved_as": "writing/d7_conditioning/technical-article.qmd",
+    "sha256": "cd78ba46a260107046e44b69728be0be3221f750fe096016b94b3e020ffb6120"
+  },
+  {
+    "source": "writing/d7_conditioning/article.html",
+    "preserved_as": "writing/d7_conditioning/technical-article.html",
+    "sha256": "827173842142755c9c3f9a67c8aecb37f939a41bd30b30b23c118d2293ef8ab7"
+  },
+  {
+    "source": "writing/d7_conditioning/article.tex",
+    "preserved_as": "writing/d7_conditioning/technical-article.tex",
+    "sha256": "7e05cf45e4115d691caf5f44fd65440e9757d1eb34a3c403b166956b0bd2a30b"
+  },
+  {
+    "source": "writing/d9_regime_map/article.qmd",
+    "preserved_as": "writing/d9_regime_map/technical-article.qmd",
+    "sha256": "d32e7161593ce760efe545556ce72a7656dabf8589f2dcf81355d229bc6f332c"
+  },
+  {
+    "source": "writing/d9_regime_map/article.html",
+    "preserved_as": "writing/d9_regime_map/technical-article.html",
+    "sha256": "1ca049b1e23516b4c5e685c9ae5162d99535e2cebf516558ddfa9f6558be4236"
+  },
+  {
+    "source": "writing/d9_regime_map/article.tex",
+    "preserved_as": "writing/d9_regime_map/technical-article.tex",
+    "sha256": "eca886d0978e5d1770752cd03e1c387a97566c806f93a264a0771f7810127c03"
+  }
+]

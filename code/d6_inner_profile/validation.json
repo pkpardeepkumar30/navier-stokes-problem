@@ -37,5 +37,8 @@
     "PyYAML": "6.0.3"
   },
   "parameters_sha256": "d78ff44cc5d621df48c41a3697f25acb9f762fd8adfc7c30719f4e7d1a8ed5aa",
-  "elapsed_seconds": 325.869
+  "elapsed_seconds": 325.869,
+  "article_source_file": "technical-article.qmd",
+  "article_reading_copy": "technical-article.html",
+  "reader_revision_note": "Original scientific article preserved verbatim as technical-article; the public article now has separate reader-validation.json."
 }

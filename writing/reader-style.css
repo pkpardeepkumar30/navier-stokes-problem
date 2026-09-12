@@ -1,0 +1,15 @@
+:root { --ink:#203044; --accent:#086c79; --muted:#506177; }
+body { color:var(--ink); font-size:1.08rem; line-height:1.8; }
+#quarto-document-content { max-width:780px; }
+#title-block-header { border-bottom:3px solid var(--accent); padding:0 0 1.7rem; margin-bottom:2.2rem; }
+h1.title { font-weight:700; line-height:1.14; letter-spacing:-.025em; }
+.subtitle { color:var(--muted); max-width:42rem; line-height:1.5; }
+h2 { margin-top:2.1rem; font-size:1.65rem; line-height:1.35; }
+h3 { font-size:1.25rem; line-height:1.4; }
+a { color:var(--accent); text-underline-offset:3px; }
+.quarto-figure { margin:2rem 0; }
+figcaption { color:var(--muted); line-height:1.55; font-size:.94rem; }
+.table { font-size:.96rem; line-height:1.5; }
+.table thead { border-bottom:2px solid var(--accent); }
+blockquote { border-left:4px solid var(--accent); padding-left:1rem; color:var(--ink); }
+@media (max-width:600px) { body {font-size:1rem;} h1.title {font-size:2.1rem;} }

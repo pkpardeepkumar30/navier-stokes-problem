@@ -1,222 +1,90 @@
 ---
-title: "How can velocity blow up while energy stays bounded?"
-subtitle: "A taller peak, a smaller region, and the geometry that connects them"
-date: 2026-09-11
+title: "How can speed rise while energy falls?"
+subtitle: "A shrinking region changes the energy calculation"
+date: 2026-09-12
 lang: en
-jupyter: python3
 format:
   html:
     toc: true
     toc-depth: 2
     embed-resources: true
     theme: cosmo
-    css: ../d1_core_size/article.css
+    css: ../reader-style.css
   latex:
     documentclass: article
     fontsize: 11pt
     geometry: margin=25mm
-execute:
-  echo: false
-  warning: false
-  error: false
 ---
 
-```{python}
-#| label: setup
-from nscomp.d2 import load_parameters, reference_model, generate, ratio_table
-p = load_parameters()
-model = reference_model(p)
-summary = generate()
-```
+[Start with the paper map](../paper-map/article.html) · Main route, article 1 of 9
 
-**A velocity can become arbitrarily large while the energy associated with its shrinking core decreases.** The reason is that kinetic energy depends on both the speed and the amount of fluid moving at that speed. If the region of intense motion shrinks sufficiently quickly, its decreasing volume can outweigh the increasing speed squared.
+If a fluid becomes faster and faster, surely its energy must grow without limit. That sounds reasonable until we ask a second question: **how much fluid is moving at that speed?**
 
-This is one of the most useful ideas to understand in the proposed OpenAI Navier–Stokes construction. The paper describes unbounded velocity near a finite time while the full flow's kinetic energy remains uniformly bounded. Its leading core has an even more striking property: the energy in that narrowing region tends to zero. To see why those statements can coexist, we need to look at the geometry as carefully as the velocity. [OpenAI, Theorem 1.1 and Section 2.1](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+A speeding truck carries much more kinetic energy than a speeding grain of sand. Speed matters, but so does mass. The proposed vortex concentrates its fastest motion into a shrinking region. This makes it possible for the largest speed to rise while the energy in that region falls.
 
-We will start with an ordinary function that becomes taller and narrower. Then we will repeat the argument in cylindrical coordinates, insert the paper's radial and axial scales, and check the result using a smooth toy vortex. An animation will show the same changing field in fixed spatial coordinates and in coordinates that shrink with it.
+We will use one familiar energy formula and the volume of a box. Those are enough to understand this first building block.
 
-The goal is to explain why an energy bound alone cannot rule out concentration of velocity. These calculations reproduce that mechanism; they do not verify the proposed Navier–Stokes solution or establish that a real fluid reaches its singular limit. The [first article](../d1_core_size/article.html) examined the separate question of physical fluid assumptions.
+## Start with a small amount of moving material
 
-## Start with a tall, narrow bump
-
-Imagine a rectangular graph with height $H$ and width $w$. The area under the graph is $Hw$. If we instead square its height before integrating, the area is $H^2w$. This second quantity is the useful analogy for kinetic energy, because energy depends on velocity squared.
-
-Now make the rectangle narrower while setting $H=w^{-1/2}$. Its height grows without bound as $w$ approaches zero, but
+The kinetic energy of a mass $m$ moving at speed $v$ is
 
 $$
-H^2w=(w^{-1/2})^2w=1.
+E=\frac12 mv^2.
 $$
 
-The sharp corners are not essential. A smooth Gaussian gives the same result:
+Doubling the speed multiplies the energy by four, **if the mass stays the same**. But suppose the amount of material moving at that speed becomes one eighth as large. Then the energy changes by a factor of $4/8$, which is one half.
 
-$$
-f_\epsilon(x)=\epsilon^{-1/2}
-\exp\left(-\frac{x^2}{2\epsilon^2}\right).
-$$
+| Quantity | First stage | Next stage |
+| --- | --- | --- |
+| Mass in the fast region | 1 | 1/8 |
+| Typical speed there | 1 | 2 |
+| Energy in that region | 1/2 | 1/4 |
 
-Its peak is $\epsilon^{-1/2}$. To integrate its square, substitute $X=x/\epsilon$, so that $dx=\epsilon\,dX$:
+These are arbitrary consistent units for an arithmetic example. We are comparing the contents of a region at two stages, not claiming that one material parcel loses seven eighths of its mass.
 
-$$
-\int_{-\infty}^{\infty}f_\epsilon(x)^2\,dx
-=\epsilon^{-1}\epsilon\int_{-\infty}^{\infty}e^{-X^2}\,dX
-=\sqrt{\pi}.
-$$
+Repeat the pattern. The speed becomes 4, then 8, then 16. The energy becomes $1/8$, then $1/16$, then $1/32$. There is no contradiction: increasingly fast motion is carried by an increasingly small amount of material.
 
-The height keeps growing while the squared integral stays fixed. More generally, replacing $\epsilon^{-1/2}$ by $\epsilon^{-p}$ gives
+![In this simple example, halving three dimensions reduces the volume eightfold. Doubling the speed then leaves half as much energy in the region. Repeating the operation gives the bars on the right.](figures/reader.png){#fig-energy fig-alt="A sequence compares rising relative speeds 1, 2, 4 and 8 with falling relative energies 1, one half, one quarter and one eighth."}
 
-$$
-\int f_\epsilon^2\,dx=\sqrt{\pi}\,\epsilon^{1-2p}.
-$$
+## Where the shrinking mass comes from
 
-For positive $p<1/2$ the integral tends to zero; at $p=1/2$ it stays constant; for $p>1/2$ it diverges. In all three cases the peak diverges. **The outcome depends on how growth and concentration compete.**
+For a fluid of fixed density, the mass in a region is proportional to its volume. A box half as wide, half as deep, and half as high has one eighth of the original volume.
 
-![The first two panels show the smooth bump and its square for three shrinking widths, with p=1/2. Their whole-line squared integrals are equal, although the displayed spatial window is finite. The last panel varies p: the squared integral can decrease, stay fixed, or increase even though every peak grows.](figures/01_tall_and_narrow.png){#fig-bump fig-alt="Gaussian curves become taller and narrower; three amplitude exponents give decreasing, constant, and increasing squared integrals."}
+A cylinder follows the same counting rule when its radius and height are both halved: its circular area becomes one quarter as large, and its height becomes one half as large. Multiply them to get one eighth.
 
-## A vortex has two widths that matter
+The paper's intense core is approximately a narrowing column. Its radius and axial length both shrink. They do so at slightly different rates, but the basic competition is the one we have just calculated:
 
-For a constant-density fluid, kinetic energy is
+**energy in the core depends on shrinking volume times growing speed squared.**
 
-$$
-E=\frac{\rho}{2}\int |\mathbf u|^2\,dV.
-$$
+With the paper's chosen rates, the shrinking volume wins. The core's energy tends to zero, even as the characteristic speed grows. The entire flow has other regions, so controlling total energy requires an additional argument. The core calculation explains compatibility; it does not replace that argument. [Paper, Section 2.1 and Section 10.3](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
 
-The maximum speed asks how large the velocity becomes at its most intense location. Energy adds the squared speed throughout a region. These are different measurements. In mathematical notation, they correspond to the $L^\infty$ norm and, up to the density factor, the square of the $L^2$ norm.
+## A high peak is different from a large total
 
-For a core around a vortex axis, a radial width alone is insufficient. We also need its extent along the axis. Call the two scales $a$ and $b$. In cylindrical coordinates,
+Imagine a crowd viewed from above. “How crowded is the busiest square metre?” and “How many people are in the whole square?” are different questions.
 
-$$
-dV=r\,dr\,d\theta\,dz.
-$$
+Likewise, the largest fluid speed is a local measure. Total energy adds contributions throughout space. A very high velocity peak confined to a sufficiently small region need not dominate that sum.
 
-Set $r=aR$ and $z=bZ$. Then
+This is why an energy bound alone does not automatically provide a bound on the largest speed. A total can stay manageable while one increasingly narrow feature becomes extreme.
 
-$$
-dV=a^2b\,R\,dR\,d\theta\,dZ.
-$$
+The accompanying [animation](animations/core_collapse.html) shows a smooth illustrative bump getting taller and narrower. In a view that continually zooms in and adjusts the velocity scale, its normalized shape stays the same. That is the idea of **self-similarity**: a changing physical pattern can have a stable shape when measured with changing rulers.
 
-The radial scale appears **twice**: once from $dr$ and once from the factor $r$. The axial scale appears once. For a velocity of the form $U\,\mathbf F(R,\theta,Z)$ with a fixed square-integrable shape,
+The animation is a model of concentration. Its arrows and colours do not track the trajectories of individual molecules.
 
-$$
-E=\frac{\rho}{2}U^2a^2b
-\int |\mathbf F|^2 R\,dR\,d\theta\,dZ.
-$$
+## Does a shrinking region violate incompressibility?
 
-The last integral is a fixed shape factor. Thus the useful estimate is
+An incompressible material parcel keeps its volume as it moves. That seems to clash with the shrinking core, until we distinguish the parcel from the region.
 
-$$
-\boxed{E_{\rm core}\ \text{scales like}\ U^2a^2b.}
-$$
+Think of the bright spot made by a moving spotlight. The spot is a region defined by a property—being brightly lit. It does not always contain the same people.
 
-Using $a^3$ would assume equal radial and axial scaling. Using only $a^2$ would omit the shrinking axial extent. Either shortcut can change the conclusion.
+The vortex core is similarly a region defined by intense motion and the construction's changing scales. Fluid can enter and leave it. Its shrinking volume therefore does not mean that the same parcel is being compressed into less space.
 
-## Put in the paper's scales
+In the central flow described by the paper, radial inflow is accompanied by axial outflow. The full geometry is more detailed, but the accounting principle remains: fluid does not accumulate merely because motion points inward in one direction.
 
-The paper writes $\tau=1-t$ for time remaining in its dimensionless variables. Section 2.1 gives
+## Where this fits in the bigger picture
 
-$$
-a\asymp\tau^{1/2},\qquad
-b\asymp\tau^{1/2-h},\qquad
-U\asymp\tau^{-1/2-h}.
-$$
+**This block removes an apparent energy contradiction. It does not yet produce a solution of the fluid equations.** A chosen shape can have the right speed and energy behaviour while requiring an unacceptable force.
 
-Here $U$ represents the dominant azimuthal or axial speed scale. The radial velocity has a weaker stated scale, $O(\tau^{-1/2})$. The parameter $h$ is small and positive; the introduction gives $h<0.01$, and the detailed construction imposes stronger restrictions. The comparison symbol $\asymp$ leaves fixed multiplicative constants unspecified. [OpenAI, Section 2.1, page 4](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+The paper must next build a smooth vortex profile and make its momentum balance work. Continue with [what happens at the centre](../d6_inner_profile/article.html). For a separate calculation of actual length scales under an assumed reference size, see [core size versus speed](../d1_core_size/article.html).
 
-Multiplying the two radial factors and the axial factor gives
+The [technical article](technical-article.html), [notebook](../../code/d2_finite_energy/study.ipynb), and [source notes](source-notes.md) contain the exact scaling formulas, computational checks, and animation conventions.
 
-$$
-V_{\rm core}\asymp a^2b\asymp\tau^{3/2-h}.
-$$
-
-Multiplying by the squared speed then gives
-
-$$
-\boxed{E_{\rm core}\asymp
-\tau^{-1-2h}\tau^{3/2-h}
-=\tau^{1/2-3h}.}
-$$
-
-Because $h<0.01$, the exponent $1/2-3h$ is positive. The energy scale therefore tends to zero as $\tau$ tends to zero. The radial component contributes at most the scale $\tau^{1/2-h}$, which also tends to zero. This explains the core-energy statement on page 4.
-
-For a numerical example, use the limit $h\to0^+$ and compare with a reference stage $\tau_0$. If the remaining time falls to one millionth of its reference value, the model gives:
-
-- The characteristic speed is **1,000 times larger**.
-- Each characteristic width is **1,000 times smaller**.
-- The characteristic volume is **one billionth** of its reference value.
-- The core-energy scale is **one thousandth** of its reference value.
-
-The energy multiplication is easy to check: $1000^2\times10^{-9}=10^{-3}$.
-
-```{python}
-#| output: asis
-print(ratio_table(p))
-```
-
-The table contains ratios, not predictions in metres, seconds, or joules. We use $h=0$ as a limiting example, not as a parameter value realizing the theorem.
-
-![On the left, peak speed increases while volume and energy decrease. Radius, axial width, and energy have the same normalized power in the h=0 limit, so their curves overlap. The right panel shows how small the change in relative slenderness is over a finite time range when using the detailed necessary upper bound on h.](figures/02_core_scaling.png){#fig-scales fig-alt="Normalized speed rises, volume and energy fall, and the relative radius-to-height ratio changes only slightly at the necessary h ceiling."}
-
-## Does a shrinking core violate incompressibility?
-
-Incompressibility means that a parcel made of the **same fluid particles** preserves its volume. If that parcel is squeezed radially, it must extend in another direction. A region selected because the flow is particularly intense is a different object: particles can enter and leave it.
-
-A simple example makes the distinction concrete. Consider the separate affine velocity field
-
-$$
-\mathbf v(x,y,z,t)=
-\left(-\frac{x}{2\tau},-\frac{y}{2\tau},\frac{z}{\tau}\right),
-\qquad \tau=1-t.
-$$
-
-Its divergence is $-1/(2\tau)-1/(2\tau)+1/\tau=0$. Starting at $\tau_0=1$, the exact trajectories are
-
-$$
-x=x_0\sqrt{\tau},\qquad
-y=y_0\sqrt{\tau},\qquad
-z=\frac{z_0}{\tau}.
-$$
-
-The material volume factor is $\sqrt{\tau}\sqrt{\tau}/\tau=1$. Radial lengths shrink and axial lengths grow.
-
-By comparison, the paper's intense-flow core has both $a\to0$ and $b\to0$, with the radius shrinking faster when $h>0$. That region is not a material container. In the paper's central flow, radial inflow and axial outflow are compatible with a shrinking region of intense motion. [OpenAI, Section 2.1 and Figure 1](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
-
-![The left panel follows dimensions of the same material parcel in the affine example: radial squeezing is compensated by axial stretching. The right panel follows the prescribed dimensions of an intense-flow envelope, whose volume decreases. These are two separate models, not trajectories computed from the same velocity field.](figures/03_material_and_core.png){#fig-material fig-alt="A material parcel keeps constant volume as it stretches axially, while a separately defined core envelope decreases in both widths and volume."}
-
-The affine example is used only for this geometric point. It grows with distance and has infinite whole-space energy; it is not our finite-energy vortex model.
-
-## Watch the concentration in two coordinate systems
-
-For the animation we prescribe a smooth, purely azimuthal toy velocity,
-
-$$
-u_\theta(r,z,\tau)=U(\tau)\,R
-\exp\left(\frac{1-R^2-Z^2}{2}\right),
-\qquad R=\frac r{a(\tau)},\quad Z=\frac z{b(\tau)}.
-$$
-
-Its maximum magnitude is $U$, at $R=1$, $Z=0$, and it vanishes smoothly on the axis. We set the other two velocity components to zero. This field is divergence free and has finite energy at each positive $\tau$. Its time dependence is prescribed; it is not an evaluated profile from the paper and does not reproduce the paper's radial inflow or axial outflow.
-
-**[Open the animation with play, pause, and a frame slider](animations/core_collapse.html).**
-
-The left panel holds spatial coordinates fixed. The high-speed region becomes smaller while the peak value rises. The right panel divides positions by the current radial and axial widths, and speed by the current peak. In those variables, the shape stays fixed.
-
-The color scales deliberately measure different quantities: the left uses speed relative to the initial peak on a fixed logarithmic scale; the right uses speed relative to the current peak on a fixed linear scale. Playback takes equal steps in the logarithm of time remaining, so movie seconds are not physical seconds. The axes are stretched to fit each panel; their labeled units specify the geometry.
-
-![Static final frame of the animation. The time remaining is one hundredth of its reference value, the peak is ten times larger, and the toy energy is one tenth as large. The normalized shape in the right panel has stayed unchanged. The initial axial-to-radial width ratio of two is a toy choice; no material trajectories are shown.](figures/04_animation_static.png){#fig-animation fig-alt="Final frame: a concentrated high-speed core in fixed coordinates and an unchanged normalized shape in similarity coordinates."}
-
-The main animation uses the $h\to0^+$ limit. It shows concentration without an increasing aspect ratio. For the paper's positive $h$, the ratio $a/b$ has the additional factor $\tau^h$ and eventually tends to zero. Lemma 4.8 implies the necessary bound $h<e^{-10}$, so the visible change over a finite range can be extremely small. A dramatically lengthening-looking schematic would need explicit exaggeration; the right panel of the scaling figure quantifies the small change instead. [OpenAI, Lemma 4.8, page 35](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
-
-## What the calculation verifies
-
-The Gaussian vortex has an exact whole-space energy:
-
-$$
-E_{\rm toy}=\frac{\rho}{2}e\pi^{3/2}U^2a^2b.
-$$
-
-We independently integrate the same field in Cartesian and cylindrical coordinates. Both agree with the analytic expression. A quadrature refinement study separates integration error from the small omitted Gaussian tail. The [notebook](../../code/d2_finite_energy/study.ipynb) records the comparison and lets readers change the scales.
-
-This exact result concerns the **entire Gaussian toy field**. In applying its scaling argument to the paper, we estimate the **leading core contribution**. The paper's full velocity also includes an exterior, transitions, and corrections. Showing that the leading core energy decreases does not by itself bound those other contributions or prove Theorem 1.1.
-
-What we needed was the speed scale and all three spatial scale factors. What makes the mechanism work is concentration: the volume carrying the largest speeds decreases fast enough to outweigh the growth of speed squared. The computation verifies that balance for explicit smooth examples and reproduces the paper's stated core-energy exponent.
-
-The next task asks a harder question: what acceleration, pressure, viscosity, and forcing are required to produce a prescribed flow? That is where the momentum residual enters. The [source and model notes](source-notes.md) document the assumptions behind this installment.

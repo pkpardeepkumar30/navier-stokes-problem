@@ -1,0 +1,123 @@
+---
+title: "A tiny parameter band that a coarse vortex calculation misses"
+subtitle: "D6 stage D: bounding the axis amplitude and checking the inner exit"
+date: 2026-09-12
+lang: en
+jupyter: python3
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+    theme: cosmo
+    css: ../d1_core_size/article.css
+  latex:
+    documentclass: article
+    fontsize: 11pt
+    geometry: margin=25mm
+execute:
+  echo: false
+  warning: false
+  error: false
+---
+
+```{python}
+#| label: setup
+from nscomp.d6d import load_parameters, generate
+p = load_parameters()
+summary = generate()
+```
+
+**A locally accurate vortex profile can still fail the conditions needed to connect it to the exterior. We found such a failure in a narrow parameter band, then recovered the required signs at the tested points by increasing the radial scale parameter. We also constructed an analytic bound that keeps the axis amplitude under control.**
+
+The [previous installment](../d6_axis_pressure/article.html) computed pressure at the axis from the paper's outer radial schedule. That supplied a meaningful input to the inner solver. It did not establish that the resulting inner profile was suitable everywhere along the axis.
+
+There are two reasons to check further. First, the axis amplitude depends exponentially on a large parameter, so a normalization that works at one location can be unsuitable elsewhere. Second, the paper requires specific shear and source inequalities before the inner field can be continued outward. Solving the local differential equations does not automatically enforce those inequalities.
+
+This study addresses both issues. It supplies a conservative analytic amplitude bound and tests the inner conditions on a broad grid and two finer grids near a critical axis location. The distinction between a bound and a numerical test remains important: the amplitude estimate covers an entire specified complex neighborhood, while the inner exit results cover the declared sample points.
+
+## Why a logarithm is the useful quantity
+
+The normalized axis amplitude is
+
+$$
+g(\eta)=\frac{1}{C}\exp\!\left(\Lambda S(\eta)\right),
+\qquad
+S(\eta)=\int_0^\eta\zeta(w)\,dw.
+$$
+
+Here $\eta$ is the axial similarity parameter, $\Lambda$ sets the radial scale, and $C$ is an amplitude normalization chosen afterward. The source defines
+
+$$
+\zeta=-\frac{LH_*}{H_*^2+\sigma^2},\qquad
+H_*=(1/2-h)\eta+(1-\eta^2)(4\eta+j),\qquad
+L=1-2h\eta^2.
+$$
+
+The small parameter $h$ controls the collapse scaling, $j$ offsets the axial velocity at the axis, and $\sigma$ smooths the amplitude variation near a zero of $H_*$. That zero lies slightly below $\eta=0$, and the amplitude can grow rapidly nearby. Storing $C$ or the exponential directly as ordinary floating-point numbers is therefore impractical. We instead store
+
+$$
+\log g=\Lambda S-\log C.
+$$
+
+The code retains extra arithmetic digits when forming this expression. It also evaluates the rational integrand's antiderivative through its complex poles, with an independent split quadrature check. This avoids missing the narrow variation in the integrand.
+
+## An amplitude bound over an entire neighborhood
+
+The paper requires $C$ to dominate the unnormalized amplitude on a complex neighborhood of the real interval. This complex extension is a device for controlling derivatives; it does not introduce a physically complex-valued fluid. [OpenAI, Equation (B.16), pages 147–148](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+
+We choose a thin rectangle around $[-1,1]$ and bound the integrand throughout it. Explicit lower bounds on its denominator factors exclude poles of $\zeta$ throughout the rectangle. A straight integration path then bounds $|S|$, giving a sufficient choice of $\log C$.
+
+The bound is deliberately conservative. Its arithmetic uses exact rational numbers formed from the declared decimal inputs, and the exported value of $\log C$ is rounded upward. It does not depend on a grid finding the largest amplitude. The [source notes](source-notes.md) give the complete inequalities.
+
+![Left: the axis amplitude is represented through its logarithm. Right: a local view of the complex neighborhood and its nearest integrand poles, with both coordinates scaled by sigma/H_star'. The amplitude bound uses analytic estimates over the entire rectangle, rather than these plotted pole locations.](figures/01_logarithmic_amplitude_bound.png){#fig-amplitude fig-alt="The logarithmic amplitude remains finite, and the chosen complex strip lies between the nearest poles of the rational axis integrand."}
+
+For the selected inputs the rectangle's imaginary half-width is about **`{python} f'{summary["complex_half_width"]:.3g}'`**. The resulting normalization satisfies the source's amplitude inequality. This single estimate does not establish the other parameter choices or the complete vortex construction.
+
+## The failure appears near a shifted critical location
+
+The inner profile must have positive angular shear $p_1$. The source also gives a lower bound on its angular source $S_q$. At the outer edge of the inner region it requires
+
+$$
+p_1+\frac{p_2^2}{p_1}>2+c_{\mathrm{ex}},
+$$
+
+where $p_2$ measures the axial contribution. We test the declared threshold $2.2$, corresponding to $c_{\mathrm{ex}}=0.2$. [Equations (B.17)–(B.19), pages 148–150](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+
+A broad grid gives an incomplete picture. Near the zero $\eta_H$ of $H_*$, the coupled pressure and axial flow introduce a still narrower scale,
+
+$$
+\Delta_\eta=\frac{Z_*(\eta_H)}{\Lambda H_*'(\eta_H)}.
+$$
+
+Here $Z_*$ is the paper's axial source expression evaluated at the axis. We use this scale to place additional points at $\eta=\eta_H+c\Delta_\eta$.
+
+To compare radial scale choices against the imposed pressure, we use $\Lambda/P_*^2$, where $P_*^2$ sets the magnitude of the outer pressure input computed in stage C. The choice $\Lambda/P_*^2=10^{16}$ gives negative $p_1$ at some of the targeted points: these finite parameters miss a required condition. Increasing radial degree and precision preserves that failure in the local calculation. At the larger declared value $\Lambda/P_*^2=10^{24}$, the sampled signs recover.
+
+![Both panels resolve displacement from the zero of H_star in units of the pressure-dependent width for each parameter choice. The smaller Lambda produces negative shear and a negative source margin in part of the band. The larger Lambda passes these sampled signs. The vertical axes use a symmetric logarithmic scale to retain both signs.](figures/02_hidden_parameter_band.png){#fig-band fig-alt="A targeted narrow-band scan reveals sign failures for the smaller radial scale parameter and positive sampled margins for the larger one."}
+
+For the larger value, $\Delta_\eta$ is approximately **`{python} f'{summary["pressure_width"]:.3g}'`**. All **`{python} summary["critical_coordinate_count"]`** coordinates in this finest scan collapse to **`{python} summary["binary64_distinct_critical_coordinates"]`** distinct value when converted to binary64. We keep them as high-precision decimals throughout the calculation.
+
+This is a dimensionless width in the similarity parameter. It is not an inferred molecular distance. Its computational message is that increasing radial resolution alone cannot recover information already lost when storing the axial coordinates.
+
+## Check the exit without overflowing the axial term
+
+Near the zero of $H_*$, the angular contribution can be very small. The source's exit argument uses the axial contribution there; away from that region the angular contribution can suffice.
+
+The axial ratio can be enormous because it contains the inverse of the tiny amplitude $g$. We evaluate its logarithm and report a useful lower bound: where the angular term is used alone, we retain $p_1$; in the complementary region, we add $\min(p_2^2/p_1,3)$. Capping a nonnegative term this way reduces the exit expression, so passing with this lower bound is sufficient at that point.
+
+![Left: the angular contribution and a stated lower bound on the exit expression across the wider critical region. Right: radial-degree convergence at a separate declared point. The exit results are pointwise numerical checks; the amplitude bound above has a different, analytic scope.](figures/03_sampled_exit_and_convergence.png){#fig-exit fig-alt="The angular and axial contributions provide complementary sampled exit margins, while a separate radial-degree scan checks equation consistency and profile convergence."}
+
+The smallest reported exit lower bound is **`{python} f'{summary["min_exit_lower"]:.3f}'`**, exceeding $2.2$. The normalized swirl remains positive at all declared profile samples. Replacing the 128-node pressure input with its 256-node counterpart changes the selected critical source margin by about **`{python} f'{summary["pressure_Sq_margin_change"]:.2g}'`**.
+
+These checks support the reported numerical observations. They do not supply a bound between every pair of sample points or a rigorous remainder estimate for the inner series.
+
+## What this adds to D6
+
+We now have an explicit complex-neighborhood amplitude bound, a logarithmic implementation, and targeted numerical evidence for the inner exit conditions. We also have a concrete example of why a locally converged solution and a coarse parameter scan can be insufficient.
+
+The remaining work includes uniform control of the inner approximation, the outer construction's parameter and stress conditions, annular matching, and the first correction in the paper's time-scale expansion. The [implementation ledger](../d6_moment_correction/implementation-ledger.md) tracks those dependencies.
+
+This is still background-profile work. A useful conceptual comparison for the later oscillatory stage is convex integration: oscillations can create an averaged momentum flux that cancels a residual stress. That is our comparison of mechanisms; the paper also relies on dynamical amplification and viscous decay. D6's present calculations prepare the background and its corrections before that oscillatory stage. [Paper, pages 2–5 and Sections 7–9](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+
+The [executed notebook](../../code/d6_global_axis/study.ipynb), [parameters](../../code/d6_global_axis/parameters.json), and [data](../../code/d6_global_axis/data/) reproduce the study.

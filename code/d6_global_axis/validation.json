@@ -48,5 +48,8 @@
     "scientific_and_notebook_checks": "retained from the completed build; equations and numerical inputs unchanged; denominator-bound metadata field renamed and project tests repeated",
     "verify_only_after_completed_renders": true,
     "elapsed_seconds": 0.051
-  }
+  },
+  "article_source_file": "technical-article.qmd",
+  "article_reading_copy": "technical-article.html",
+  "reader_revision_note": "Original scientific article preserved verbatim as technical-article; the public article now has separate reader-validation.json."
 }
