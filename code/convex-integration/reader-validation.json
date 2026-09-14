@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "audience": "General public; mostly high-school mathematics",
+  "article_source_file": "article.qmd",
+  "rendered_formats": [
+    "html",
+    "latex"
+  ],
+  "source_sha256": "6eac394bb456d0501c368756d3a4ee1f6b1b7f2d4b5e03d04f9013f46cfa6002",
+  "html_sha256": "261db64a88ffd8f80d331b814cab03d1391e180c4299543f8f0c87695e4581a4",
+  "latex_sha256": "f7dec4d7eae1446d61a41f30590f696a6af00e2a80f58e97de47442b9df96fc7",
+  "reader_png_sha256": "7121d69cfae7dbb570ee599f805aaff2c9980cd74f38944bfe323af6bab21a44",
+  "reader_svg_sha256": "c85f89c0906a4ff7ee5d9bf539f42dabe442452a36780521fdc707f2cc5958ea",
+  "word_count_approximate": 1507,
+  "embedded_figures": 1,
+  "figure_alt_text_present": true,
+  "embedded_figure_matches_current_png": true,
+  "local_links_checked": 6,
+  "latex_figure_path_resolves": true,
+  "context_section_present": true,
+  "advanced_notation_guardrail": "passed; not a readability score",
+  "new_numerical_research": false,
+  "browser_visual_review": false,
+  "pdf_compiled": false,
+  "technical_material_preserved": false
+}

@@ -1,73 +1,83 @@
-# Navier-Stokes computational companion
+# A reader's guide to the OpenAI Navier–Stokes paper
 
-Reproducible explanations of a proposed forced incompressible Navier-Stokes blow-up construction, with a separate assessment of its physical interpretation.
+**Start with [the paper map](writing/paper-map/article.html).**
+It explains the goal, the main building blocks, how they connect, and where
+each section and appendix belongs.
 
-## First deliverable
+The public articles use arithmetic, graphs, area, and slope to explain the
+ideas. Each starts with its question, introduces the concepts through a
+simple example, and ends with its role in the whole construction. The
+paper's forced setting and the difference between a mathematical model and
+a real fluid are stated explicitly.
 
-**How small does a collapsing vortex become?**
+## Main reading route
 
-D1 is complete and accepted. See the [review record](writing/d1_core_size/review-notes.md) for completed checks and rendering limits.
+| Order | Article | The idea it contributes |
+| --- | --- | --- |
+| 1 | [How can speed rise while energy falls?](writing/d2_finite_energy/article.html) | Shrinking mass can outweigh growing speed squared. |
+| 2 | [What happens at the centre of a vortex?](writing/d6_inner_profile/article.html) | A regular inner shape starts the construction. |
+| 3 | [Why centre pressure depends on the outside](writing/d6_axis_pressure/article.html) | The inner and outer flow must fit the same pressure balance. |
+| 4 | [The missing push: what a residual means](writing/d3_residual/article.html) | The force calculation identifies the repair target. |
+| 5 | [Convex integration: useful fine ripples](writing/convex-integration/article.html) | Fine local slopes can satisfy stronger conditions while preserving a coarse shape. |
+| 6 | [Zero average, nonzero momentum transport](writing/d4_mean_stress/article.html) | Opposite fluctuations can produce a useful averaged stress. |
+| 7 | [How a small wave grows, then fades](writing/d5_shearing_wave/article.html) | Shear supplies energy; viscosity controls the later decay. |
+| 8 | [How local repairs preserve important totals](writing/d6_moment_correction/article.html) | Weighted sums connect local adjustments to global requirements. |
+| 9 | [How the pieces become one complete flow](writing/completing-the-flow/article.html) | Scheduling, repeated repair, summation, and localization finish the argument. |
 
-- [Read the article](writing/d1_core_size/article.html)
-- [Article source](writing/d1_core_size/article.qmd) and [generated LaTeX](writing/d1_core_size/article.tex)
-- [Executed notebook](code/d1_core_size/study.ipynb)
-- [Source and calibration notes](writing/d1_core_size/source-notes.md)
-- [Parameters](code/d1_core_size/parameters.json), [CSV data](code/d1_core_size/data/), and [validation record](code/d1_core_size/validation.json)
+The convex-integration chapter explains both the rapid shear modification
+in Appendix C and the related stress-realization idea in the later pulse
+construction. It also explains why the viscous dynamics and derivative
+estimates still matter.
 
-The first study evaluates an anchored scaling surrogate, not a CFD solution. With an illustrative 1 mm / 1 m/s reference pair, the inverse-law limit gives approximately 0.334 nm at 0.01c and 0.0334 nm at 0.1c. These are formal extrapolations; no physical air/water realization has been established, and the displayed fluid-model screens are crossed much earlier.
+## Optional side routes
 
-## Following installments
+For physical interpretation:
 
-| Deliverable | Reading copy | Computational notebook | Status |
-| --- | --- | --- | --- |
-| D2: finite energy and collapse geometry | [Article](writing/d2_finite_energy/article.html), [animation](writing/d2_finite_energy/animations/core_collapse.html) | [Notebook](code/d2_finite_energy/study.ipynb) | Complete |
-| D3: the momentum residual | [Article](writing/d3_residual/article.html) | [Notebook](code/d3_residual/study.ipynb) | Complete for the explicit exterior and toy comparison |
-| D4: zero-mean motion and mean stress | [Article](writing/d4_mean_stress/article.html) | [Notebook](code/d4_mean_stress/study.ipynb) | Complete |
-| D5: shear growth and viscous decay | [Article](writing/d5_shearing_wave/article.html) | [Notebook](code/d5_shearing_wave/study.ipynb) | Complete for the Kelvin-wave example |
-| D6 stage A: finite moment correction | [Article](writing/d6_moment_correction/article.html) | [Notebook](code/d6_moment_correction/study.ipynb) | Stage A complete; full PDE comparison pending |
-| D6 stage B: leading inner profile | [Article](writing/d6_inner_profile/article.html) | [Notebook](code/d6_inner_profile/study.ipynb) | Local engine validated; source pressure supplied in stage C |
-| D6 stage C: source axis pressure | [Article](writing/d6_axis_pressure/article.html) | [Notebook](code/d6_axis_pressure/study.ipynb) | Ideal-schedule pressure and local handoff; global construction pending |
-| D6 stage D: axis amplitude and inner exit | [Article](writing/d6_global_axis/article.html) | [Notebook](code/d6_global_axis/study.ipynb) | Analytic amplitude bound and sampled exit checks; uniform inner control pending |
-| D7: conditioning and retained precision | [Article](writing/d7_conditioning/article.html) | [Notebook](code/d7_conditioning/study.ipynb) | Complete for the isolated moment operator |
-| D9: physical regime map | [Article](writing/d9_regime_map/article.html) | [Notebook](code/d9_regime_map/study.ipynb) | Complete for declared scale scenarios |
-| D10: compressible vortex equilibrium | [Article](writing/d10_compressible_vortex/article.html) | [Notebook](code/d10_compressible_vortex/study.ipynb) | Complete for the stationary Euler comparison |
+1. [How small does a faster vortex become?](writing/d1_core_size/article.html)
+2. [The vortex radius is not the only small length](writing/d9_regime_map/article.html)
+3. [What changes when the gas can change density?](writing/d10_compressible_vortex/article.html)
 
-Each article folder contains source and review notes documenting its checks and limits.
+For understanding numerical checks:
 
-## Two main folders
+- [Why checking a few points is not enough](writing/d6_global_axis/article.html)
+- [What computer digits can hide](writing/d7_conditioning/article.html)
 
-```text
-code/
-  src/nscomp/           reusable Python functions
-  tests/               scientific validation checks
-  d1_core_size/        notebook, inputs, data, provenance, validation
-  d2_finite_energy/   same layout for the energy study
-  d3_residual/        same layout for the residual study
-  d4_mean_stress/     same layout for the stress study
-  d5_shearing_wave/   same layout for the wave study
-  d6_moment_correction/  finite correction substep and dependency ledger
-  d6_inner_profile/  local leading-inner solver and convergence studies
-  d6_axis_pressure/  ideal-schedule integral and inner-solver handoff
-  d6_global_axis/    complex amplitude bound and targeted exit checks
-  d7_conditioning/   precision and sensitivity experiments
-  d9_regime_map/     gas/liquid screens and scale audit
-  d10_compressible_vortex/  density, pressure, and radial convergence
-  build.py             reproducible build
-writing/
-  d1_core_size/        article, LaTeX source, source notes, figures
-  d2_finite_energy/   article, figures, and offline animation
-  d3_residual/        article and figures
-  d4_mean_stress/     article and figures
-  d5_shearing_wave/   article and figures
-  d6_moment_correction/  article, figures, and implementation ledger
-  d6_inner_profile/  leading-inner article, figures, and scope audit
-  d6_axis_pressure/  pressure article, figures, and source audit
-  d6_global_axis/    amplitude/exit article, figures, and bound derivation
-  d7_conditioning/   article, figures, and research decision
-  d9_regime_map/     article, figures, and model selection
-  d10_compressible_vortex/  equilibrium comparison and research decision
+These side routes are optional on a first reading of the paper's mechanism.
+
+## Supporting mathematics and computations
+
+All twelve original computational articles are preserved as
+`technical-article.qmd`, `technical-article.html` and `technical-article.tex`
+in their existing writing folders. Each public article links to its
+technical version, notebook and source notes where available.
+
+The notebooks and scientific data retain their stated scopes. They do not
+constitute a reconstruction or independent verification of the whole proof.
+The public guide explains the remaining blocks without requiring us to
+implement a full corrected PDE solution first.
+
+We are currently prioritizing explanation for the general public.
+New research, novelty claims and further solver development are paused.
+The current priorities and historical computational record are in
+[deliverables.txt](deliverables.txt); the topic catalogue is in
+[project-ideas.txt](project-ideas.txt).
+
+## Files and rebuilding
+
+`writing/` contains the editable Quarto articles, rendered HTML, LaTeX source,
+notes and figures. `code/` contains the notebooks, existing scientific
+modules, reader-figure script, and validation records.
+
+Build the public series with:
+
+```powershell
+& code/.venv/Scripts/python.exe code/render_readers.py
 ```
 
-Each new piece gets matching `dN_<topic>/` folders under code and writing. Repository-wide planning stays in [project-ideas.txt](project-ideas.txt) and the ordered [deliverables.txt](deliverables.txt).
+See [code/README.md](code/README.md) and
+[reader-series reproduction notes](code/reader_series/README.md).
+Open an HTML file locally for the formatted reading copy. LaTeX source is
+exported; PDF compilation is a separate step.
 
-See [code/README.md](code/README.md) for environment setup and the one-command build. Open the HTML file locally for the formatted reading copy; GitHub's file viewer displays HTML source rather than serving the article.
+The [series review notes](writing/paper-map/review-notes.md) record the
+coverage, completed checks and remaining browser/PDF review limits.

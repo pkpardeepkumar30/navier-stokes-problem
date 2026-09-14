@@ -99,4 +99,3 @@ A few displayed small numbers cannot establish all of that. But the elementary s
 The next blocks explain how fine structure helps meet local constraints and how oscillating motion supplies averaged transport. Continue with [convex integration, from slopes to fluid motion](../convex-integration/article.html).
 
 The [technical article](technical-article.html), [notebook](../../code/d3_residual/study.ipynb), and [source notes](source-notes.md) contain the actual momentum terms and the two computational examples.
-

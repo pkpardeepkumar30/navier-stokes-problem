@@ -105,4 +105,3 @@ These are conclusions of the paper's complete estimates. Our cartoons and isolat
 **The early blocks create the mechanism. The finishing blocks make it compatible with the exact statement the paper is trying to prove.** Scheduling limits selected interactions; repeated repair improves the residual; summation controls the infinitely many stages; localization and extension give the required smooth force.
 
 You can now return to the [paper map](../paper-map/article.html) and attach a purpose to every major section. For the separate question of what a shrinking vortex could mean in a real fluid, continue with [core size and molecular scales](../d1_core_size/article.html). The [source notes](source-notes.md) give the precise locations behind this overview.
-

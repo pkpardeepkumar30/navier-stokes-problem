@@ -1,0 +1,51 @@
+{
+  "classification": "Arithmetic illustrations, conceptual diagrams, or redisplays of existing study results",
+  "energy": {
+    "relative_speed": [
+      1.0,
+      2.0,
+      4.0,
+      8.0
+    ],
+    "relative_mass": [
+      1.0,
+      0.125,
+      0.015625,
+      0.001953125
+    ],
+    "relative_energy": [
+      1.0,
+      0.5,
+      0.25,
+      0.125
+    ]
+  },
+  "pressure_initial_branch_percent": 75.42336500404308,
+  "gas_centre_density_percent": [
+    98.64639585304248,
+    88.21293361668084,
+    58.01271342896885
+  ],
+  "source_data_sha256": {
+    "code/d5_shearing_wave/data/time_history.csv": "12aa6c03e6a31b52a28aaa0779b7290490817b31b1a70c4e6e99f2af3e879a28",
+    "code/d6_axis_pressure/data/summary.json": "5bc094dc69d4b9167cc5d1db2abe44577868984981de1e9430df9a07fcf975f7",
+    "code/d10_compressible_vortex/data/summary.json": "0178604449fbb3621163072d62103c2d2e681d92488736ca66959023e547035d"
+  },
+  "generated_folders": [
+    "paper-map",
+    "completing-the-flow",
+    "convex-integration",
+    "d2_finite_energy",
+    "d6_inner_profile",
+    "d6_axis_pressure",
+    "d3_residual",
+    "d4_mean_stress",
+    "d5_shearing_wave",
+    "d6_moment_correction",
+    "d6_global_axis",
+    "d7_conditioning",
+    "d1_core_size",
+    "d9_regime_map",
+    "d10_compressible_vortex"
+  ]
+}

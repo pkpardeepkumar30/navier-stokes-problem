@@ -1,12 +1,24 @@
-PROJECT IDEAS: COMPUTATIONAL AND PHYSICAL INTERPRETATION OF THE PROPOSED OPENAI NAVIER-STOKES BLOW-UP CONSTRUCTION
+PROJECT IDEAS: A GENERAL-PUBLIC GUIDE TO THE OPENAI NAVIER-STOKES PAPER
 
 Purpose
 -------
-This file collects blog posts, computational notes, and research directions arising from the proposed OpenAI forced incompressible Navier-Stokes blow-up construction. The audience is computational scientists, engineers, and advanced undergraduate students.
+Current user direction (2026-09-12): make the paper accessible to the general public, using mostly high-school mathematics and very little higher engineering mathematics. Explanation is the present goal. Novel research, new full-profile calculations and further solver development are paused.
 
-The central contribution is a reproducible explanation: readers should be able to follow a derivation, change parameters, reproduce a figure, and identify the limits of its physical interpretation.
+The reader should understand the question each proof block answers, the elementary idea behind it, and how it fits the whole paper. The existing computations are supporting material; readers should not need to run code or understand advanced notation to follow the main narrative.
 
-Task numbers are stable topic identifiers, not execution order. See deliverables.txt for the preferred order, dependencies, expected outputs, and completion criteria. The user has reviewed the plan and authorized D1, the core-size and physical-validity study in Task 8.
+Start with writing/paper-map/article.html. Follow its nine-article main route, including the new convex-integration and completion chapters. The physical and numerical side routes are optional. Task numbers below remain historical topic identifiers, not the current execution order; deliverables.txt records the current educational priorities.
+
+Current editorial requirements
+------------------------------
+- Start every article with the question, why it matters, and what the reader will learn.
+- Explain each concept before using its technical name; prefer arithmetic, signed numbers, graphs, areas, and slopes.
+- Use one clear example or visual to carry each central idea.
+- Keep advanced derivations, parameter hierarchies, and convergence reports in the linked technical articles and notebooks.
+- End by stating explicitly what the concept means and where it fits in the larger construction.
+- Make convex integration a central explanation, including both the fine-shear modification of Appendix C and its connection to oscillatory stress realization. Preserve the role of the paper's actual viscous pulse dynamics.
+- Cover Sections 1-10 and Appendices A-C in a single paper map; explain scheduling, mean corrections, infinite summation and smooth-force localization as well as the core and waves.
+- Separate the main mathematical story from optional physical-model and computer-precision discussions.
+- Preserve existing computations and their limitations; do not require novel computations as a prerequisite for explaining the paper.
 
 Scientific framing and scope
 ----------------------------
@@ -17,11 +29,11 @@ Scientific framing and scope
 - Separate educational reproduction from original research. Research directions need a specific unanswered question, a comparison or benchmark, and evidence beyond reproducing an imposed power law.
 - Treat asymptotic formulas as asymptotic; expose profile constants, admissible parameters, and the range in which the approximation is being used.
 
-General pedagogical style for all explanatory pieces
+Supporting technical style and historical topic catalogue
 ----------------------------------------------------
-Each section should follow this structure:
+The earlier computational plan below remains useful as supporting material. Its detailed expectations do not override the general-public reading requirements above. Technical explanations may follow this structure:
 1. State the big mathematical/physical goal.
-2. Introduce a high-school or undergraduate engineering-mathematics analogy.
+2. Introduce a high-school analogy; make any higher mathematics optional.
 3. Present a simple toy model or derivation.
 4. Return to the exact construction/result used in the OpenAI paper.
 5. Add a computational visualization or quantitative numerical check where useful.

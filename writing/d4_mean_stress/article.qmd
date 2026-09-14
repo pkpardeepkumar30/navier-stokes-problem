@@ -103,4 +103,3 @@ Our numerical examples use a related construction to check zero mean, the desire
 That is a central bridge between the convex-integration viewpoint and the paper's pulse construction. But the waves also need a source of energy and a controlled way to fade. Continue with [how a small wave grows and then dies away](../d5_shearing_wave/article.html).
 
 The [technical article](technical-article.html), [notebook](../../code/d4_mean_stress/study.ipynb), and [source notes](source-notes.md) contain the explicit waves, averaging conventions, and computational checks.
-

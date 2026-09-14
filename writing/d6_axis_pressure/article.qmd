@@ -91,4 +91,3 @@ Those implementation details belong in the supporting notebook. The reader-level
 Even after this match, a proposed flow may leave an unacceptable force imbalance. Continue with [the missing push and the momentum residual](../d3_residual/article.html).
 
 The [technical article](technical-article.html), [notebook](../../code/d6_axis_pressure/study.ipynb), and [source notes](source-notes.md) document the source schedule, its pressure calculation, and the remaining construction conditions.
-

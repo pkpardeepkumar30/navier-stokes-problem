@@ -14,4 +14,4 @@ code/.cache/
 **/*.toc
 **/*.synctex.gz
 writing/**/article_files/
-
+writing/**/technical-article_files/

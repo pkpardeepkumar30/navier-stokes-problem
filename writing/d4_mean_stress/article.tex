@@ -165,7 +165,7 @@
 \@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
 \makeatother
 \hypersetup{
-  pdftitle={How can a velocity with zero average push a flow?},
+  pdftitle={How can motion with zero average transport momentum?},
   pdflang={en},
   colorlinks=true,
   linkcolor={blue},
@@ -175,392 +175,214 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{How can a velocity with zero average push a flow?}
+\title{How can motion with zero average transport momentum?}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{From sine waves to momentum transport, with a reproducible
-experiment}
+\subtitle{Two opposite signs can produce the same useful effect}
 \author{}
-\date{2026-09-11}
+\date{2026-09-12}
 \begin{document}
 \maketitle
 
 
-\textbf{A velocity fluctuation can average to zero and still carry
-momentum. If that transport varies from place to place, it contributes a
-force to the mean flow.} The reason is that momentum transport depends
-on products of velocities: reversing both factors leaves their product
-unchanged.
+\href{../paper-map/article.html}{Start with the paper map} · Main route,
+article 6 of 9
 
-This answers a question left by the
-\href{../d3_residual/article.html}{previous article}. There we
-calculated the force needed to sustain a prescribed vortex. Some terms
-balanced, while others left a residual. Could additional fluid motion
-supply part of the missing transport even if its average velocity
-vanished?
+Imagine a road between two warehouses. Ten loaded trucks travel north
+while ten empty trucks return south. The average direction of truck
+travel can be zero, yet goods have clearly moved north.
 
-That is the role of the oscillatory corrections in the proposed OpenAI
-construction. Its pulse families supply averaged radial fluxes of
-angular and axial momentum.
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-Section 2.2 and Proposition 7.5}
+Something similar happens in a fluid. Opposite motions need not cancel
+the quantity they carry. Small-scale velocity variations can have zero
+average and still produce a useful transport of momentum.
 
-We will make the underlying mechanism visible in three steps. First,
-average a sine wave and its square. Then construct an incompressible
-velocity with a chosen average momentum flux. Finally, let its amplitude
-vary across space and calculate the resulting mean force, including the
-part that pressure can cancel. All examples use a dimensionless periodic
-square, so the algebra and the numerical checks can be inspected without
-a Navier--Stokes solver.
+This is the essential reason the paper's oscillations can help its
+background vortex. We will use signed numbers and multiplication to make
+the idea precise.
 
-\subsection{Opposite motions need not cancel their
-transport}\label{opposite-motions-need-not-cancel-their-transport}
+\subsection{Velocity and transported cargo answer different
+questions}\label{velocity-and-transported-cargo-answer-different-questions}
 
-Imagine a fluid parcel moving upward while carrying more horizontal
-momentum than its surroundings. Another parcel moves downward while
-carrying less. The mean vertical velocity can be zero, but both motions
-contribute to the same net upward transport of horizontal momentum: in
-the second parcel, both deviations have the opposite sign.
+Averaging the truck velocities asks about their net movement. Counting
+transported goods asks how much cargo crosses a boundary and in which
+direction.
 
-For a fluctuation \(\mathbf w=(w_x,w_y)\), that transport is measured by
-\(w_xw_y\). The simplest arithmetic example is
+For a fluid, the relevant cargo is \textbf{momentum}: mass times
+velocity. Fluid crossing an imaginary surface carries momentum with it.
 
-\[
-\langle\sin\phi\rangle=0,\qquad
-\langle\sin^2\phi\rangle=\frac12,
-\]
+This gives a product. One velocity component describes motion across the
+surface. Another describes the momentum being carried along a chosen
+direction. For constant density, their product gives the corresponding
+momentum flux per unit density.
 
-where the brackets mean a uniform average over one complete period.
-Cancellation of the first average says nothing about cancellation of the
-second.
+``Flux'' simply means an amount passing through a surface per unit area
+and time. The direction of both the crossing and the transported
+momentum matters.
 
-Collect the velocity products in a matrix:
+\subsection{Try the arithmetic with two
+fluctuations}\label{try-the-arithmetic-with-two-fluctuations}
 
-\[
-Q=\langle\mathbf w\otimes\mathbf w\rangle
-=\begin{pmatrix}
-\langle w_x^2\rangle&\langle w_xw_y\rangle\\
-\langle w_yw_x\rangle&\langle w_y^2\rangle
-\end{pmatrix}.
-\]
-
-Here \(Q\) is the momentum covariance per unit density. Its diagonal
-entries measure squared fluctuations; its off-diagonal entries measure
-correlated transport. In dimensional variables, \(Q\) has units of
-velocity squared. Some engineering conventions call \(-\rho Q\) the
-Reynolds stress. We retain the positive covariance definition and write
-the force sign explicitly.
-
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio,alt={A sine averages to zero, its square averages to one half, and the constructed velocity has covariance entries 2, 1, 1, 2.}]{figures/01_zero_mean_nonzero_stress.png}}
-
-}
-
-\caption{\label{fig-averages}A sine has zero mean while its square has
-mean one half. The matrix on the right is the numerically averaged
-covariance of the two-wave example below, which matches its prescribed
-target. The scalar panels show the elementary averaging identity, not
-the two-component velocity field itself.}
-
-\end{figure}%
-
-\subsection{Build a velocity with the stress we
-want}\label{build-a-velocity-with-the-stress-we-want}
-
-Choose the target
-
-\[
-Q_{\rm target}=
-\begin{pmatrix}2&1\\1&2\end{pmatrix}.
-\]
-
-Can an incompressible velocity produce it? On \(0\le x,y<2\pi\), take
-
-\[
-\mathbf w=
-\sqrt3\binom{1}{1}\sin[8(x-y)]
-+\binom{1}{-1}\sin[9(x+y)].
-\]
-
-Each wave's velocity direction is perpendicular to its wavevector. For
-example, the first wave points along \((1,1)\) while its phase changes
-along \((1,-1)\). Their dot product is zero, giving
-\(\nabla\cdot\mathbf w=0\) exactly.
-
-Average over the full square. Each sine averages to zero, each squared
-sine averages to one half, and their cross product averages to zero
-because the two Fourier modes are different. Thus
-
-\[
-\langle\mathbf w\rangle=0,\qquad
-Q=\frac32
-\begin{pmatrix}1&1\\1&1\end{pmatrix}
-+\frac12
-\begin{pmatrix}1&-1\\-1&1\end{pmatrix}
-=Q_{\rm target}.
-\]
-
-The factors \(3\) and \(1\) are the covariance eigenvalues. Changing
-these nonnegative weights changes the prescribed covariance within this
-two-direction family. The amplitudes are their square roots because the
-velocity product is quadratic.
-
-This realizes a \textbf{global average}. It does not make the
-instantaneous product \(\mathbf w(x,y)\otimes\mathbf w(x,y)\) constant
-at every point. Nor does a nonzero constant covariance by itself give a
-mean force: its spatial divergence is zero.
-
-\subsection{A force requires a change in momentum
-flux}\label{a-force-requires-a-change-in-momentum-flux}
-
-For an incompressible velocity, the nonlinear transport can be written
-as
-
-\[
-(\mathbf u\cdot\nabla)\mathbf u
-=\nabla\cdot(\mathbf u\otimes\mathbf u).
-\]
-
-Split the velocity into its mean and fluctuation,
-\(\mathbf u=\overline{\mathbf u}+\mathbf w\), with
-\(\langle\mathbf w\rangle=0\). For an average that commutes with
-differentiation, averaging the momentum equation leaves the additional
-transport \(\nabla\cdot Q\). Move it to the right-hand side and the
-force on the mean is
-
-\[
-\boxed{\mathbf F_{\rm wave}=-\nabla\cdot Q.}
-\]
-
-This is a force per unit mass. It expresses a familiar balance: a region
-gains momentum when more arrives than leaves. A constant flux has equal
-inflow and outflow. A changing flux can accelerate one region while
-decelerating another.
-
-To demonstrate that change, we now average over \(x\) \textbf{at fixed
-\(y\)}. The resulting covariance remains a function of \(y\). This
-differs from the full-square average in the previous example.
-
-\subsection{Give the oscillations a varying
-envelope}\label{give-the-oscillations-a-varying-envelope}
-
-Let the amplitude be larger near \(y=0\) and smaller near \(y=\pi\):
-
-\[
-a(y)=1+\epsilon\cos y,\qquad \epsilon=0.4.
-\]
-
-Simply multiplying a divergence-free wave by \(a(y)\) generally breaks
-incompressibility. A streamfunction avoids that problem. Define
-
-\[
-\psi(x,y)=\frac{a(y)}k\cos[k(x+my)],
-\qquad
-\mathbf w=(\partial_y\psi,-\partial_x\psi),
-\]
-
-with integers \(k=8\) and \(m=1\). The mixed derivatives cancel in the
-divergence. Expanding the velocity gives
-
-\[
-w_x=\frac{a'}k\cos\phi-ma\sin\phi,\qquad
-w_y=a\sin\phi,\qquad
-\phi=k(x+my).
-\]
-
-The term \(a'\cos\phi/k\) is the small correction that preserves
-incompressibility. It matters even though the main oscillation looks
-nearly unchanged.
-
-The average velocity is zero at every \(y\). Averaging its products over
-\(x\) gives the exact covariance
-
-\[
-Q(y)=\frac{a^2}{2}
-\begin{pmatrix}m^2&-m\\-m&1\end{pmatrix}
-+\begin{pmatrix}(a')^2/(2k^2)&0\\0&0\end{pmatrix}.
-\]
-
-Since this matrix depends only on \(y\), the force uses the derivatives
-of its second column:
-
-\[
-\mathbf F_{\rm wave}
-=-\binom{\partial_yQ_{xy}}{\partial_yQ_{yy}}
-=\binom{maa'}{-aa'}.
-\]
-
-We have obtained a nonzero mean force from a velocity whose mean
-vanishes everywhere in the averaging coordinate.
-
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio,alt={Oscillatory velocity produces a varying mean flux and nonzero mean force; pressure removes its vertical gradient component.}]{figures/02_spatial_transport.png}}
-
-}
-
-\caption{\label{fig-force}The horizontal velocity alternates in sign,
-with amplitude varying across height. Averaging over x leaves a
-spatially varying momentum flux. Differentiating that flux gives
-opposite horizontal and vertical force components in this example. A
-pressure contribution cancels the vertical component while the
-horizontal component remains. These are static fields on a dimensionless
-periodic square; no time evolution or particle trajectories are shown.}
-
-\end{figure}%
-
-\subsection{Pressure can cancel some of the
-force}\label{pressure-can-cancel-some-of-the-force}
-
-In incompressible flow, pressure balances gradient contributions. Here
-the vertical wave force is
-
-\[
--aa'=-\partial_y(a^2/2).
-\]
-
-The mean pressure \(p=-a^2/2\) contributes \(-\nabla p=(0,aa')\) to the
-right-hand side. After adding it, the remaining force is
-
-\[
-\mathbf F_{\rm remaining}=(maa',0).
-\]
-
-This horizontal force varies with \(y\). Its two-dimensional curl is
-
-\[
--m\big[(a')^2+aa''\big],
-\]
-
-which is generally nonzero, so a pressure gradient cannot remove it. In
-the baseline calculation, its largest sampled magnitude is approximately
-\textbf{0.427} in the chosen dimensionless units. Its integral over the
-periodic square is zero: this transport redistributes momentum.
-
-More generally, an isotropic covariance \(q(\mathbf x)I\) contributes
-\(-\nabla q\) and can be absorbed into pressure. The part that changes
-the incompressible mean velocity is the divergence-free part of
-\(-\nabla\cdot Q\).
-
-This calculation is a snapshot of momentum transport. Keeping the
-prescribed fluctuation field fixed in time would require its own
-dynamical balance; we have not constructed that balance or evolved a
-mean flow.
-
-\subsection{Make sure the grid captures the
-oscillations}\label{make-sure-the-grid-captures-the-oscillations}
-
-Uniform periodic samples integrate these resolved trigonometric products
-to floating-point accuracy. Spatial derivatives are evaluated with
-Fourier differentiation. The baseline uses \(128^2\) samples, excludes
-the duplicated endpoint, and resolves both the carriers and their
-quadratic products.
+Suppose equal portions of fluid have the following deviations from their
+local mean motion:
 
 {\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}ll@{}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
 \toprule\noalign{}
-Check & Computed value \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Portion
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Upward velocity fluctuation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Horizontal velocity fluctuation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Product
+\end{minipage} \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Constant target: relative covariance error & 1.02e-14 \\
-Envelope: maximum mean-velocity component & 3.75e-16 \\
-Envelope: maximum absolute divergence & 7.54e-13 \\
-Envelope: maximum covariance error & 1.33e-15 \\
-Mean force: error from differentiated covariance & 4.31e-14 \\
-Mean force: error from direct transport & 4.1e-14 \\
+A & +2 & +3 & +6 \\
+B & −2 & −3 & +6 \\
+Average & 0 & 0 & +6 \\
 \end{longtable}
 }
 
-The force is checked in two ways: differentiate the averaged covariance,
-and separately calculate \((\mathbf w\cdot\nabla)\mathbf w\) before
-averaging. Both agree with the analytic expression.
+Both velocity fluctuations average to zero. Their product does not.
 
-A deliberately coarse \(16^2\) grid gives approximately \textbf{94.9\%
-relative covariance error} in the constant-target example. Its
-frequency-eight sine is sampled at its zeros, so that entire
-contribution is lost. A small numerical divergence does not rescue a
-velocity that was sampled incorrectly.
+For portion A, upward motion carries an excess of horizontal momentum.
+For portion B, downward motion carries a deficit. Relative to the mean
+flow, these contribute to the same signed transport.
 
-At \(20^2\) samples the covariance average is already accurate, but the
-grid still cannot represent every quadratic Fourier mode. With the
-chosen carriers, their highest coordinate frequency is 18, requiring
-\(N>36\) for full product resolution. An accurate average alone is
-therefore insufficient evidence that the entire nonlinear field is
-resolved.
+The arithmetic is simply
+
+\[
+(+2)(+3)=6,\qquad (-2)(-3)=6.
+\]
 
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={The coarsest grid loses most of the target stress, while the finite-frequency envelope correction decreases by four whenever frequency doubles.}]{figures/03_resolution_and_envelope.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Two rows show fluctuations plus two and plus three, then minus two and minus three; both products are plus six.}]{figures/reader.png}}
 
 }
 
-\caption{\label{fig-resolution}The covariance error is large on a grid
-that loses a carrier. Some finer grids reproduce the average even before
-resolving all quadratic modes. The right panel isolates a different
-effect: the exact covariance correction from the varying envelope
-decreases as the inverse square of carrier frequency.}
+\caption{\label{fig-transport}Opposite fluctuations have zero mean,
+while the products in the transport column have the same sign. These
+invented values illustrate the averaging mechanism.}
 
 \end{figure}%
 
-The right panel shows a modelling correction, rather than numerical
-error. The maximum additional covariance entry is exactly
-\(\epsilon^2/(2k^2)\), so doubling \(k\) divides it by four. We use a
-resolved \(256^2\) grid for that frequency scan. In this particular
-construction, the correction lies in \(Q_{xx}(y)\) and contributes no
-divergence, so the exact mean force is independent of \(k\).
+A sine wave makes the same point smoothly: its positive and negative
+parts cancel in the mean, while its square is never negative. The
+supporting notebook uses sine waves to construct and check this kind of
+transport.
 
-\subsection{What restrictions does a realizable stress
-satisfy?}\label{what-restrictions-does-a-realizable-stress-satisfy}
+\subsection{Why this averaged transport is called a
+stress}\label{why-this-averaged-transport-is-called-a-stress}
 
-Every covariance is positive semidefinite:
+Different surfaces and momentum directions give different products.
+Collecting them describes how small-scale motion transports momentum
+through the fluid.
 
-\[
-\mathbf c^TQ\mathbf c
-=\langle(\mathbf c\cdot\mathbf w)^2\rangle\ge0.
-\]
+That collection is often called a \textbf{Reynolds stress}, with sign
+and density conventions that vary between texts. For this explanation,
+keep the physical meaning: it is the transport contributed by the
+velocity fluctuations.
 
-This permits negative off-diagonal entries, as our varying-envelope
-example demonstrates. It forbids a negative variance. Our two fixed wave
-directions impose a further restriction: their covariances can be
-combined only with nonnegative squared amplitudes.
+You do not need to learn matrix notation to understand its job. The
+paper especially needs radial transport of circular momentum and radial
+transport of axial momentum.
 
-The paper has an additional, specific admissibility condition. Its
-target is a two-component flux vector \((T_{r\theta},T_{rz})\), not a
-complete covariance matrix. Proposition 7.5 selects positive squared
-amplitudes from two pulse covariance directions; Equation (4.26)
-constrains the target direction through the background shear. Positive
-semidefiniteness alone does not check that condition.
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-Theorem 4.6(iii) and Proposition 7.5}
+The word ``radial'' means toward or away from the axis. ``Axial'' means
+along the axis. Those are two different kinds of cargo carried across
+rings in the vortex.
 
-Our example establishes the averaging mechanism, exact
-incompressibility, and a mean force that survives pressure balance.
-Evaluating the paper's actual stress and pulse amplitudes requires its
-joined background and pulse dynamics, which this toy does not supply.
+\subsection{Transport must change from place to place to create a net
+effect}\label{transport-must-change-from-place-to-place-to-create-a-net-effect}
 
-The next question is dynamical: where can the oscillations obtain their
-energy, and why can viscosity eventually extinguish them? That motivates
-the next installment on a wave growing in a sheared flow and then
-decaying.
+Imagine a warehouse receiving 100 boxes an hour and sending out 100. Its
+stock does not change. If it receives 100 and sends out 90, ten boxes
+accumulate each hour.
 
-The \href{../../code/d4_mean_stress/study.ipynb}{executed notebook},
-\href{../../code/d4_mean_stress/parameters.json}{parameters},
-\href{../../code/d4_mean_stress/data/}{CSV datasets}, and
-\href{source-notes.md}{source notes} make the calculations and scope
-reproducible.
+Momentum obeys the same accounting. If equal momentum enters and leaves
+a region, the transport does not change its total. A difference between
+incoming and outgoing transport produces a net effect.
+
+This is why a nonzero \textbf{constant} averaged stress does not by
+itself accelerate the mean flow. The useful force arises from how the
+transport changes across space.
+
+The paper shapes the pulse amplitudes and locations so their transport
+has the required spatial variation. It aims to cancel the troublesome
+contribution identified by the
+\href{../d3_residual/article.html}{residual calculation}.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Paper,
+Section 2.2 and Section 3.3}
+
+\subsection{Tune the amount with the wave
+amplitude}\label{tune-the-amount-with-the-wave-amplitude}
+
+If both velocity fluctuations are multiplied by two, their product is
+multiplied by four. Therefore, changing the wave amplitude changes its
+quadratic transport strength.
+
+A desired contribution four times as large needs twice the amplitude in
+this simple scaling. That square-root relationship explains why the
+paper first finds positive weights for the required stress and then uses
+their square roots as amplitude factors.
+
+The two pulse families provide different ratios of circular to axial
+momentum transport. Their nonnegative weights combine those
+contributions. The desired pair has to be attainable with those
+families---the ``stress cone'' condition explained in the
+\href{../convex-integration/article.html}{convex-integration article}.
+
+The paper does not claim that any arbitrary ripple can supply any
+arbitrary force. Directions, weights, geometry, and evolution must all
+fit.
+
+\subsection{Keep the fluid-volume constraint
+intact}\label{keep-the-fluid-volume-constraint-intact}
+
+Simply making a wave stronger in one place can accidentally introduce an
+apparent accumulation or loss of fluid volume.
+
+The source therefore builds its corrections through a representation
+that guarantees incompressibility. This introduces some additional,
+smaller velocity terms. They are retained in the next residual
+calculation rather than ignored.
+
+Our numerical examples use a related construction to check zero mean,
+the desired averaged products, and the effect of a spatially changing
+amplitude. They illustrate the transport mechanism in a simple periodic
+domain. They are not the actual pulse field of the full vortex.
+
+\subsection{Where this fits in the bigger
+picture}\label{where-this-fits-in-the-bigger-picture}
+
+\textbf{The oscillations can supply a missing mean transport even though
+their mean velocity is zero.} This connects fine-scale motion to the
+large-scale force balance.
+
+That is a central bridge between the convex-integration viewpoint and
+the paper's pulse construction. But the waves also need a source of
+energy and a controlled way to fade. Continue with
+\href{../d5_shearing_wave/article.html}{how a small wave grows and then
+dies away}.
+
+The \href{technical-article.html}{technical article},
+\href{../../code/d4_mean_stress/study.ipynb}{notebook}, and
+\href{source-notes.md}{source notes} contain the explicit waves,
+averaging conventions, and computational checks.
 
 
 

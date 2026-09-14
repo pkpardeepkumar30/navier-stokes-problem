@@ -1,174 +1,97 @@
 ---
-title: "The density cost of supporting a fast vortex"
-subtitle: "A controlled comparison between constant-density and compressible gas equilibria"
+title: "What changes when the gas can change density?"
+subtitle: "A simple rotating-gas comparison beyond the constant-density assumption"
 date: 2026-09-12
 lang: en
-jupyter: python3
 format:
   html:
     toc: true
     toc-depth: 2
     embed-resources: true
     theme: cosmo
-    css: ../d1_core_size/article.css
+    css: ../reader-style.css
   latex:
     documentclass: article
     fontsize: 11pt
     geometry: margin=25mm
-execute:
-  echo: false
-  warning: false
-  error: false
 ---
 
-```{python}
-#| label: setup
-from nscomp.d10 import load_parameters, generate, observable_table
-p = load_parameters()
-summary = generate()
-```
+[Return to the paper map](../paper-map/article.html) · Physical interpretation, article 3 of 3
 
-**For the smooth vortex examined here, the center density falls 5% below the surrounding gas density when the peak rotation speed is about 0.193 times the exterior sound speed. At a speed ratio of 0.3, the deficit is nearly 12%.**
+The paper studies an incompressible fluid. In its constant-density setting, pressure adjusts without requiring the density to change.
 
-The [physical regime map](../d9_regime_map/article.html) explained why compressibility can matter while a vortex is still comfortably larger than molecular transport scales. A screening number identifies a question; a model with an equation of state lets us calculate an answer.
+A real gas responds differently. If its pressure changes substantially, its density and temperature can change too. What would that do to a vortex?
 
-Here the question is concrete: how much must the gas density and pressure change to support a prescribed rotating velocity profile? We compare a constant-density fluid with a compressible ideal gas, using the same swirl and the same pressure far from the vortex. We solve the radial balance numerically and check it against an analytic equilibrium.
+To isolate the idea, our companion study compares two descriptions of the **same prescribed stationary rotation**: one holds density fixed, and the other lets an ideal gas respond. We are asking what a model assumption changes, not simulating the paper's collapse.
 
-This is a steady, inviscid Euler benchmark. Its Gaussian isentropic vortex belongs to a well-established test family. It provides a controlled physical comparison, not a simulation of the OpenAI collapse or evidence that compressibility prevents singularities. [Spiegel, Huynh and DeBonis, Sections III–IV](https://ntrs.nasa.gov/api/citations/20150018403/downloads/20150018403.pdf)
+## Begin with the inward push again
 
-## Keep the velocity profile explicit
+Fluid travelling in a circle needs an inward acceleration. Higher pressure outside than inside supplies that push.
 
-Let $a$ be the radius of peak speed and write $R=r/a$. Prescribe
+Faster rotation demands a larger pressure difference. For a fixed radius, doubling the speed makes the required circular acceleration four times as large.
 
-$$
-u_\theta(r)=U R\exp\!\left(\frac{1-R^2}{2}\right),\qquad u_r=u_z=0.
-$$
+In a constant-density model, pressure can adjust while density stays fixed by assumption. In the gas model, pressure and density are linked by a stated thermodynamic relationship.
 
-The velocity vanishes smoothly at the axis, peaks at $r=a$, and decays at large radius. We use a fixed $a=1$ mm. Unlike the earlier collapse estimate, the radius does not decrease when we increase $U$: each speed defines a separate equilibrium.
+Our comparison uses an isentropic ideal-gas relation. That means the model links pressure, density, and temperature with a fixed entropy. You do not need its formula to understand the comparison, but the choice matters to the numerical results.
 
-The exterior air state is 296.15 K and 101.3 kPa. We take the ideal-gas constants $\gamma=1.4$ and $R_{\rm gas}=287.05$ J/(kg K), giving exterior density $\rho_\infty=p_\infty/(R_{\rm gas}T_\infty)$ and sound speed $c_\infty=\sqrt{\gamma R_{\rm gas}T_\infty}$.
+## Hold the rotating shape fixed
 
-We label the control parameter
+We prescribe a smooth circular-speed profile that is zero on the axis, rises to a maximum, and then decreases outside. Its characteristic radius is one millimetre.
 
-$$
-M_*=\frac{U}{c_\infty}.
-$$
+The outer gas state is fixed at the study's room-temperature reference, 23 °C. We change the maximum speed and calculate the pressure and density required for stationary radial balance.
 
-It uses the **exterior** sound speed. The local Mach number also depends on the local temperature and is evaluated separately.
+Holding the rotation fixed lets us ask a clean question: what difference comes from allowing density to respond?
 
-## Pressure must increase outward to hold the gas in a circle
+It does not tell us how a real vortex would evolve to reach that prescribed rotation. There is no collapse time or changing core radius in this experiment.
 
-Radial momentum balance is
+## The faster cases have a less dense centre
 
-$$
-\frac{dp}{dr}=\rho(r)\frac{u_\theta(r)^2}{r}.
-$$
+Here are three representative results. Density is given relative to the outer gas:
 
-Pressure is lower toward the axis, providing the inward force for circular motion. The constant-density model fixes $\rho=\rho_\infty$, so its pressure follows directly by integration from the exterior:
+| Maximum circular speed | Centre density compared with the outside |
+| --- | --- |
+| About 34.5 metres per second | About 99% |
+| About 103 metres per second | About 88% |
+| About 207 metres per second | About 58% |
 
-$$
-\frac{p_{\rm inc}(R)}{p_\infty}
-=1-\frac{\gamma e}{2}M_*^2e^{-R^2}.
-$$
+The results are specific to the chosen speed profile, outer state, and gas law. They are not a universal table for every vortex.
 
-For the compressible gas, pressure and density are linked by the constant-entropy relation $p/\rho^\gamma=p_\infty/\rho_\infty^\gamma$. With the ideal-gas equation of state, the specific enthalpy is $H=\gamma p/[(\gamma-1)\rho]$. Radial momentum becomes $dH/dr=u_\theta^2/r$. [NASA isentropic relations](https://www.grc.nasa.gov/www/k-12/airplane/isentrop.html)
+![The centre-density fraction decreases as the imposed maximum rotation increases. The values come from the stationary ideal-gas comparison, not from the time-dependent paper flow.](figures/reader.png){#fig-density fig-alt="Three bars show approximately 99, 88 and 58 percent centre density for maximum speeds about 34.5, 103 and 207 metres per second."}
 
-Define
+At the lower speed, constant density is a close approximation for this measure. At the higher speeds, the same assumption misses a substantial change.
 
-$$
-\Theta(R)=1-\frac{(\gamma-1)e}{2}M_*^2e^{-R^2}.
-$$
+## A tolerance makes “close enough” explicit
 
-The resulting gas equilibrium is
+Suppose we decide that a five-percent change in centre density is large enough to deserve attention. That is a chosen tolerance, not a law of nature.
 
-$$
-\frac{T}{T_\infty}=\Theta,\qquad
-\frac{\rho}{\rho_\infty}=\Theta^{1/(\gamma-1)},\qquad
-\frac{p}{p_\infty}=\Theta^{\gamma/(\gamma-1)}.
-$$
+In this particular example, the five-percent marker occurs at a maximum speed of about **67 metres per second**.
 
-These fields require $\Theta>0$. The implementation rejects parameters giving a nonpositive center temperature.
+Using a tolerance makes the question clearer than asking for one universal speed at which incompressibility “breaks.” A different velocity shape, state, or required accuracy can give a different answer.
 
-![The same prescribed rotation produces different density and pressure profiles depending on the constitutive model. Both pressure curves share the same exterior value. The dashed constant-density pressure can become negative after that exterior absolute pressure is fixed; its interpretation is discussed below.](figures/01_density_and_pressure.png){#fig-profiles fig-alt="Faster swirl creates a deeper density depression. Compressible and constant-density pressure profiles agree at low speed and diverge as speed increases."}
+The supporting calculation also compares pressure predictions. They agree well at low speeds and separate as the gas response becomes stronger.
 
-This is a comparison of equilibria with different interior densities, not two evolutions of identical initial data. Both models have zero external force and omit viscosity. Steady mass conservation follows because the motion is purely azimuthal and the density is axisymmetric. Energy transport is also azimuthal, with no angular variation, so the steady total-energy equation is satisfied.
+## Why pressure labels matter
 
-## A density tolerance gives a better-defined marker
+A pressure below an arbitrary mathematical reference can simply be negative in that convention. That is common in incompressible calculations.
 
-Choose a 5% center density deficit as an illustrative tolerance:
+Absolute gas pressure has a different interpretation. Once the outer absolute pressure is fixed, a model that demands an inadmissible inner absolute pressure has lost its intended physical interpretation.
 
-$$
-1-\frac{\rho(0)}{\rho_\infty}=0.05.
-$$
+The main reader-level point is to keep reference pressure and absolute thermodynamic pressure distinct. A minus sign by itself is not enough to diagnose a physical failure.
 
-Solving gives $M_*=$ **`{python} f'{summary["five_percent_density_marker_mach"]:.3f}'`**, or about **`{python} f'{summary["density_marker_speed_m_s"]:.1f}'` m/s** for this exterior state. At $M_*=0.3$, the deficit is **`{python} f'{100*summary["mach_point_three_density_deficit"]:.1f}'`%**.
+## Does this show that compressibility prevents blow-up?
 
-The central gas is stationary on the axis even though its density deficit is largest there. Pressure support depends on the surrounding swirl. Thus a single local speed, or a generic Mach marker, does not uniquely determine the density variation across a vortex.
+This experiment cannot answer that question. It is stationary, has a fixed radius, and does not evolve the coupled velocity and density in time.
 
-```{python}
-#| label: observables
-#| output: asis
-print(observable_table(p))
-```
+Its useful finding is narrower: allowing density to change alters the pressure-supported equilibrium before molecular dimensions are involved.
 
-![The left panel compares center density loss with a declared 5% marker. The right shows the pressure difference between the two models. Small-Mach expansions explain the leading quadratic density change and fourth-power pressure discrepancy; the dashed curves are approximations, not additional models at large Mach.](figures/02_departure_from_constant_density.png){#fig-departure fig-alt="Center density changes approximately as the square of peak Mach, while the pressure difference between the models scales as its fourth power at low Mach."}
+It also helps separate the two model questions discussed in the [previous article](../d9_regime_map/article.html). A flow may still have useful continuum scale separation while a constant-density approximation is no longer accurate enough.
 
-Expanding at small $M_*$ gives
+The comparison uses a known inviscid equilibrium model. Viscosity and time-dependent dynamics would require a different experiment.
 
-$$
-1-\frac{\rho(0)}{\rho_\infty}=\frac{e}{2}M_*^2+O(M_*^4),
-\qquad
-\frac{p(0)-p_{\rm inc}(0)}{p_\infty}
-=\frac{\gamma e^2}{8}M_*^4+O(M_*^6).
-$$
+## Where this fits in the bigger picture
 
-The coefficient depends on the chosen swirl shape. The 0.193 value is therefore a result for this profile and tolerance, not a replacement universal Mach cutoff.
+**A mathematical construction is tied to its equations and assumptions. Changing the density assumption changes the physical question.** This comparison makes one such change concrete without treating it as a critique of the theorem's internal logic.
 
-## What does negative constant-density pressure mean here?
+It completes the short physical-interpretation route. Return to the [paper map](../paper-map/article.html) to follow the mathematical mechanism.
 
-The constant-density center pressure reaches zero at $M_*\approx$ **`{python} f'{summary["constant_density_zero_center_pressure_mach"]:.3f}'`**, after fixing the same exterior absolute pressure. At $M_*=0.8$ it is negative, while the compressible gas still has positive pressure, density, and temperature.
-
-An incompressible pressure field is a mathematical constraint field, determined up to an additive constant in this setting. Negative values do not invalidate that mathematical solution. They show that this particular field, with its exterior absolute pressure fixed, cannot simply be inserted into an ideal-gas thermodynamic interpretation.
-
-The compressible family has its own positivity limit, $M_*<\sqrt{2/[(\gamma-1)e]}$. We do not approach that limit in the calculation or interpret it as a dynamically reached event.
-
-## Check the computation before interpreting the difference
-
-We integrate an independent nonlinear radial equation for the normalized density $q=\rho/\rho_\infty$:
-
-$$
-\frac{dq}{dR}=M_*^2 R e^{1-R^2}q^{2-\gamma}.
-$$
-
-A fourth-order Runge–Kutta method starts at an outer radius and proceeds inward. With the exact outer density, the maximum density error decreases by approximately a factor of sixteen when the radial step is halved. The finest displayed error is about **`{python} f'{summary["finest_radial_density_error"]:.2g}'`**, measured relative to exterior density.
-
-![Radial refinement gives fourth-order convergence when the correct boundary value is supplied. Fixing the density to its infinite-radius value at a finite outer radius leaves a separate boundary error. The right panel separates that contribution from integration error. Its small dip in total error is cancellation between signed errors, not a sudden increase in accuracy of the method.](figures/03_radial_and_boundary_accuracy.png){#fig-accuracy fig-alt="A refined radial solver converges with exact boundary data, while an approximate far-field boundary leaves an error floor that decreases when the domain is enlarged."}
-
-We also check all four steady Cartesian conservation equations—mass, two momentum components, and total energy—using independent finite differences of the conservative fluxes. Additional checks cover the enthalpy integral, equation of state, constant entropy, small-Mach limits, actual swirl shear, and the density marker.
-
-These are checks of a stationary radial solver and an equilibrium field. There is no flow time step, two-dimensional time integration, or dynamical stability result.
-
-## Is this comparison already at molecular scales?
-
-For the fixed 1 mm radius, the exterior mean-free-path ratio is $6.73\times10^{-5}$. We improve on that core-scale comparison by computing actual thermodynamic gradients:
-
-$$
-\mathrm{Kn}_f=\lambda_{\rm mfp}(r)\,|\nabla\log f|,
-\qquad f=T,\rho,p.
-$$
-
-The local mean-free-path estimate uses the reference NIST temperature/pressure correction with the calculated gas state. It is a local-property approximation, not a kinetic simulation. We also compare its collision-time proxy with the explicitly computed swirl shear $|du_\theta/dr-u_\theta/r|$. [NIST, Equation (11)](https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf)
-
-![For the chosen fixed radius and speed range, the computed thermodynamic-gradient Knudsen proxy remains well below 0.01. The collision-time/shear comparison is also small. Zero values on the axis lie below the logarithmic display. These diagnostics support scale separation for this benchmark under its property approximations, not all assumptions of an actual rotating gas.](figures/04_local_gas_scale_check.png){#fig-gas fig-alt="Thermodynamic-gradient Knudsen proxies and collision-time/shear ratios remain small for all displayed equilibria."}
-
-Across the scan, the largest thermodynamic-gradient Knudsen proxy is about **`{python} f'{summary["max_thermodynamic_kn_proxy"]:.2g}'`** and the largest collision/shear ratio is **`{python} f'{summary["max_collision_shear_ratio"]:.2g}'`**. Density can therefore vary substantially in this benchmark while these molecular-scale screens remain small.
-
-Other assumptions still have limits. The largest case reaches a center temperature near **`{python} f'{summary["minimum_temperature_K"]:.0f}'` K**; constant heat capacities and the local transport estimate are modelling approximations. Viscosity would redistribute angular momentum and generate heat. The stationary Euler family does not describe indefinite persistence of a real viscous vortex.
-
-## What this contributes to the project
-
-This experiment replaces a generic compressibility warning with a defined observable, a consistent equation of state, and a validated equilibrium calculation. It shows how a physically meaningful density change can arise well before the selected molecular screens, while preserving a clear boundary between the equilibrium example and the proposed blowup construction.
-
-The [research decision](research-decision.md) classifies this as an educational reconstruction of a known vortex family. A study of the actual collapsing flow still requires its assembled profiles and consistent compressible initial data, forcing, boundary conditions, and energy inputs.
-
-The [source notes](source-notes.md), [executed notebook](../../code/d10_compressible_vortex/study.ipynb), [parameters](../../code/d10_compressible_vortex/parameters.json), and [five CSV datasets](../../code/d10_compressible_vortex/data/) make this comparison reproducible.
+The [technical article](technical-article.html), [notebook](../../code/d10_compressible_vortex/study.ipynb), and [source notes](source-notes.md) contain the explicit profile, gas law, boundary conditions, and independent numerical checks.

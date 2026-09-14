@@ -165,7 +165,7 @@
 \@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
 \makeatother
 \hypersetup{
-  pdftitle={How the outer vortex fixes pressure at the axis},
+  pdftitle={Why the pressure at the centre depends on the outside},
   pdflang={en},
   colorlinks=true,
   linkcolor={blue},
@@ -175,257 +175,179 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{How the outer vortex fixes pressure at the axis}
+\title{Why the pressure at the centre depends on the outside}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{D6 stage C: a source-defined input for the inner-profile
-solver}
+\subtitle{A vortex is connected through its pressure balance}
 \author{}
 \date{2026-09-12}
 \begin{document}
 \maketitle
 
 
-\textbf{Pressure at the vortex axis is constrained by the flow outside
-it. We now compute that pressure from the paper's prescribed radial
-schedule and use it in the inner solver. This supplies a missing input;
-the complete joined flow and its first correction remain unfinished.}
+\href{../paper-map/article.html}{Start with the paper map} · Main route,
+article 3 of 9
 
-The \href{../d6_inner_profile/article.html}{previous study} built a
-numerical solver for the leading inner equations. It needed pressure
-values along the axis, so it began with a clearly declared analytic test
-function. That was enough to test the recurrence, but it left a physical
-and mathematical question: where should those pressure values come from
-in the paper's construction?
+Suppose you have built a smooth description of the vortex near its
+centre. Can you choose a convenient centre pressure and deal with the
+outer flow later?
 
-In a swirling flow, radial pressure variation supplies centripetal
-acceleration. Once the pressure is fixed at radial infinity, integrating
-that balance inward determines the pressure at the axis. We therefore
-cannot choose the inner pressure and the exterior swirl independently.
+In general, no. The surrounding rotating fluid must also be held in
+circular motion. The pressure differences that provide that inward push
+connect the outside to the centre.
 
-This article follows that dependency. We evaluate the source's pressure
-integral, check it against independent calculations, and pass its axial
-derivatives to the inner recurrence. The calculation also illustrates
-two numerical issues that recur in this project: enormous scale ranges
-and the difference between a small equation defect and an accurate
-input.
+This article explains that connection without calculating an integral.
+We will think of pressure changes across successive rings and add them
+up.
 
-\subsection{Pressure remembers the entire radial
-profile}\label{pressure-remembers-the-entire-radial-profile}
+\subsection{Going in a circle needs an inward
+push}\label{going-in-a-circle-needs-an-inward-push}
 
-The leading radial balance is
+A car going around a bend changes direction even if its speedometer
+reading stays constant. That change of direction requires an inward
+force.
 
-\[
-\Pi_X=\frac{E^2}{2X}.
-\]
+Fluid going around a vortex needs an inward push too. Pressure is higher
+farther out and lower farther in, so the pressure difference pushes
+inward.
 
-With pressure normalized to vanish at radial infinity, the axis value is
+For a fixed radius, doubling circular speed makes the required inward
+acceleration four times as large. The familiar circular-motion formula
+is
 
 \[
-\Pi_0(\eta)=-\frac12\int_{-\infty}^{\infty}
-E_{\mathrm{id,sched}}(y,\eta)^2\,dy,
-\qquad y=\log(X/X_R).
+\text{inward acceleration}=\frac{\text{speed}^2}{\text{radius}}.
 \]
 
-Here \(X\) is the radial similarity coordinate, \(X_R\) is the later
-joining scale, and \(\eta\) is the axial similarity parameter. The
-logarithmic coordinate removes \(X_R\) from the integral. Moving that
-radial scale therefore does not change the axis-pressure datum.
+This tells us why pressure is linked to the rotation rather than being
+an independent decoration added afterward.
 
-The source allows this integral to use its ideal azimuthal schedule with
-certain angular correction bumps omitted: those bumps preserve the total
-pressure increment. Their interval lengths and all other transitions
-must still be retained. The later heat replacement also has a
-compensation that restores the same integral. This lets us compute the
-datum before implementing every outer correction.
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-Lemma A.5 and Equations (A.21)--(A.23), pages 133--134; Proposition A.7,
-pages 139--140}
+\subsection{Build the pressure difference one ring at a
+time}\label{build-the-pressure-difference-one-ring-at-a-time}
 
-\subsection{Use the source's schedule, with declared numerical
-choices}\label{use-the-sources-schedule-with-declared-numerical-choices}
+Picture travelling inward through three rings. Suppose their pressure
+drops are 2, 1, and 0.5 units. The total drop is \(2+1+0.5=3.5\) units.
 
-The schedule begins with
+If the outer pressure is 10 units, the inner pressure must be 6.5 units
+in this illustration. Leaving out one ring changes the centre value.
 
-\[
-E=P_*f(\eta)e^{y/10},\qquad
-f(\eta)=\frac{1}{1+\eta^2},\qquad y\le0.
-\]
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Passage inward & Pressure drop & Pressure after the passage \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Outer ring & 2 & 8 \\
+Middle ring & 1 & 7 \\
+Inner ring & 0.5 & 6.5 \\
+\end{longtable}
+}
 
-That initial branch contributes exactly
-
-\[
-\Pi_{0,\mathrm{initial}}=-\frac52P_*^2f^2.
-\]
-
-The following intervals change the radial slope, allow the axial flow to
-decrease, reserve room for moment corrections, remove the azimuthal
-profile's \(\eta\) dependence, and approach the exterior power law. We
-implement those intervals in their own local logarithmic coordinates.
-The smooth transitions use the function specified in Equation (A.5).
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Appendix
-A.2, pages 129--130}
-
-For this numerical schedule we choose \(M_d=2\), \(\lambda=0.02\),
-\(h=10^{-9}\), interpolation length \(T_f=100\), and terminal constant
-\(c_o=0.01\). We set \(T_d=e^{M_d}+10\) and \(\log P_*=T_d+1\). These
-satisfy the source's displayed scalar inequalities, including
-\(P_*>e^{T_d}\) and \(h<e^{-T_d}\).
-
-\textbf{They do not certify all the source's ``sufficiently large'' or
-``sufficiently small'' choices.} In particular, this study does not
-establish the full stress cone or outer moment construction. The
-\href{../../code/d6_axis_pressure/parameters.json}{parameter file}
-records that distinction alongside every numerical choice.
+These are invented numbers to explain the adding-up operation. In the
+fluid calculation, the rotation and ring radii determine the
+contributions.
 
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={The computed axis pressure is negative and even; its derivative is negative for negative eta and positive for positive eta.}]{figures/01_source_axis_pressure.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={A staircase falls from outer pressure 10 to inner pressure 6.5; a separate contribution bar divides the computed pressure magnitude into approximately 75 percent and 25 percent.}]{figures/reader.png}}
 
 }
 
-\caption{\label{fig-pressure}The complete pressure integral and its
-exact initial-branch contribution. Pressure is even in eta, and its
-derivative has the sign of eta. Both panels use the normalized pressure
-Pi0/P\_star squared.}
+\caption{\label{fig-pressure}The left panel adds three illustrative
+pressure drops. The right shows a result from our source-schedule
+calculation: its initial branch supplies about three quarters of the
+centre-pressure magnitude, so the rest cannot simply be omitted.}
 
 \end{figure}%
 
-At the center, \(\Pi_0(0)/P_*^2\approx\) \textbf{-3.314622730}.
+Using ever thinner rings turns the sum into an \textbf{integral}. For
+this purpose, an integral is a disciplined way to add many small
+contributions. You do not need to perform that calculation to understand
+why the pressure depends on the whole radial schedule.
 
-The initial branch supplies about \textbf{75.4\%} of its magnitude.
-Using that branch alone would miss a substantial part of the pressure
-datum.
+\subsection{What the paper fixes at the
+outside}\label{what-the-paper-fixes-at-the-outside}
 
-\subsection{Keep small contributions
-visible}\label{keep-small-contributions-visible}
+The paper chooses a reference pressure at radial infinity and calculates
+the difference inward. This is why its normalized inner pressure can be
+negative: it lies below the chosen reference.
 
-For these finite choices, the terminal power law starts near
-\(\log_{10}(X/X_R)\approx\) \textbf{537.1}.
+A negative value relative to that reference is not automatically a claim
+about negative absolute pressure in an actual gas. The mathematical
+constant-density equations and a calibrated thermodynamic experiment use
+pressure differently.
 
-Directly storing that radius as an ordinary floating-point number would
-overflow. Some late pressure contributions have the opposite problem:
-they are too small to store directly in binary64 arithmetic.
+The construction's radial schedule specifies how the outer rotation
+passes through several regimes. Those regimes contribute to the pressure
+supplied to the inner problem. The matching is therefore a connection
+between the outer and inner parts, not a boundary value guessed for
+convenience.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Paper,
+Section 3.1 and Appendix A.3--A.4}
 
-We avoid both problems by storing logarithmic radius, logarithmic
-amplitudes, and logarithmic pressure contributions. The initial and
-infinite final power-law integrals are evaluated analytically. Finite
-smooth intervals use Gauss--Legendre quadrature.
+\subsection{Why later repairs do not force us to start
+over}\label{why-later-repairs-do-not-force-us-to-start-over}
 
-\begin{figure}
+A natural worry is that later adjustments to the outer profile will
+change the pressure we have just calculated.
 
-\centering{
+Some of the paper's corrections are designed to preserve the relevant
+weighted totals. When a correction preserves the total that determines
+the centre pressure, that pressure stays the same.
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={The pressure contributions span over 600 orders of magnitude, with several late intervals below the smallest positive binary64 value.}]{figures/02_pressure_contribution_scales.png}}
+Think of moving items between compartments while keeping the relevant
+total weight unchanged. The rearrangement matters locally, but an agreed
+overall quantity is preserved.
 
-}
+This allows the source to calculate the axis pressure from a particular
+ideal schedule before all its later moment-preserving repairs are
+assembled. The preservation property is essential; it would not hold for
+arbitrary modifications.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Paper,
+Lemma A.5 and Proposition A.7}
 
-\caption{\label{fig-scales}Each point is a separate interval's
-contribution to the magnitude of Pi0(0)/P\_star squared. Contributions
-left of the dashed line cannot be represented as positive binary64
-numbers directly, but their logarithms remain available. The infinite
-tail is integrated analytically.}
+\subsection{What our computation
+contributes}\label{what-our-computation-contributes}
 
-\end{figure}%
+The companion calculation adds the schedule's pressure contributions and
+passes the resulting pressure data to the inner solver.
 
-The infinite exterior tail's normalized pressure contribution has
-base-10 logarithm \textbf{-629.7}, or roughly \(2\times10^{-630}\) in
-magnitude. Its contribution beyond an additional logarithmic distance
-\(L\) is that value multiplied by \(e^{-(1+2h)L}\). This gives an
-explicit remainder if a later implementation chooses to truncate the
-exterior.
+One useful result is easy to interpret: the schedule's initial branch
+supplies about \textbf{75\%} of the centre-pressure magnitude. That is
+most of it, but treating it as all of it would miss about a quarter.
 
-Such terms cannot change the displayed digits of the total pressure.
-Retaining them separately still matters: it distinguishes a quantified
-small contribution from an integral that was silently omitted. The
-\href{../../code/d6_axis_pressure/data/pressure_contributions.csv}{contribution
-table} and
-\href{../../code/d6_axis_pressure/data/exterior_tail.csv}{tail data}
-preserve this accounting.
+The code also keeps track of extremely small contributions. Some are too
+small to change any displayed digit of the total. Recording them
+separately explains what was included and why discarding them at a given
+precision would have little numerical effect.
 
-\subsection{Check both the integral and its use by the inner
-solver}\label{check-both-the-integral-and-its-use-by-the-inner-solver}
+Those implementation details belong in the supporting notebook. The
+reader-level lesson is the dependency: the inner calculation needs
+pressure information from the outer construction.
 
-Increasing the quadrature order from 128 to 256 changes the normalized
-pressure by at most about \textbf{8.9e-16} on the declared axial grid. A
-separate adaptive calculation agrees within its stated tolerance.
+\subsection{Where this fits in the bigger
+picture}\label{where-this-fits-in-the-bigger-picture}
 
-There is another check on the radial schedule. Its terminal interval
-begins only after a source-defined quantity \(Q\) reaches a prescribed
-target. We reproduce that stopping rule and independently integrate its
-scalar differential equation; the terminal value approaches zero as
-required. Here \(Q\) sets the ideal schedule's interval length. We do
-not claim to have reconstructed it from all the corrected outer moments.
+\textbf{Pressure helps the inner and outer pieces belong to the same
+flow.} A smooth centre and an attractive exterior do not automatically
+match; their pressure and weighted totals must fit.
 
-The pressure dependence on \(\eta\) has the form of a positive weighted
-sum of \((1+\eta^2)^{-\beta}\). Its Taylor coefficients can therefore be
-generated analytically and handed to the existing inner recurrence. A
-local calculation at \(\eta=0.2\), \(Y=1\) uses this pressure,
-\(j=0.02\), \(\sigma=10^{-4}\), and \(\Lambda=100P_*^2\).
+Even after this match, a proposed flow may leave an unacceptable force
+imbalance. Continue with \href{../d3_residual/article.html}{the missing
+push and the momentum residual}.
 
-\begin{figure}
-
-\centering{
-
-\pandocbounded{\includegraphics[keepaspectratio,alt={Quadrature differences approach binary64 accuracy, and the inner recurrence\textquotesingle s leading balance defects decrease with radial degree, with the axial balance reaching roundoff.}]{figures/03_pressure_and_handoff_convergence.png}}
-
-}
-
-\caption{\label{fig-convergence}Left: quadrature refinement for the
-pressure and terminal target. Right: leading inner balance defects when
-the computed pressure supplies the axis data; the axial curve reaches
-the working-arithmetic floor. The right panel measures consistency with
-the supplied numerical pressure, whose quadrature error is a separate
-limitation.}
-
-\end{figure}%
-
-The inner calculation uses 70-digit arithmetic, so its equation defects
-can become much smaller than the pressure-input uncertainty. Those tiny
-defects do \textbf{not} imply 70-digit accuracy relative to the source's
-exact pressure integral. Changing the quadrature from 128 to 256 nodes
-changes the computed axial profile by about \textbf{4.5e-18} at the
-selected point. The
-\href{../../code/d6_axis_pressure/data/handoff_quadrature_change.csv}{propagated-change
-table} makes this difference explicit.
-
-\subsection{One joining condition now has a sufficient
-bound}\label{one-joining-condition-now-has-a-sufficient-bound}
-
-The earlier analytic test data failed condition (B.2), which requires
-\(\chi>0.99\) wherever the axis expression \(Z_*\) is sufficiently
-small. For the present pressure we can use its sign and lower-magnitude
-bound to confine that region near \(\eta=0\).
-
-With the declared threshold \(\delta=1\), \(|Z_*|\le1\) implies
-\(|\eta|\) is at most about \textbf{3.17e-15}. Throughout that band, the
-lower bound on \(\chi\) is approximately \textbf{0.999975}.
-
-The lower bound exceeds \(0.99\). The derivation uses the exact initial
-pressure contribution and the common sign of the remaining pressure
-terms; it does not rely on sampling a very narrow region and hoping to
-find its minimum. The \href{source-notes.md}{source notes} give the
-algebra.
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-Equation (B.2), page 144, and Equation (A.22), page 133}
-
-This establishes a sufficient bound for that particular condition. The
-complex-domain amplitude bound, inner exit inequality, outer stress
-cone, annular moment matching, and first correction remain separate
-requirements.
-
-We have now replaced the arbitrary pressure test function with a
-computed, source-defined schedule datum in a local inner calculation.
-The \href{../../code/d6_axis_pressure/study.ipynb}{executed notebook}
-reproduces the study, while the
-\href{../d6_moment_correction/implementation-ledger.md}{D6 ledger}
-records what is still needed for the full corrected flow.
+The \href{technical-article.html}{technical article},
+\href{../../code/d6_axis_pressure/study.ipynb}{notebook}, and
+\href{source-notes.md}{source notes} document the source schedule, its
+pressure calculation, and the remaining construction conditions.
 
 
 

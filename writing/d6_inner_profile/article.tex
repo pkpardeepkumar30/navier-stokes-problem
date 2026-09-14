@@ -165,7 +165,7 @@
 \@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
 \makeatother
 \hypersetup{
-  pdftitle={Computing a regular vortex profile from the axis outward},
+  pdftitle={What should happen at the centre of a vortex?},
   pdflang={en},
   colorlinks=true,
   linkcolor={blue},
@@ -175,279 +175,180 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{Computing a regular vortex profile from the axis outward}
+\title{What should happen at the centre of a vortex?}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{D6 stage B: a numerical solver for the leading inner
-equations}
+\subtitle{Building a smooth starting shape before worrying about the
+whole flow}
 \author{}
 \date{2026-09-12}
 \begin{document}
 \maketitle
 
 
-\textbf{We can now compute the paper's leading inner profile equations
-for explicit analytic axis data and check how their balance improves
-with radial resolution. The chosen data validate the solver; they do not
-yet define the paper's joined vortex.}
+\href{../paper-map/article.html}{Start with the paper map} · Main route,
+article 2 of 9
 
-The \href{../d6_moment_correction/article.html}{finite moment repair}
-showed how a small linear solve can cancel five integral discrepancies.
-To use that repair in a full correction, however, we need the velocity
-and pressure that generate those discrepancies. An isolated exterior
-solution or an arbitrary Gaussian vortex does not provide them.
+A drawing of a whirlpool often shows arrows circling a central point.
+But what should an arrow right at that point do? There is no single
+``around the centre'' direction there.
 
-The next step is therefore to construct the inner field itself. The
-paper defines its equations near the vortex axis, where the flow must
-remain smooth in Cartesian coordinates. Their radial form appears
-singular, but regularity supplies a natural way to compute successive
-coefficients.
+That small question reveals a major requirement of the construction. The
+fluid must be perfectly smooth at every time before the designated
+singular time. We cannot build the final blow-up by putting a hidden
+defect at the centre from the start.
 
-This article explains that calculation, checks it in both similarity and
-physical coordinates, and identifies what still prevents a complete
-reconstruction. A useful lesson emerges: solving local balance equations
-accurately and satisfying all the global construction requirements are
-separate tasks.
+This article explains how the paper begins with a regular inner profile.
+The key ideas are the circumference of a circle, a smooth graph, and an
+approximation that improves as more shape information is included.
 
-\subsection{Remove the apparent singularity before
-computing}\label{remove-the-apparent-singularity-before-computing}
+\subsection{Use a roundabout as the first
+picture}\label{use-a-roundabout-as-the-first-picture}
 
-The source writes the azimuthal profile as
+Imagine dots painted on a rigid rotating disk. Every dot completes one
+turn in the same time. A dot farther from the centre travels a longer
+circle, so it moves faster.
 
-\[
-E(X,\eta)=\sqrt{2X}\,F(X,\eta),
-\]
+The circumference is \(2\pi r\), where \(r\) is the distance from the
+centre. With a common rotation period, the speed is proportional to
+\(r\). A dot halfway out moves half as fast. At the very centre, its
+circular speed is zero.
 
-where \(X\) is the radial similarity coordinate and \(\eta\) is the
-axial similarity parameter. The square-root factor gives the required
-linear vanishing of physical swirl at the axis. Smoothness is imposed on
-\(F\), the axial velocity profile \(U\), the pressure \(\Pi\), and
-\(V_0/X\), where \(V_0\) determines radial velocity.
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-Equations (4.3)--(4.7), pages 25--26}
-
-We also use the paper's rescaled radial coordinate \(Y=\Lambda X\) and
-factor out the axis amplitude:
-
-\[
-F(Y,\eta)=g(\eta)\Phi(Y,\eta),\qquad \Phi(0,\eta)=1.
-\]
-
-Computing \(\Phi\) avoids confusing variation in the radial profile with
-the potentially enormous variation of its axis amplitude. The pressure
-increment is retained separately from the axis pressure for a similar
-numerical reason.
-
-\subsection{The axis data are inputs to this local
-problem}\label{the-axis-data-are-inputs-to-this-local-problem}
-
-The validation example uses
-
-\[
-U(0,\eta)=4\eta+0.02,\qquad
-\Pi(0,\eta)=-\frac{100}{(1+\eta^2)^2}.
-\]
-
-The positive axis amplitude follows the source's functional form:
-
-\[
-g(\eta)=C^{-1}\exp\!\left[
-\Lambda\int_0^\eta
--\frac{L(w)H_*(w)}{H_*(w)^2+\sigma^2}\,dw
-\right],
-\]
-
-with \(L=1-2h\eta^2\), \(H_*=(1/2-h)\eta+(1-\eta^2)(4\eta+0.02)\), and
-the declared numerical choices \(h=10^{-6}\), \(\sigma=0.2\),
-\(\Lambda=512\), \(C=10^4\).
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Appendix
-B.1, pages 144--145}
-
-The pressure is an analytic test datum with the required evenness and
-sign pattern. It has \textbf{not} been obtained by integrating a
-prepared outer profile. The parameter values also have not been
-certified against the full construction hierarchy. Below we explicitly
-identify one joining condition that these test data fail.
-
-That distinction lets us validate the numerical method without
-mislabelling the resulting field as the complete paper construction.
-
-\subsection{Regularity turns the equations into a
-recurrence}\label{regularity-turns-the-equations-into-a-recurrence}
-
-Expand the normalized swirl, axial velocity, and pressure in powers of
-\(Y\). The leading equations contain the radial operators
-
-\[
-Y\Phi_{YY}+2\Phi_Y,\qquad YU_{YY}+U_Y.
-\]
-
-For a series \(f(Y)=\sum_n f_nY^n\), the coefficient of \(Y^n\) in these
-operators is, respectively,
-
-\[
-(n+1)(n+2)f_{n+1},\qquad (n+1)^2f_{n+1}.
-\]
-
-Neither divisor vanishes for \(n\ge0\). Once the axis values are
-supplied, the equations determine the next radial coefficients. Radial
-pressure balance supplies the next pressure coefficient through
-
-\[
-\Pi_Y=\frac{g^2\Phi^2}{\Lambda}.
-\]
-
-The nonlinear right-hand sides also contain axial-parameter derivatives
-and radial averages. We compute those using Taylor coefficients in
-\(\eta\), retaining enough derivatives for each radial step. This avoids
-estimating high derivatives by subtracting nearby floating-point values.
-The \href{source-notes.md}{source notes} give the full recurrence and
-its derivative accounting. The underlying equations are (4.13) and
-(B.15), with the radial inverses described in (B.5).
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-pages 27, 145 and 147}
+This does not describe the whole vortex in the paper. It gives a simple
+model of regular behaviour near a rotation axis: the circulating speed
+can vanish smoothly even while the rotation is strong.
 
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={Regular normalized swirl and axial velocity profiles are computed from their axis values at four axial parameter locations.}]{figures/01_regular_inner_profiles.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Concentric circles accompany a straight line showing circular speed increasing from zero with distance from the centre.}]{figures/reader.png}}
 
 }
 
-\caption{\label{fig-profiles}Profiles computed with degree 22 and 80
-decimal digits at four declared axial parameters. The normalized swirl
-remains positive on the displayed samples, while the axial velocity
-follows its coupled equation. These curves use validation axis data and
-have not been joined to an exterior.}
+\caption{\label{fig-centre}A rigid-disk example has circulating speed
+proportional to distance from the centre. The graph reaches zero at the
+centre; no circulating direction has to be assigned there. This is an
+illustration of regularity, not the paper's computed velocity profile.}
 
 \end{figure}%
 
-The smallest sampled \(\Phi\) is about \textbf{0.222}. Sampling
-positivity is a numerical observation; it does not certify positivity
-throughout a continuous rectangle.
+Fluid can still move \textbf{along} the axis. Zero circular speed at the
+centre does not require the full velocity to be zero.
 
-\subsection{Check the equations as the radial degree
-increases}\label{check-the-equations-as-the-radial-degree-increases}
+\subsection{Describe the shape before changing its
+size}\label{describe-the-shape-before-changing-its-size}
 
-The solver reevaluates the leading angular and axial equations and
-radial pressure balance from the resulting coefficients. Each relative
-defect is the absolute equation imbalance divided by the sum of the
-magnitudes of its terms. No fixed numerical floor replaces a small
-physical denominator.
+A \textbf{profile} is simply a graph describing how a quantity varies
+with position. Here we need profiles for circular motion, axial motion,
+and pressure.
 
-\begin{figure}
+The construction separates the profile from its changing physical
+scales. Imagine printing the same picture at different sizes and
+changing the colour scale used for speed. The profile describes the
+underlying picture; the time-dependent scales describe how narrow and
+fast it becomes.
 
-\centering{
+This separation helps organize the equations. A shrinking coordinate
+ruler follows the core, so the profile does not have to be recomputed as
+an unrelated picture at every time.
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={Leading balance defects and differences from a higher-degree profile decrease as more radial coefficients are retained.}]{figures/02_radial_degree_convergence.png}}
+The actual radial and axial rulers change at slightly different rates.
+For this first explanation, remembering that there are two rulers is
+more useful than memorizing their exponents.
 
-}
+\subsection{Let the equations determine the nearby
+shape}\label{let-the-equations-determine-the-nearby-shape}
 
-\caption{\label{fig-convergence}Increasing the radial polynomial degree
-reduces both the leading equation defects and the differences from a
-degree-24 reference. Degree here means radial Taylor degree of the
-leading field; it is not the correction index in the paper's time-scale
-expansion.}
+Suppose we know a smooth graph's value at a point. To draw it nearby, we
+might first use a constant value, then add a tilt, then add curvature.
 
-\end{figure}%
-
-Across the displayed profile samples, the largest relative angular,
-axial, and pressure defects are approximately \textbf{2.6e-22},
-\textbf{4.6e-38}, and \textbf{1.7e-16}.
-
-These are leading balances. The source separates axial viscosity and the
-remaining radial momentum terms for later correction. Small values here
-therefore do not mean the full Navier--Stokes residual has been
-cancelled.
-
-We make additional independent checks. Repeating the computation at
-higher precision checks retained digits. Independently centered \(\eta\)
-expansions agree where they overlap. A separate physical-coordinate test
-reconstructs velocity and pressure and uses finite differences to check
-incompressibility, the two leading tangential momentum balances, and
-centrifugal pressure balance. Its parameters and step size are recorded
-explicitly; it is not a global physical-grid simulation.
-
-\subsection{Compare with the source's large-parameter
-approximation}\label{compare-with-the-sources-large-parameter-approximation}
-
-Appendix B gives the comparison function
+An elementary example is
 
 \[
-f_0(z)=\sum_{n=0}^{\infty}\frac{(-z/2)^n}{n!(n+1)!},
-\qquad \Phi\approx f_0(Y\chi),\qquad
-\chi=\frac{H_*^2}{H_*^2+\sigma^2}.
+y=1+x+x^2.
 \]
 
-The first axial comparison is \(U\approx U_*-YZ_*/(2\Lambda L)\), where
-\(Z_*\) is the source's axial expression evaluated at the axis. We test
-these formulas at a fixed declared \((Y,\eta)\) while increasing
-\(\Lambda\).
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Equation
-(B.13), page 147}
+At \(x=0.1\), its three terms are \(1\), \(0.1\), and \(0.01\). This
+illustrates how powers can organize information close to the starting
+point. It is not the vortex formula.
 
-\begin{figure}
+The inner solver uses this general idea. It represents the unknown
+radial profiles by powers of the radial coordinate. The fluid equations
+relate the coefficients, so the nearby shape is constrained by the
+balance of motion, pressure, and viscosity.
 
-\centering{
+Including more coefficients gives a way to check whether the
+approximation is settling down. If successive approximations agree
+better over a declared region, that is useful numerical evidence. It is
+not automatically a guarantee beyond that region.
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={Computed profiles approach the source\textquotesingle s large-Lambda comparison expressions with the expected observed orders at the selected point.}]{figures/03_large_lambda_comparison.png}}
+In the paper, Appendix B supplies analytic existence and continuation
+arguments. Our numerical study illustrates how a local coefficient
+construction behaves for stated inputs.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Paper,
+Section 4 and Appendix B}
 
-}
+\subsection{Why the upward and downward motions are not perfectly
+symmetric}\label{why-the-upward-and-downward-motions-are-not-perfectly-symmetric}
 
-\caption{\label{fig-asymptotic}At the stated point, the normalized swirl
-comparison error decreases approximately as inverse Lambda. After
-including the first axial term, the remaining axial difference decreases
-approximately as inverse Lambda squared. These are numerical comparisons
-for the supplied data, not certified uniform bounds for the
-construction.}
+A perfectly symmetric sketch is attractive, but it can make two useful
+mechanisms weak in the same place.
 
-\end{figure}%
+The paper needs enough shear near the edge of the inner flow to amplify
+the later pulses. Circular shear helps in much of the region; axial
+shear supplies another contribution. A small axial bias separates
+locations where those mechanisms would otherwise both become
+ineffective.
 
-The experiment tests the algebra and limiting behavior. It does not
-determine the theorem's parameter thresholds or prove a uniform estimate
-over all axial parameters.
+Think of arranging two supports so their weak spots do not line up. The
+analogy explains the design choice; the actual condition is a
+quantitative statement about the velocity profiles.
 
-\subsection{Why this does not finish the joined
-vortex}\label{why-this-does-not-finish-the-joined-vortex}
+This is one reason the flow cannot be specified by ``draw a nice
+symmetrical whirlpool.'' Its shape is chosen to support later steps of
+the argument.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf\#page=5}{Paper,
+Section 2.1}
 
-The source requires more than local balance. Its axis-data selection
-includes condition (B.2): \(\chi>0.99\) wherever the axial expression
-\(Z_*\) is sufficiently small. Our test datum has a zero of \(Z_*\) near
-\(\eta=\) \textbf{-0.000145}, where \(\chi\approx\) \textbf{0.0093}. It
-fails that condition.
+\subsection{A local profile still needs a connection to the
+outside}\label{a-local-profile-still-needs-a-connection-to-the-outside}
 
-This is a concrete reason to keep the example's status explicit. A very
-accurate local solution can still have unsuitable data for the later
-joining argument.
+A good centre is one piece of the construction. The profile must extend
+far enough, reach a suitable state at its outer edge, and connect to the
+annulus and exterior.
 
-There is also a representation issue. Some pressure increments are much
-smaller than the nonzero axis pressure. Adding them into one pressure
-value can lose the increment even at the selected precision. The code
-retains those increments separately and differentiates their
-coefficients; the
-\href{../../code/d6_inner_profile/data/pressure_storage.csv}{pressure-storage
-data} expose the loss that occurs if they are recovered by subtraction.
+Pressure is especially important. We cannot choose its inner value
+arbitrarily and assume that the surrounding rotating fluid will fit it.
 
-To complete D6, we still need the prepared outer pressure trace,
-source-consistent parameter choices, the inner-to-annular continuation
-and moment match, and the first correction in powers of \(q^{2h}\).
-Increasing radial Taylor degree does not perform any of those steps.
+Our first inner calculation used declared test pressure data to check
+the numerical method. That was a useful component check. It was not an
+assembled version of the paper's entire vortex.
 
-The
-\href{../d6_moment_correction/implementation-ledger.md}{implementation
-ledger} records that dependency chain. This stage supplies a tested
-local recurrence. The \href{../d6_axis_pressure/article.html}{following
-pressure study} computes the ideal-schedule pressure datum and supplies
-its coefficients to the same engine. The
-\href{../../code/d6_inner_profile/study.ipynb}{executed notebook},
-\href{../../code/d6_inner_profile/parameters.json}{parameters}, and
-\href{../../code/d6_inner_profile/data/}{four CSV datasets} reproduce
-the present analytic-data validation experiment.
+The next stage supplied pressure from the source's outer schedule. The
+distinction is similar to testing a bridge component in a workshop
+before calculating the loads it will carry in the actual bridge.
+
+\subsection{Where this fits in the bigger
+picture}\label{where-this-fits-in-the-bigger-picture}
+
+\textbf{The smooth inner profile gives the concentrating vortex a
+legitimate starting shape before the singular time.} Its edge must also
+provide the shear needed by the later wave mechanism.
+
+The growth of the final maximum speed comes from the evolving
+concentration, not an initially broken rotation axis. Continue with
+\href{../d6_axis_pressure/article.html}{why the centre pressure depends
+on the outside}.
+
+The \href{technical-article.html}{technical article},
+\href{../../code/d6_inner_profile/study.ipynb}{notebook}, and
+\href{source-notes.md}{source notes} give the coupled equations,
+numerical convergence checks, and limits of the local calculation.
 
 
 

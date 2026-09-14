@@ -109,4 +109,3 @@ The repair step makes a local modification compatible with global requirements. 
 We now have the main tools needed to understand the final construction cycle. Continue with [how the pieces become one complete flow](../completing-the-flow/article.html).
 
 The [technical article](technical-article.html), [notebook](../../code/d6_moment_correction/study.ipynb), and [source notes](source-notes.md) identify the precise five constraints and their numerical checks.
-

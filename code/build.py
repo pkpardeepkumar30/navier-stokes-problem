@@ -61,6 +61,9 @@ def main():
     folder, expected_figures, test_pattern = STUDIES[args.study]
     STUDY = CODE / folder
     ARTICLE = ROOT / "writing" / folder
+    # Public prose now has its own lightweight build; preserve the executable
+    # computational article and its original scientific figure checks.
+    article_stem = "technical-article" if (ARTICLE / "technical-article.qmd").exists() else "article"
     generate = importlib.import_module(f"nscomp.{args.study}").generate
 
     start = time.perf_counter()
@@ -116,14 +119,14 @@ def main():
             env["QUARTO_PYTHON"] = sys.executable
             env["PATH"] = str(Path(sys.executable).parent) + os.pathsep + env.get("PATH", "")
             for output_format in ["html", "latex"]:
-                completed = run([quarto, "render", ARTICLE / "article.qmd", "--to", output_format],
+                completed = run([quarto, "render", ARTICLE / f"{article_stem}.qmd", "--to", output_format],
                                 env=env, capture_output=True, text=True, encoding="utf-8")
                 (CODE / ".cache" / f"{args.study}-quarto-{output_format}.log").parent.mkdir(parents=True, exist_ok=True)
                 (CODE / ".cache" / f"{args.study}-quarto-{output_format}.log").write_text(
                     completed.stdout+completed.stderr, encoding="utf-8")
                 report["rendered_formats"].append(output_format)
                 print(f"Rendered {output_format}.")
-            html = (ARTICLE / "article.html").read_text(encoding="utf-8")
+            html = (ARTICLE / f"{article_stem}.html").read_text(encoding="utf-8")
             if "data:image/png;base64," not in html or "{python}" in html:
                 raise RuntimeError("HTML is missing embedded figures or has unresolved inline code")
             report["html_checks"] = "figures embedded; inline Python evaluated"
@@ -144,13 +147,18 @@ def main():
                     missing_links.append(href)
             if missing_links:
                 raise RuntimeError(f"Broken local article links: {missing_links}")
-            tex = (ARTICLE / "article.tex").read_text(encoding="utf-8")
+            tex = (ARTICLE / f"{article_stem}.tex").read_text(encoding="utf-8")
             graphics = re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", tex)
             if len(graphics) != expected_figures or any(not (ARTICLE/g).exists() for g in graphics):
                 raise RuntimeError("LaTeX figure references did not resolve")
             report["artifact_checks"] = {"embedded_figures": len(images), "local_links_resolve": True,
                                          "latex_figure_paths_resolve": True, "pdf_compiled": False}
-            report["article_source_sha256"] = hashlib.sha256((ARTICLE/"article.qmd").read_bytes()).hexdigest()
+            report["article_source_file"] = f"{article_stem}.qmd"
+            report["article_reading_copy"] = f"{article_stem}.html"
+            report["article_source_sha256"] = hashlib.sha256((ARTICLE/f"{article_stem}.qmd").read_bytes()).hexdigest()
+            if article_stem == "technical-article":
+                run([sys.executable, CODE/"render_readers.py", "--study", folder])
+                report["public_article"] = "rendered and checked separately; see reader-validation.json"
         report["dependencies"] = {
             name: importlib.metadata.version(name)
             for name in ["numpy", "matplotlib", "sympy", "scipy", "mpmath", "Pillow", "nbformat", "nbclient", "nbconvert", "ipykernel", "pypdf", "PyYAML"]

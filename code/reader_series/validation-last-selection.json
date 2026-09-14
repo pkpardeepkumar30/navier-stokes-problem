@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "article_count": 3,
+  "all_series_articles": false,
+  "elapsed_seconds": 16.182,
+  "articles": {
+    "d6_inner_profile": {
+      "status": "passed",
+      "audience": "General public; mostly high-school mathematics",
+      "article_source_file": "article.qmd",
+      "rendered_formats": [
+        "html",
+        "latex"
+      ],
+      "source_sha256": "0a043538bfa73786d7c785ec653d931dd6be52cb3009082ed8ce4b826d3762e0",
+      "html_sha256": "0235a746ace2ff93e684d5b86c0315177001175b43f84c47f1d7bae37c43c8a6",
+      "latex_sha256": "fa49b7cca1a94374c0674eb5d4784b8d73b8cc699e661c1bde11492dd0c9f96c",
+      "reader_png_sha256": "c423e7b08db27753592cdd6cfb18f060e2d0fff5cdfcbd06aa41a0e8633f3289",
+      "reader_svg_sha256": "7c0d5bd0fbfc80f0cea174aad7b9146d86eaddd131c99960e3ff3ca0a518b05d",
+      "word_count_approximate": 976,
+      "embedded_figures": 1,
+      "figure_alt_text_present": true,
+      "embedded_figure_matches_current_png": true,
+      "local_links_checked": 6,
+      "latex_figure_path_resolves": true,
+      "context_section_present": true,
+      "advanced_notation_guardrail": "passed; not a readability score",
+      "new_numerical_research": false,
+      "browser_visual_review": false,
+      "pdf_compiled": false,
+      "technical_material_preserved": true
+    },
+    "d6_moment_correction": {
+      "status": "passed",
+      "audience": "General public; mostly high-school mathematics",
+      "article_source_file": "article.qmd",
+      "rendered_formats": [
+        "html",
+        "latex"
+      ],
+      "source_sha256": "988aac86f8d7ab0204ae57e7b23ef451725ca0c26c6787a09f6d8e0abf14d3e6",
+      "html_sha256": "9d3163cdbe80caaa6de60b94f35cf53859c5b9cf9e4e997e8ce730922f7f2031",
+      "latex_sha256": "9c812d15d895876994aaec76a12ee75b14e7119bdc00eb5a745bbf7ed476b4bb",
+      "reader_png_sha256": "3342617eda84f320ea0ed96432a7620d268c22952d74c6ea903edaf1982f0ad9",
+      "reader_svg_sha256": "fcdbba2508b149b10c44a6b39f9338529d6ddaa34818047c591f2d9b5058087b",
+      "word_count_approximate": 930,
+      "embedded_figures": 1,
+      "figure_alt_text_present": true,
+      "embedded_figure_matches_current_png": true,
+      "local_links_checked": 6,
+      "latex_figure_path_resolves": true,
+      "context_section_present": true,
+      "advanced_notation_guardrail": "passed; not a readability score",
+      "new_numerical_research": false,
+      "browser_visual_review": false,
+      "pdf_compiled": false,
+      "technical_material_preserved": true
+    },
+    "d10_compressible_vortex": {
+      "status": "passed",
+      "audience": "General public; mostly high-school mathematics",
+      "article_source_file": "article.qmd",
+      "rendered_formats": [
+        "html",
+        "latex"
+      ],
+      "source_sha256": "3425c487a2394ecf454f37296e781915cc1c205593cbdda7ef9ed7f8c90b0489",
+      "html_sha256": "f303099fe82b1559690de746889fce794444353fa1212b85568c80f6354433ca",
+      "latex_sha256": "abe7f5f6bbe3b14a8be6747409b83f765e1fc6d839fa71730afd9cd8cd7fb045",
+      "reader_png_sha256": "bc4d326e085842073c0f4f16559474abc4477a070314ccb39681a0bcb2b4d16f",
+      "reader_svg_sha256": "4333118de50351e3d839b785321b191f9750f262de5b48f3e743a804307ef464",
+      "word_count_approximate": 815,
+      "embedded_figures": 1,
+      "figure_alt_text_present": true,
+      "embedded_figure_matches_current_png": true,
+      "local_links_checked": 7,
+      "latex_figure_path_resolves": true,
+      "context_section_present": true,
+      "advanced_notation_guardrail": "passed; not a readability score",
+      "new_numerical_research": false,
+      "browser_visual_review": false,
+      "pdf_compiled": false,
+      "technical_material_preserved": true
+    }
+  }
+}

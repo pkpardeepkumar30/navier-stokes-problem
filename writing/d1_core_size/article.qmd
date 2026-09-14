@@ -1,259 +1,103 @@
 ---
-title: "How small does a collapsing vortex become?"
-subtitle: "From a shrinking core to molecular scales: where the fluid picture needs to change"
-date: 2026-09-11
+title: "How small does a faster vortex become?"
+subtitle: "A simple size–speed rule, followed to the limits of a fluid picture"
+date: 2026-09-12
 lang: en
-jupyter: python3
 format:
   html:
     toc: true
     toc-depth: 2
     embed-resources: true
-    code-fold: true
-    css: article.css
     theme: cosmo
+    css: ../reader-style.css
   latex:
     documentclass: article
     fontsize: 11pt
     geometry: margin=25mm
-execute:
-  echo: false
-  warning: false
-  error: false
 ---
 
-```{python}
-#| label: setup
-from nscomp.d1 import (
-    load_parameters, derived, reference_model, generate,
-    speed_table, length_table, fluid_table, gradient_rows,
-)
-p = load_parameters()
-d = derived(p)
-model = reference_model(p)
-summary = generate()
-c = p["constants"]["speed_of_light_m_s"]
-```
+[Return to the paper map](../paper-map/article.html) · Physical interpretation, article 1 of 3
 
-The proposed OpenAI Navier–Stokes construction describes a striking mathematical process: the velocity grows without bound as an intense vortex core becomes progressively narrower. This is a *finite-time blow-up*: the growth happens as a particular time is approached, rather than requiring an infinite wait. The construction concerns a fluid governed by the **forced incompressible** Navier–Stokes equations. For an engineer reading it, a natural question is how small the moving region has become by the time its speed is enormous. [OpenAI, Sections 1–2.1](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+The paper describes a vortex whose intense core becomes smaller while its speed grows. That raises a natural question: by the time the speed is enormous, how much room is left inside the core?
 
-That question matters because a smooth fluid velocity is a description of molecular motion averaged over a small region. The region must contain enough molecules to support that average, yet be small enough to distinguish variations within the flow. As a vortex narrows towards molecular dimensions, those two requirements become difficult to satisfy together. The incompressible approximation also deserves attention: density changes may matter well before the core becomes molecular in size.
+We can make a useful first estimate with a rule close to “ten times faster, ten times smaller.” Then we can compare the answer with familiar lengths: a millimetre, a micrometre, and the spacing between molecules.
 
-Our aim is to put numbers on this sequence. We will use the paper's leading radius and velocity scalings to obtain a simple rule connecting them. We will then choose an explicit reference size and speed, calculate the radius at increasingly high speeds, and compare it with sound-speed, molecular, and atomic markers. This is a calculation of scales; it does not require a full fluid simulation.
+The main message is physical. **A formula can be continued into a range where the real-fluid assumptions behind its interpretation have already failed.** Calculating that continuation is useful only if we keep the distinction clear.
 
-Here is the result to keep in mind. **For an illustrative core of radius 1 millimetre at 1 metre per second, the estimate reaches molecular dimensions near one percent of the speed of light. Yet basic checks on the incompressible-fluid description already raise questions when the radius is still a few micrometres.** The exact numbers depend on the reference pair and the fluid assumptions, which we will make explicit.
+## The rule needs one reference size and speed
 
-The physical message is that we must reassess the model well before using its singular limit to describe a real fluid. A mathematical solution and its physical interpretation have different requirements: identifying where the latter becomes unreliable does not establish an error in a theorem about the equations.
+Speed alone cannot determine a radius. We first need an example point on the size–speed curve.
 
-## The rule: ten times faster, about ten times smaller
+For illustration, suppose the core has radius **1 millimetre** when its characteristic speed is **1 metre per second**. These values set our example; they are not measured from a realization of the paper's flow.
 
-Imagine redrawing the same vortex profile with a narrower horizontal scale and a larger velocity scale. Its shape in rescaled coordinates can remain similar while its physical width shrinks and its speed rises. This is the idea behind the similarity scalings used here.
-
-Let $r_c$ denote the core's characteristic radial width and $U$ its characteristic speed. The speed is associated with motion around the vortex axis or along it; it is not the angular rotation rate. Write $\tau>0$ for the time remaining, measured in the paper's dimensionless units. Its leading scalings are
+The paper's leading scaling is very close to an inverse relation:
 
 $$
-r_c\asymp\tau^{1/2},
-\qquad
-U\asymp\tau^{-(1/2+h)}.
+\text{new radius}\approx
+\frac{\text{reference radius}\times\text{reference speed}}
+{\text{new speed}}.
 $$
 
-The small positive parameter $h$ slightly changes the velocity exponent. The symbol $\asymp$ means that these expressions give the dependence on time up to fixed multiplicative factors. [OpenAI, Section 2.1](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+So multiplying the speed by ten divides the radius by about ten. The paper has a small exponent adjustment; the inverse rule is its useful limiting approximation for this explanation. [Paper, Section 2.1](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
 
-To connect radius directly to speed, choose a reference stage with values $r_0$, $U_0$, and $\tau_0$. Holding the profile factors fixed gives the following model for the ratios:
+This is a relation between characteristic scales. It is not a calculation of the path of a particular fluid particle.
 
-$$
-\frac{r_c}{r_0}=\left(\frac{\tau}{\tau_0}\right)^{1/2},
-\qquad
-\frac{U}{U_0}=\left(\frac{\tau}{\tau_0}\right)^{-(1/2+h)}.
-$$
+## Work through the numbers
 
-The second equation gives $\tau/\tau_0=(U/U_0)^{-1/(1/2+h)}$. Substitute this into the first:
+With our assumed reference pair:
 
-$$
-\boxed{\frac{r_c}{r_0}
-=\left(\frac{U}{U_0}\right)^{-\alpha}},
-\qquad
-\alpha=\frac{1}{1+2h}.
-$$
+| Characteristic speed | Estimated core radius |
+| --- | --- |
+| 1 metre per second | 1 millimetre |
+| 10 metres per second | 0.1 millimetres |
+| 1,000 metres per second | 1 micrometre |
+| 1,000,000 metres per second | 1 nanometre |
+| About 3,000,000 metres per second | About 0.33 nanometres |
 
-Since $h$ is very small, $\alpha$ is close to one. Our main estimates use the limit $h\to0^+$:
+A micrometre is one thousandth of a millimetre. A nanometre is one thousandth of a micrometre.
 
-$$
-\boxed{r_c\approx\frac{r_0U_0}{U}.}
-$$
+The last speed is approximately one percent of the speed of light. With the exact value, the supporting calculation gives **0.334 nanometres**. At one tenth of the speed of light, the formal estimate is **0.0334 nanometres**.
 
-In words, **multiplying the speed by ten divides the radius by approximately ten**. This is the central computational result. It describes the leading scaling with an assumed reference pair; determining an absolute radius from the full constructed flow requires additional profile information.
+The enormous-speed entries are extrapolations of the formula. They do not claim that a real gas or liquid can follow this path.
 
-The [technical note below](#technical-note) explains the restrictions on $h$ and why the inverse law is a useful approximation. For now, we can use it to calculate a concrete example.
+![Each tenfold speed increase gives a tenfold radius decrease in the inverse-law illustration. The cards are a calculation from an assumed reference pair, not physical stages validated for air or water.](figures/reader.png){#fig-size fig-alt="Cards pair 1 metre per second with 1 millimetre, 1000 metres per second with 1 micrometre, and 1 million metres per second with 1 nanometre."}
 
-## An example you can calculate by hand
+## What is wrong with a molecule-sized fluid core?
 
-Speed alone does not determine a core radius. We need one radius–speed pair to set the size of the curve. For illustration, suppose that at a stage when the flow is already moving,
+A continuum-fluid description assigns a smooth velocity to each small region. Physically, that value represents the collective behaviour of many molecules.
 
-$$
-r_0=1\ \mathrm{mm}=10^{-3}\ \mathrm m,
-\qquad
-U_0=1\ \mathrm{m\,s^{-1}}.
-$$
+The averaging region must meet two requirements. It must include enough molecules to have a meaningful average. It must also be small enough to distinguish nearby parts of the flow.
 
-These are assumed reference values, not measurements from an air or water experiment. Their compatibility with a complete dimensionless profile and a specified fluid viscosity has not been established.
+If the radial structure itself is only about one molecular spacing wide, there is little room to satisfy both requirements. A long core does not fix the problem: many molecules along its length do not provide the missing radial resolution.
 
-With this choice, the inverse law gives a radius of 1 micrometre at $10^3$ m/s and 1 nanometre at $10^6$ m/s. Recall that a micrometre is one thousandth of a millimetre, and a nanometre is one thousandth of a micrometre.
+For liquid water near room temperature, the estimated mean molecular spacing is about **0.31 nanometres**. Our formal 0.334-nanometre radius is comparable. This spacing is an average separation, not a hard spherical diameter assigned to every molecule.
 
-Now consider one percent of the speed of light, $0.01c$, which is approximately $3\times10^6$ m/s. The calculation is simply
+An atomic reference length, the Bohr radius, is about **0.053 nanometres**. It provides a ruler for comparison, not a universal radius for all atoms. The property sources and definitions are in the [source notes](source-notes.md).
 
-$$
-r_c\approx
-\frac{(10^{-3}\ \mathrm m)(1\ \mathrm{m\,s^{-1}})}
-{3\times10^6\ \mathrm{m\,s^{-1}}}
-\approx 3.3\times10^{-10}\ \mathrm m
-=0.33\ \mathrm{nm}.
-$$
+## Important assumptions deserve attention much earlier
 
-Using the exact value of $c$, our code gives **`{python} f'{1e9*model.radius(0.01*c):.3f}'` nm at $0.01c$**. At $0.1c$, the speed is another factor of ten larger, and the radius falls to **`{python} f'{1e9*model.radius(0.1*c):.4f}'` nm**.
+Waiting until the radius reaches molecules would miss earlier model questions.
 
-The table includes these extreme cases alongside speeds referenced to air and water. Here $Ma=1$ means the reference sound speed, and $Ma=5$ means five times that speed.
+The incompressible description holds density fixed. A common preliminary check compares the fluid speed with the sound speed. When that ratio is no longer small, density changes deserve explicit examination.
 
-```{python}
-#| output: asis
-print(speed_table(p))
-```
+For the reference conditions used here, an illustrative speed marker is around **100 metres per second in air**, and around **450 metres per second in water**. On our assumed curve, those correspond to radii of roughly **10 micrometres** and **2 micrometres**—far larger than a molecular spacing.
 
-All sizes quoted here are **radii**; a diameter would be twice as large. The extreme-speed entries are *formal extrapolations*: we have continued the formula without assuming that a real fluid can remain in the state required for it to apply.
+These are screening markers, not universal failure boundaries. The calculation uses air at 23 °C and 101.3 kPa, and water at 25 °C and 100 kPa. Heating, pressure changes, and other effects can also matter.
 
-## What does a molecular-sized core actually mean?
+In a gas, we must additionally compare the distance molecules travel between collisions with the distance over which the flow changes. That second distance need not equal the overall vortex radius. The [next physical article](../d9_regime_map/article.html) explains why.
 
-For liquid water near room temperature, we can estimate an average molecular spacing from its density. If $n$ is the number of molecules per unit volume, then
+## How much do the reference values matter?
 
-$$
-n=\frac{\rho N_A}{M},
-\qquad
-d=n^{-1/3},
-$$
+They matter directly. If the reference radius were ten times larger while the reference speed stayed fixed, every estimated radius in the table would be ten times larger.
 
-where $\rho$ is mass density, $M$ is molar mass, and $N_A$ is Avogadro's constant. Taking the cube root of the volume per molecule gives a convenient spacing estimate.
+A full dimensional interpretation would also have to match the constructed profile and viscosity to the chosen fluid. That matching has not been done in this scale estimate.
 
-For water at 25 °C and 100 kPa, this yields **`{python} f'{1e9*d["water_mean_spacing_m"]:.3f}'` nm**. Our $0.01c$ radius is about `{python} f'{model.radius(0.01*c)/d["water_mean_spacing_m"]:.2f}'` times that spacing. The Bohr radius, **`{python} f'{1e9*p["constants"]["bohr_radius_m"]:.4f}'` nm**, provides an atomic reference length; the $0.1c$ radius is smaller still. The spacing is not a molecular diameter, and the Bohr radius is not the radius of every atom. [IAPWS water properties, Table 8](https://iapws.org/technical-guidance/release/LiquidWater.download), [NIST water molar mass](https://webbook.nist.gov/cgi/cbook.cgi?Name=water), [CODATA constants](https://physics.nist.gov/cuu/Constants/Table/allascii.txt)
+The useful result is therefore a transparent relationship with declared assumptions, not a unique physical radius attached to a given velocity.
 
-Why is that comparison consequential? Picture a small averaging box used to define the local fluid velocity. It must be wide enough to include many molecules and narrow enough to resolve the core. If the radial variation occurs over roughly one molecular spacing, there is no room between those requirements. **A smooth local continuum description of that radial structure then loses its physical basis.** The core may remain long in the axial direction; having many molecules along its length does not restore the missing radial separation of scales.
+## Where this fits in the bigger picture
 
-We can also reverse the calculation. For the inverse law, the speed at which the radius equals a chosen length $\ell$ is $U(\ell)\approx r_0U_0/\ell$. The following values answer that geometric question:
+**This article interprets the paper's shrinking scales; it is not a step that proves or disproves the mathematical construction.** A theorem about a continuum equation and an experiment with molecular matter answer different questions.
 
-```{python}
-#| output: asis
-print(length_table(p))
-```
+The calculation makes the separation visible: the formula reaches molecular sizes only after passing earlier reasons to reconsider the physical model.
 
-These lengths are comparison markers, not a universal list of failure thresholds. Some averaged transport predictions can agree with molecular simulations in very small pores; that agreement concerns particular observables and conditions. It does not automatically justify resolving an arbitrary smooth vortex at the same scale. [Gravelle and colleagues](https://arxiv.org/abs/1501.01476)
-
-## The fluid assumptions need attention much earlier
-
-Reaching molecular dimensions gives a compelling picture, but waiting for that point would miss earlier reasons to reconsider the equations. We can make two simple checks using reference properties of air at 23 °C and 101.3 kPa, and water at 25 °C and 100 kPa.
-
-### Can density changes still be neglected?
-
-The Mach number compares a flow speed with the speed at which sound travels:
-
-$$
-Ma=\frac{U}{c_s}.
-$$
-
-Here $U$ is the characteristic vortex speed relative to its bulk motion, and $c_s$ is the reference sound speed. A marker near $Ma=0.3$ is commonly used to flag the need to examine compressibility. It is an engineering check, not an exact boundary at which incompressibility suddenly fails. Its applicability also depends on the flow, especially for liquids. [Low-Mach modelling discussion](https://ntrs.nasa.gov/api/citations/19960045736/downloads/19960045736.pdf)
-
-For the illustrative radius–speed curve, this marker occurs at approximately:
-
-- **Air:** `{python} f'{0.3*d["air_sound_speed_m_s"]:.3g}'` m/s and a radius of **`{python} f'{1e6*model.radius(0.3*d["air_sound_speed_m_s"]):.3g}'` micrometres**.
-- **Water:** `{python} f'{0.3*p["water"]["sound_speed_m_s"]:.3g}'` m/s and a radius of **`{python} f'{1e6*model.radius(0.3*p["water"]["sound_speed_m_s"]):.3g}'` micrometres**.
-
-Those radii are thousands of times larger than the water molecular spacing. Thus, in this example, there is already a reason to reassess the incompressible approximation long before the molecular comparison becomes relevant. Heating, pressure changes, or cavitation could introduce other limitations; this calculation does not determine their onset.
-
-### In a gas, are molecular flights short enough?
-
-Gas molecules travel a finite distance between collisions. The mean free path $\lambda$ measures that distance, while $L_{\rm grad}$ measures the distance over which the flow varies appreciably. Their ratio is the Knudsen number:
-
-$$
-Kn=\frac{\lambda}{L_{\rm grad}}.
-$$
-
-For conventional continuum gas modelling, we want molecular flights to be short compared with flow variations. A $Kn=0.01$ marker is a common check on that separation of scales. The cited air reference gives $\lambda=67.3$ nm, using its stated mean-free-path convention. [NIST, Equation 11 and Table 3](https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf), [Knudsen screening discussion](https://ntrs.nasa.gov/api/citations/20000004526/downloads/20000004526.pdf)
-
-We have not calculated the actual velocity gradients, so start with the assumption $L_{\rm grad}=r_c$. Then $Kn=0.01$ corresponds to a radius of **6.73 micrometres**, reached at a formal speed near **`{python} f'{gradient_rows(p)[1]["kn_screen_speed_m_s"]:.3g}'` m/s**.
-
-Under that assumption, the air Mach marker is encountered before the Knudsen marker as speed increases. The order is conditional: if the flow varies over one tenth of the core radius, the Knudsen marker is reached first. Both comparisons remain far from the extreme-speed entries in the earlier table.
-
-![For the illustrative 1 mm / 1 m/s reference pair, the Mach and air Knudsen checks arise at micrometre radii. The molecular and atomic reference bands lie much lower. Follow each curve from left to right as speed increases: the dashed continuation reaches those bands only after passing the displayed physical checks. The solid segment means only that these checks have not yet been crossed; it does not establish that every fluid assumption holds.](figures/02_core_size_and_physical_scales.png){#fig-physical fig-alt="Air and water radius-versus-speed curves cross micrometre-scale physical checks well before reaching the molecular and atomic reference bands at extreme speeds."}
-
-The gas calculation should not be transferred directly to water. A liquid requires attention to molecular correlations, relaxation times, and its thermodynamic state. Here we use water's molecular spacing as a geometric comparison and leave a quantitative liquid relaxation criterion for a later study.
-
-## How much do the chosen reference values matter?
-
-Quite a lot. In the inverse law, $r_c=r_0U_0/U$, the product $r_0U_0$ sets the radius at any chosen speed. Increasing either reference value by a factor of ten increases the calculated radius by a factor of ten. A different reference pair can therefore move the molecular-size comparison to a very different speed.
-
-This is why the headline estimate must travel with its **1 mm at 1 m/s** assumption. It is not a universal prediction that every collapsing vortex reaches a particular radius at $0.01c$.
-
-The figure below shows the dependence on the reference pair and on the assumed gradient length. In its right panel, $\beta$ means $L_{\rm grad}/r_c$: $\beta=0.1$ corresponds to variations over one tenth of the radius.
-
-![The left panel shows how changing the assumed reference radius or speed changes the radius at 0.01c. The right panel shows how changing the gradient-length assumption changes the order of the two air checks. The orange exponent example is included only for comparison; it lies outside the detailed paper's necessary parameter bound.](figures/03_calibration_and_gradient_sensitivity.png){#fig-sensitivity fig-alt="The inferred core radius changes with the reference pair, while the relative order of Mach and Knudsen checks changes with the assumed gradient length."}
-
-These are alternative assumptions, not statistical error bars. An unknown multiplicative factor in the radius is already represented by changing $r_0$; counting it again would double-count the same freedom. Matching an actual profile and viscosity may also couple the choices of $r_0$ and $U_0$.
-
-## What should we take from this calculation?
-
-The paper's leading scalings give a clear, useful estimate: **the characteristic core radius falls almost inversely with speed**. With our illustrative reference pair, continuing that law to $0.01c$ gives a radius comparable to the spacing between water molecules; continuing to $0.1c$ gives a radius smaller than the Bohr radius.
-
-The central physical finding is the ordering of scales. In this example, the displayed checks on incompressibility and gas continuum modelling arise while the core is still micrometres in radius. The molecular and atomic comparisons lie much farther along the extrapolated curve. A prediction about a real fluid would therefore need to revisit the governing assumptions before reaching those extreme speeds.
-
-This study does not identify a universal first failure mechanism. That would require the actual gradients, pressure and temperature evolution, and relevant relaxation times. The paper's corrections may also contain smaller scales than the visible core. The [source and calibration notes](source-notes.md) record those unresolved quantities.
-
-For computational scientists and engineers, this gives a practical starting point: derive the scale relation, state its dimensional reference, and check the physical assumptions at each stage of the extrapolation. The [executed notebook](../../code/d1_core_size/study.ipynb), [parameters](../../code/d1_core_size/parameters.json), and [CSV data](../../code/d1_core_size/data/) let readers change the assumptions and reproduce the comparisons. The next article will examine how increasing velocity can coexist with bounded energy as the intense-flow region shrinks.
-
-## Technical note: the exponent and the dimensional reference {#technical-note}
-
-The details here support the approximation used above; they are not needed to follow the worked example.
-
-### How close is the exponent to one?
-
-The introduction to the paper gives $0<h<0.01$. Its detailed construction imposes stronger restrictions. Lemma 4.8, page 35, requires
-
-$$
-h<e^{-T_d},\qquad T_d=e^{M_d}+10.
-$$
-
-Since $e^{M_d}>0$, a necessary upper bound is $h<e^{-10}$. Satisfying this bound alone does not establish that a chosen value meets every requirement of the construction. [OpenAI, Lemma 4.8](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
-
-At fixed reference values and speed ratio $q=U/U_0\geq1$, the radius differs from the inverse-law value by the factor
-
-$$
-\frac{r_h}{r_{\rm inverse}}=q^{\,2h/(1+2h)}.
-$$
-
-Using $e^{-10}$ as an upper endpoint gives an upper limit of approximately **`{python} f'{100*summary["exponent_ceiling_relative_effect_at_0_01c"]:.3f}'` percent** on the exponent's effect at $0.01c$ for our reference pair. This measures only the exponent's effect with the reference fixed; it does not quantify the unknown profile calibration. We use $h=0$ only to evaluate the limiting formula, not as a parameter choice realizing the theorem.
-
-![The left panel compares the normalized radius–speed relation with an inverse law. The right panel enlarges the difference. The orange introductory endpoint is an illustration outside the detailed necessary bound; the tighter bound makes the exponent effect much smaller.](figures/01_dimensionless_scaling.png){#fig-scaling fig-alt="Normalized radius and exponent sensitivity show why an inverse law closely approximates the anchored scaling when the detailed necessary upper bound on h is used."}
-
-### Why does viscosity enter the dimensional reference?
-
-Converting a dimensionless solution into metres and seconds also fixes its viscosity scale. If $L_*$ and $t_*$ are the length and time units, hats denote dimensionless variables, and $\nu$ is physical kinematic viscosity, then
-
-$$
-x=L_*\hat x,\qquad t=t_*\hat t,\qquad
-u=\frac{L_*}{t_*}\hat u,\qquad
-\hat\nu=\nu\frac{t_*}{L_*^2}.
-$$
-
-For a construction with $\hat\nu=1$, this requires $t_*=L_*^2/\nu$ and hence
-
-$$
-\frac{r_0U_0}{\nu}=\hat r_0\hat U_0.
-$$
-
-The right-hand side must come from the chosen dimensionless profile and reference stage. We have not determined it here. Consequently, the common 1 mm / 1 m/s reference is an illustrative comparison for air and water, not a completed physical calibration for either. Nor have we assigned a time-to-collapse in seconds.
-
-The calculations use the following fixed reference properties:
-
-```{python}
-#| output: asis
-print(fluid_table(p))
-```
-
-Air density and sound speed use the ideal-gas estimates $\rho=p/(RT)$ and $c_s=\sqrt{\gamma RT}$, with $R=287.05$ J/(kg K) and $\gamma=1.4$. The viscosities and water sound speed come from the source tables. These values are reference inputs, not a prediction of how the fluid's state evolves during collapse. [Ideal-gas sound-speed derivation](https://www.grc.nasa.gov/www/k-12/BGP/snddrv.html), [NIST air reference](https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf), [IAPWS water reference](https://iapws.org/technical-guidance/release/LiquidWater.download)
+Continue with [which small length actually matters](../d9_regime_map/article.html), or return to the [paper map](../paper-map/article.html). The [technical article](technical-article.html), [notebook](../../code/d1_core_size/study.ipynb), and [source notes](source-notes.md) contain the detailed derivation, calibration assumptions, and property references.

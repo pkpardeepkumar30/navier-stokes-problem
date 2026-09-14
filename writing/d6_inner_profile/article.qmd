@@ -91,4 +91,3 @@ The next stage supplied pressure from the source's outer schedule. The distincti
 The growth of the final maximum speed comes from the evolving concentration, not an initially broken rotation axis. Continue with [why the centre pressure depends on the outside](../d6_axis_pressure/article.html).
 
 The [technical article](technical-article.html), [notebook](../../code/d6_inner_profile/study.ipynb), and [source notes](source-notes.md) give the coupled equations, numerical convergence checks, and limits of the local calculation.
-

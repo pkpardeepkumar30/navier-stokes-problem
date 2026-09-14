@@ -1,13 +1,47 @@
-DELIVERABLES: PREFERRED ORDER AND COMPLETION CRITERIA
+DELIVERABLES: EDUCATIONAL PRIORITIES AND PRESERVED COMPUTATIONAL RECORD
 ===================================================
 
 Purpose and current status
 --------------------------
 This file is the ordered delivery roadmap for project-ideas.txt. Task numbers there identify topics; the D-numbers here identify outputs in the preferred order.
 
-Current status: D1 complete and accepted; D2-D5, the scoped D7 report, D9, and the stationary D10 comparison built and validated. D6 stages A-D are implemented within their stated scopes; stage D adds an analytic complex-amplitude bound and sampled inner-exit checks. D6's full joined/corrected PDE comparison remains pending. The user authorized continuing through the ordered roadmap. The project uses separate code/ and writing/ folders with matching per-deliverable identifiers.
+Current direction (2026-09-12): general-public explanation using mostly high-school mathematics. The user explicitly paused novelty and redirected the work from computational reconstruction to an intuitive article series. The earlier D1-D12 records below document supporting work and backlog; they are not an instruction to resume research or the unfinished D6 solver.
 
-The order favors a useful public result early, then a progressively deeper computational explanation. D1-D6 form the educational core. Later items are conditional research or verification work, not prerequisites for releasing the early articles. D7's initial conditioning work can begin alongside D3 and D6.
+Current educational deliverables, in preferred order
+----------------------------------------------------
+R1 — One map of the whole paper.
+Status: Ready for review; written, illustrated and rendered.
+Reading copy: writing/paper-map/article.html. Editable source: article.qmd in the same folder.
+Explain the target, six conceptual building blocks, Sections 1-10 and Appendices A-C, a reading route and a plain-language glossary.
+
+R2 — Central convex-integration explanation.
+Status: Ready for review; written, illustrated and rendered.
+Reading copy: writing/convex-integration/article.html. Editable source: article.qmd in the same folder.
+Explain slopes and convex averages, fine variation with small profile changes, Appendix C's shear preparation, the available stress mixtures, pulse transport and the extra obligations imposed by viscosity and smoothness.
+
+R3 — Rewrite every existing public article.
+Status: Ready for review; all twelve public articles rewritten and rendered.
+Each article introduces its question, uses a simple example, and ends with its explicit role in the paper. Each has a new simple PNG/SVG illustration. The twelve original computational sources are preserved verbatim as technical-article.qmd, with HTML/LaTeX reading copies and notebook/source links. The D4 technical HTML was regenerated when verifying the revised build; its original source is unchanged.
+
+R4 — Explain how the construction is completed.
+Status: Ready for review; written, illustrated and rendered.
+Reading copy: writing/completing-the-flow/article.html. Editable source: article.qmd in the same folder.
+Cover background versus wave corrections, auxiliary scheduling, repeated residual repair, moments, summation with shrinking supports, derivative control, localization, zero initial velocity and smooth forcing.
+
+R5 — Coherent reading and verification.
+Status: Ready for review; all fifteen public exports pass the artifact checks.
+The README now starts at the paper map, with a nine-article main route and optional physical/numerical routes. All fifteen articles have HTML and LaTeX source, a simplified PNG/SVG figure, source links and reproducible builds. Local links/anchors, embedded figures, alternative text, LaTeX image paths and editorial structure pass checks. All fifteen PNG illustrations were visually inspected. A complete D4 rebuild also passed its ten scientific checks and six notebook cells, preserving the separate technical/public build paths.
+Verification records: code/reader_series/validation.json and writing/paper-map/review-notes.md.
+Limits: no browser was available for page-layout review; no PDF was compiled. Automated checks are not evidence that readers understand the explanations. The next useful input is feedback on clarity, especially the paper map and convex-integration chapter.
+
+Acceptance standard for the current work
+----------------------------------------
+A reader comfortable with school algebra should be able to explain what each block does and why the next block needs it. Numerical test counts are supporting evidence, not the measure of success. No new research result, formal proof audit or full corrected-flow computation is required.
+
+Historical computational roadmap
+---------------------------------
+
+The earlier order favored a public result followed by deeper computations. It is retained for provenance. Research and solver extensions now remain paused unless the user explicitly reopens them.
 
 Maintain this file as work proceeds. For each deliverable, update its status, record actual artifact paths and validation results, and note unresolved limitations. Do not mark an output complete merely because its outline or a placeholder notebook exists.
 
@@ -366,10 +400,11 @@ Progress record
 - 2026-09-11: D1 artifacts generated and validated; ready for user review. No public posting or manuscript submission performed. D2 has not started.
 - D1 reader-feedback revision: expanded the introduction, stated the physical message explicitly, added a worked example and plain-language explanations, and moved detailed parameter/calibration restrictions to a technical note. HTML and LaTeX regenerated; article execution, values, tables, figures, and local links checked.
 - Continued work authorized: D1 accepted; proceed through the roadmap. D2 source scalings checked on paper page 4, energy/geometry models implemented, eight scientific checks passed, figures and animation being prepared.
+- 2026-09-12: user redirected the project to general-public explanation. All twelve existing articles rewritten; paper map, convex integration and completion chapters added. Fifteen HTML/LaTeX exports and fifteen PNG/SVG illustrations prepared and checked. R1-R5 are ready for reader review; research and further solver work remain paused.
 
 Continuation checkpoint
 -----------------------
-- Active deliverable: D6 inner/annular continuation; stages A-D are complete within their declared scopes. Stage D supplies an analytic amplitude bound and targeted numerical exit checks. The full PDE comparison remains incomplete.
+- Active direction: the general-public reader series R1-R5 above is ready for review. The historical D6 full PDE comparison remains incomplete and paused; it is not the next task.
 - D2 complete: full build and article/animation checks passed; see its validation and review records.
 - D3 complete for the explicit exterior: ten checks, six notebook code cells, three figures, four CSV datasets, and article exports passed. Full inner/annular assembly remains outside the evaluated example.
 - D4 complete: ten checks, six notebook code cells, three figures, six CSV datasets, HTML and LaTeX exports passed. Review notes record scope and rendering limits.
@@ -381,6 +416,6 @@ Continuation checkpoint
 - D7 complete for the isolated moment operator: seven checks, six notebook code cells, three figures, three CSV datasets, article exports, and research decision. The full D1-D7 scientific suite passed 59 checks. D8 is deferred pending a specific PDE question.
 - D9 complete: eight checks, six notebook code cells, four figures, five CSV datasets, article exports, and physical-model selection. Missing actual gradients, phase wavelengths, and liquid relaxation are explicitly recorded.
 - D10 complete for the selected stationary comparison: eight checks, six notebook cells, four figures, five CSV datasets, article exports, and a research decision. All 75 scientific checks passed across the project. D11 is deferred pending an original supported result.
-- Next: quantify inner convergence and exit margins on the broad, chi-transition and pressure-dependent patches; control interpolation and radial remainder before making a uniform assertion. Proceed with a bounded numerical annular-continuation experiment using explicit matching constants and reserved support intervals. Full proof formalization is not a prerequisite for numerical work. writing/d6_global_axis/continuation-next-step.md separates these scopes and the remaining outer hierarchy/moment/stress checks, joined-profile assembly and first correction.
+- Next: incorporate user feedback on the accessibility of the completed reader series, starting with the paper map and convex-integration chapter. Browser page-layout review and PDF compilation remain unperformed. Do not resume the inner/annular continuation specification or pursue novelty without a new user instruction.
 - Authorization: continue ordered work without requesting approval for routine local implementation. Keep code and writing separate; do not publish, submit, message others, commit, or push without authorization.
 - This file is a durable checkpoint, not a scheduled background job. Credit refills do not themselves trigger a new run here.

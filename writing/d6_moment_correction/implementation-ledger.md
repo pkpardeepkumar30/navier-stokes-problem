@@ -1,5 +1,11 @@
 # D6 implementation ledger
 
+**Current priority, 2026-09-12:** computational continuation is paused at the
+user's request. The project now focuses on the
+[general-public paper guide](../paper-map/article.html). This ledger records
+the existing technical work and possible later dependencies; it does not
+set the active task.
+
 The finite moment-repair substep, a local leading-inner solver, the
 ideal-schedule axis-pressure integral, and a logarithmic axis-amplitude
 representation with an analytic complex-neighborhood bound are implemented.

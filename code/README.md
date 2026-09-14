@@ -1,5 +1,14 @@
 # Computational studies
 
+The main project is now a general-public reader series. Build its fifteen
+articles with `code/.venv/Scripts/python.exe code/render_readers.py`; see
+[reader-series notes](reader_series/README.md). The existing computations are
+supporting material, and new research/solver development is paused.
+
+The original executable articles are preserved as `technical-article.*`.
+The scientific build below checks and regenerates those technical exports,
+then renders the corresponding plain-language article separately.
+
 Select a deliverable with --study d1 through --study d7, --study d6b, --study d6c,
 --study d6d, --study d9, or --study d10 when running code/build.py. D6b is the
 leading-inner numerical study; d6c computes the ideal-schedule axis pressure;
@@ -46,7 +55,8 @@ For only the exported D1 data and figures:
 | `d1_core_size/source-manifest.json` | Audited source URLs, metadata and hashes |
 | `d1_core_size/validation.json` | Result of the latest build, including whether publication formats were rendered |
 | `tests/` | Scientific checks, including independent time parameterization and units |
-| `build.py` | Runs checks, clears and executes the notebook, and renders the article |
+| `build.py` | Runs scientific checks and the notebook, renders the technical article, then checks the public article separately |
+| `render_readers.py` | Renders the public reader series without rerunning numerical studies |
 
 Add future studies as `d2_<topic>/`, `d3_<topic>/`, etc. Put a routine in `src/nscomp/` only when it has a clear reusable responsibility; keep study-specific parameters and outputs with the study. Do not create top-level folders for each new post.
 

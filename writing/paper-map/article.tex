@@ -1,0 +1,514 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  english,
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={The Navier--Stokes paper{,} one building block at a time},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{The Navier--Stokes paper, one building block at a time}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Start here: the question, the plan, and a route through the
+explanations}
+\author{}
+\date{2026-09-12}
+\begin{document}
+\maketitle
+
+
+A long mathematical paper can feel like a box of LEGO pieces without the
+picture on the lid. You can inspect each piece and still have little
+idea what you are trying to build. This guide supplies that picture.
+
+The paper describes a specially designed fluid motion that becomes
+faster and more concentrated as a particular time approaches. The
+challenge is to make that motion obey the fluid equations while the
+external force stays smooth. The many profiles, waves, corrections, and
+estimates all serve that goal.
+
+You can follow the explanations here with arithmetic, graphs, areas, and
+the idea of a slope. When a more advanced concept appears, we explain
+its job before naming it. The calculations and original technical
+articles remain available at the end of each installment.
+
+\subsection{The question in ordinary
+language}\label{the-question-in-ordinary-language}
+
+The Navier--Stokes equations describe how a viscous fluid moves.
+\emph{Viscous} means that neighbouring regions moving at different
+speeds exchange momentum, tending to smooth out those differences.
+
+The equations combine two ideas. First, fluid parcels accelerate
+according to the pushes they receive: pressure, viscosity, and an
+external force. Second, the incompressible model makes each moving
+parcel keep its volume. Fluid entering a small region must be balanced
+by fluid leaving it.
+
+The paper's claimed result concerns a deliberately chosen \textbf{smooth
+external force}, acting on fluid initially at rest. The resulting
+velocity is smooth before the designated time, but its largest value
+becomes unbounded as that time approaches. The total kinetic energy
+stays bounded. This is a statement about the forced mathematical
+equations.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Paper,
+Theorem 1.1 and Sections 1--2}
+
+``Blow-up'' means that no finite number remains an upper limit on the
+speed. It does not mean that the whole fluid suddenly has infinite
+speed. Nor does this guide establish that a real liquid or gas could
+reach that limit. We are explaining the construction presented in the
+paper, not independently checking every proof.
+
+\subsection{The picture on the box}\label{the-picture-on-the-box}
+
+Here is the whole strategy in one sentence:
+
+\textbf{Design a shrinking vortex, calculate the push that its motion is
+missing, supply that push through carefully arranged small-scale motion,
+and control the errors so the external force stays smooth.}
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={Six connected blocks: concentrate a vortex; join core to exterior; identify missing transport; prepare shear and add pulses; repair remaining errors; localize the result and keep the force smooth.}]{figures/reader.png}}
+
+}
+
+\caption{\label{fig-map}The argument runs from a concentrating vortex to
+a smooth external force. The repair stage repeatedly addresses errors
+introduced by earlier repairs. This is a conceptual map, not a
+simulation.}
+
+\end{figure}%
+
+\subsubsection{Block 1: a fast motion in a shrinking
+region}\label{block-1-a-fast-motion-in-a-shrinking-region}
+
+A small amount of fluid can move extremely fast without making the total
+energy enormous. A simple calculation shows why: energy depends on speed
+squared \textbf{and} how much fluid moves at that speed.
+
+The intense part of the proposed vortex shrinks in radius and length.
+The radius shrinks slightly faster, making the region increasingly
+slender. ``The core'' names this moving region of intense motion; it
+does not identify a fixed collection of molecules.
+
+\textbf{Job in the argument:} make growing speed compatible with bounded
+energy. Start with \href{../d2_finite_energy/article.html}{speed and
+energy}. This is mainly Section 2.1, developed in Sections 3--4.
+
+\subsubsection{Block 2: a core, a joining ring, and an
+exterior}\label{block-2-a-core-a-joining-ring-and-an-exterior}
+
+The flow needs a smooth centre. Outside it, the motion must connect to a
+simpler outer flow. The ring-shaped joining region is called the
+\emph{annulus}. Pressure also has to fit across the regions.
+
+Think of building a bridge: an excellent central span is insufficient if
+its connections to the banks do not fit. Here the connections must
+satisfy fluid balances as well as match smoothly.
+
+\textbf{Job in the argument:} provide a usable background vortex. Read
+\href{../d6_inner_profile/article.html}{the smooth centre} and
+\href{../d6_axis_pressure/article.html}{pressure from the surrounding
+flow}. These explain parts of Section 4 and Appendices A--B.
+
+\subsubsection{Block 3: find the missing
+push}\label{block-3-find-the-missing-push}
+
+Once a candidate velocity and pressure have been chosen, we can
+calculate the external force they would require. The paper calls this
+the \emph{momentum residual}. It is a force-balance calculation.
+
+The background vortex alone leaves a troublesome imbalance in its
+joining ring. Calling that imbalance an external force would not solve
+the problem: the force would have the wrong behaviour near the singular
+time.
+
+\textbf{Job in the argument:} turn ``this vortex is not yet a solution
+with a smooth force'' into a precise repair target. Read
+\href{../d3_residual/article.html}{the missing-push calculation}. See
+Sections 2.2, 3.2 and 5.
+
+\subsubsection{Block 4: use fine ripples to achieve what a coarse shape
+cannot}\label{block-4-use-fine-ripples-to-achieve-what-a-coarse-shape-cannot}
+
+A line can look almost flat from far away while being steep on each tiny
+rising or falling segment. This separation between overall shape and
+local slope is one route into \textbf{convex integration}.
+
+Appendix C uses a related construction: rapid radial variations improve
+the local shear---the difference between neighbouring velocities---while
+making only a small change to the overall profiles. Their averages are
+chosen carefully, and further adjustments restore the required totals.
+
+\textbf{Job in the argument:} prepare a background whose missing
+transport can be supplied by the available waves. Read
+\href{../convex-integration/article.html}{convex integration, from
+slopes to fluid motion}. Appendix C belongs here in the story, even
+though it appears near the back of the paper.
+
+\subsubsection{Block 5: make oscillations do useful
+work}\label{block-5-make-oscillations-do-useful-work}
+
+Opposite velocity fluctuations can average to zero while their momentum
+transport does not. The reason is simple multiplication: reversing two
+signs leaves their product unchanged.
+
+The paper chooses two pulse families whose combined transport supplies
+the required leading contribution. Their growth comes from the
+background shear. Later, shear squeezes their pattern into finer scales
+and viscosity damps them.
+
+\textbf{Job in the argument:} let internal fluid motion supply the
+troublesome missing transport. Read
+\href{../d4_mean_stress/article.html}{zero average, nonzero transport},
+then \href{../d5_shearing_wave/article.html}{why a pulse grows and
+fades}. These connect to Sections 6--7 and Appendix C.
+
+\subsubsection{Block 6: repair the repairs, then finish the
+construction}\label{block-6-repair-the-repairs-then-finish-the-construction}
+
+Adding waves fixes one imbalance and creates others. Local adjustments
+can also change totals that matter outside their own neighbourhood. The
+construction repeatedly updates the waves, mean motion, pressure, and
+weighted totals.
+
+Finally, the paper combines the corrections and confines the flow to a
+bounded region. It must preserve both the increasing velocity and the
+smoothness of the required external force.
+
+\textbf{Job in the argument:} turn the mechanism into the claimed
+complete solution. Read
+\href{../d6_moment_correction/article.html}{repairing weighted totals},
+then \href{../completing-the-flow/article.html}{from corrections to a
+complete flow}. These explain the roles of Sections 5, 8, 9 and 10.
+
+\subsection{Where every section
+belongs}\label{where-every-section-belongs}
+
+The order of a proof follows its dependencies. A first reading can
+instead follow the ideas.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Paper location
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it does, in everyday language
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Section 1 & States the target and relates it to earlier work. \\
+Section 2 & Describes the vortex, the pulses, and the physical
+mechanism. \\
+Section 3 & Gives the plan of the construction before the full
+details. \\
+Section 4 & Builds the basic vortex and specifies what the joining ring
+must do. \\
+Section 5 & Adds finer background corrections for balances omitted at
+first. \\
+Section 6 & Organizes the oscillations so distinct pulses do not create
+unwanted overlap terms. \\
+Section 7 & Builds growing and decaying pulses and chooses their
+averaged transport. \\
+Section 8 & Repairs mean motion, pressure compatibility, and weighted
+totals locally. \\
+Section 9 & Repeats the repairs, controls new errors, and combines the
+stages. \\
+Section 10 & Starts from rest, confines the construction, extends the
+force smoothly, and completes the argument. \\
+Appendix A & Prepares radial schedules, matching totals, and the outer
+flow. \\
+Appendix B & Builds a smooth inner profile and connects it outward. \\
+Appendix C & Uses rapid shear variations and total-preserving repairs to
+make the wave requirements fit. \\
+\end{longtable}
+}
+
+The
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf\#page=13}{paper's
+contents and proof-outline figures} are the source for this map. Our
+examples illustrate the jobs performed by these blocks; they are not
+substitutes for their proofs.
+
+\subsection{A first reading route}\label{a-first-reading-route}
+
+Follow these nine articles in order. Each introduces the concepts it
+uses and ends by returning to the paper.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \href{../d2_finite_energy/article.html}{How can speed rise while
+  energy falls?}
+\item
+  \href{../d6_inner_profile/article.html}{What should happen at the
+  centre of a vortex?}
+\item
+  \href{../d6_axis_pressure/article.html}{Why the pressure at the centre
+  depends on the outside}
+\item
+  \href{../d3_residual/article.html}{The missing push: what a residual
+  means}
+\item
+  \href{../convex-integration/article.html}{Convex integration: useful
+  fine detail}
+\item
+  \href{../d4_mean_stress/article.html}{How motion with zero average can
+  transport momentum}
+\item
+  \href{../d5_shearing_wave/article.html}{How a small wave grows, then
+  fades}
+\item
+  \href{../d6_moment_correction/article.html}{How small local repairs
+  preserve important totals}
+\item
+  \href{../completing-the-flow/article.html}{How the pieces become one
+  complete flow}
+\end{enumerate}
+
+For a first pass, the numerical side articles are optional:
+\href{../d6_global_axis/article.html}{local checks versus global
+guarantees} and \href{../d7_conditioning/article.html}{what computer
+digits can hide}.
+
+The physical interpretation has its own short route:
+\href{../d1_core_size/article.html}{core size versus speed},
+\href{../d9_regime_map/article.html}{which small length matters}, and
+\href{../d10_compressible_vortex/article.html}{what changes when density
+can vary}. These ask what the model can mean for matter; they are not
+additional proof steps.
+
+\subsection{A small vocabulary to keep
+nearby}\label{a-small-vocabulary-to-keep-nearby}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Word
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meaning in this guide
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Profile & The shape of a quantity as position changes. \\
+Shear & Neighbouring fluid moving at different speeds. \\
+Oscillation & A repeated variation, such as a wave or a ripple. \\
+Momentum & Mass times velocity; both amount and direction matter. \\
+Stress & Momentum transport, or the corresponding force-per-area
+description. \\
+Residual & The force required by a proposed velocity and pressure;
+compared with a specified force, it reveals the remaining mismatch. \\
+Mean & An average over a stated group, region, or wave cycle. \\
+Moment & A total in which contributions receive specified weights. \\
+Smooth & Having well-behaved rates of change of every order used by the
+theorem. \\
+Localization & Making a field vanish outside a chosen region, with a
+smooth transition. \\
+\end{longtable}
+}
+
+\subsection{What understanding the paper should feel
+like}\label{what-understanding-the-paper-should-feel-like}
+
+You do not need to remember every symbol. You should be able to say what
+problem each block solves, why that problem appears, and what the next
+block needs from it.
+
+The central thread is the balance between a growing velocity and a
+well-behaved force. The shrinking geometry makes the energy possible;
+the background establishes the shape; the ripples and pulses provide the
+missing transport; the corrections and final estimates make the pieces
+fit.
+
+
+
+
+\end{document}

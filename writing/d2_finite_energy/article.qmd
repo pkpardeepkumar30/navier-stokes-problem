@@ -87,4 +87,3 @@ In the central flow described by the paper, radial inflow is accompanied by axia
 The paper must next build a smooth vortex profile and make its momentum balance work. Continue with [what happens at the centre](../d6_inner_profile/article.html). For a separate calculation of actual length scales under an assumed reference size, see [core size versus speed](../d1_core_size/article.html).
 
 The [technical article](technical-article.html), [notebook](../../code/d2_finite_energy/study.ipynb), and [source notes](source-notes.md) contain the exact scaling formulas, computational checks, and animation conventions.
-

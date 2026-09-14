@@ -10,6 +10,6 @@ test_sine_averages (test_stress.StressChecks.test_sine_averages) ... ok
 test_spatial_covariance_and_positive_eigenvalues (test_stress.StressChecks.test_spatial_covariance_and_positive_eigenvalues) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 0.696s
+Ran 10 tests in 0.643s
 
 OK

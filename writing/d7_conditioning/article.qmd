@@ -1,138 +1,95 @@
 ---
-title: "Accurate coefficients can still give an inaccurate correction"
-subtitle: "Separate the formula, the stored digits, and the sensitivity of the problem"
-date: 2026-09-11
+title: "What computer digits can hide"
+subtitle: "An optional guide to rounding and sensitive calculations"
+date: 2026-09-12
 lang: en
-jupyter: python3
 format:
   html:
     toc: true
     toc-depth: 2
     embed-resources: true
     theme: cosmo
-    css: ../d1_core_size/article.css
+    css: ../reader-style.css
   latex:
     documentclass: article
     fontsize: 11pt
     geometry: margin=25mm
-execute:
-  echo: false
-  warning: false
-  error: false
 ---
 
-```{python}
-#| label: setup
-from nscomp.d7 import load_parameters, generate
-p = load_parameters()
-summary = generate()
-```
+[Return to the paper map](../paper-map/article.html) · Optional numerical side article
 
-**Computing correction coefficients accurately is only one part of a reliable calculation. You must also retain enough digits to apply them, and understand how uncertain inputs change the answer.** These three questions can have very different answers.
+A computer can perform a calculation exactly as instructed and still produce a misleading answer. One reason is that it stores only a finite number of digits.
 
-The [previous article](../d6_moment_correction/article.html) exposed a concrete example. Two weighted integrals became almost identical as a parameter decreased. Cancelling their prescribed discrepancies required increasingly large positive and negative coefficients. The resulting moment cancellation lost accuracy.
+That matters in this project because the construction repeatedly cancels quantities. When the desired answer is a small difference between large, nearly equal contributions, the digits that look least important can determine the entire result.
 
-Before interpreting that loss as a failure of a fluid construction, we should determine where it comes from. Is the equation difficult to evaluate? Are accurate coefficients being rounded too aggressively? Or is the underlying problem sensitive even when solved accurately?
+We will use subtraction and two elementary equations to separate two problems: loss of information during calculation and sensitivity already present in the problem.
 
-We answer those questions for the two-moment axial correction, using the original formula, an equivalent formulation designed to avoid subtraction error, and independently integrated high-precision references. This is a numerical audit of one finite operator. It is not a dynamical stability test of the Navier–Stokes flow.
+## Subtract first, or round first?
 
-## Two moment weights become almost the same
+Take the numbers 1.2344 and 1.2343. Their difference is 0.0001.
 
-The axial correction coefficients satisfy
+Now keep only four significant digits before subtracting. Both become 1.234, and their stored difference becomes zero.
 
-$$
-B\boldsymbol\alpha=-\mathbf d,\qquad
-B_{1j}=\int Rb_j(R)\,dR,\quad
-B_{2j}=\int R^{1-2\lambda}b_j(R)\,dR.
-$$
+| Operation | Result |
+| --- | --- |
+| Subtract the original numbers | 0.0001 |
+| Round each number first | 1.234 and 1.234 |
+| Subtract the rounded numbers | 0 |
 
-These are the axial equations from the five-moment repair. [OpenAI, Equation (5.16), pages 51–52](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+The subtraction is not faulty. The needed information was lost before it began.
 
-We keep the two smooth, unit-integral bumps centered at $R=2,3$, with halfwidth $0.12$. The first experiment keeps $\mathbf d=(1,-0.4)$ fixed and varies $\lambda$.
+![Two nearby numbers remain distinct when their extra digits are retained. Rounding both to the same stored value erases their small difference.](figures/reader.png){#fig-rounding fig-alt="Original values 1.2344 and 1.2343 yield 0.0001; rounded values 1.234 and 1.234 yield zero."}
 
-For small positive $\lambda$,
+The same issue appears when large correction terms are designed to cancel. A coefficient can look accurate to many digits while still lacking the particular digits needed for the final small remainder.
 
-$$
-R^{1-2\lambda}
-=R\,e^{-2\lambda\log R}
-\approx R-2\lambda R\log R.
-$$
+## A better formula can avoid losing the difference
 
-The difference between the two moment rows is proportional to $\lambda$. If the computer first rounds both rows to ordinary double precision, that small difference can lose most of its meaningful digits.
+Two formulas can mean exactly the same thing in algebra but behave differently with rounded numbers.
 
-The mathematical matrix remains invertible for these positive parameters. At $\lambda=10^{-18}$, however, the implementation of its original form produces identical floating-point rows, and the numerical solve reports a singular matrix.
+Suppose one formula first builds two nearly equal quantities and subtracts them. Another calculates their small difference more directly. The second may preserve information that the first discards.
 
-## Evaluate the difference before losing it
+The supporting study uses such a reformulation for two nearly identical moment weights. It also uses higher-precision arithmetic where needed.
 
-Replace the second equation by its difference from the first, divided by $-2\lambda$. Its new weight is
+These are improvements in how we evaluate the same mathematical problem. They do not alter the intended correction or create new fluid physics.
+
+## Some problems are sensitive even with perfect arithmetic
+
+Consider
 
 $$
-g_\lambda(R)=
-\frac{R^{1-2\lambda}-R}{-2\lambda}
-=R\frac{\operatorname{expm1}(-2\lambda\log R)}{-2\lambda}.
+x+y=2,\qquad x+1.000001y=2.000001.
 $$
 
-The function $\operatorname{expm1}(x)$ evaluates $e^x-1$ accurately when $x$ is small, avoiding the subtraction of an already rounded value close to one. [NumPy documentation](https://numpy.org/doc/stable/reference/generated/numpy.expm1.html)
+Subtract the first equation from the second. We get $0.000001y=0.000001$, so $y=1$ and $x=1$.
 
-As $\lambda$ approaches zero, this weight tends to $R\log R$. It stays distinct from the first weight $R$.
+Now change only the second right-hand side to 2.000002. The subtraction gives $y=2$, so $x=0$.
 
-The right-hand side must undergo the same transformation:
+A tiny change in the supplied number caused a large change in the answer. No rounding error is needed for that result. The two equations ask nearly the same question, so their small difference carries almost all the information about how to distinguish $x$ and $y$.
 
-$$
-\widetilde B\boldsymbol\alpha
-=\binom{-d_1}{(d_2-d_1)/(2\lambda)}.
-$$
+This is called **poor conditioning**. It is a property of the problem and its chosen variables. More accurate arithmetic can reveal the sensitivity; it cannot remove genuine uncertainty in the input data.
 
-This is the same exact linear system in a different form. Its evaluation preserves the small difference that the original computation lost.
+## Keep the extra digits all the way through
 
-![The equivalent expm1 formulation retains accurate coefficients throughout the parameter scan, while the original float64 system loses digits and eventually becomes singular. The transformed rows have a moderate condition number. Nonfinite condition estimates from the original floating-point matrix are omitted from the plotted curve and retained in the CSV data.](figures/01_equivalent_formulations.png){#fig-formulations fig-alt="The original solve loses coefficient accuracy as lambda decreases, while the equivalent expm1 formulation remains accurate against a high-precision reference."}
+Suppose a calculation uses many digits to determine accurate coefficients, then saves them in an ordinary lower-precision format. The later cancellation may lose the benefit of the careful calculation.
 
-At $\lambda=10^{-12}$, the original coefficient error is approximately **`{python} f'{summary["selected_raw_coefficient_error"]:.2g}'`** relative to the reference. The transformed calculation reduces it to about **`{python} f'{summary["selected_stable_coefficient_error"]:.2g}'`**. Across the displayed scan, the largest relative coefficient error from the transformed calculation is **`{python} f'{summary["largest_stable_coefficient_relative_error"]:.2g}'`**.
+That is like measuring a length to the nearest micrometre and writing it down only to the nearest centimetre.
 
-The reference uses 70-digit arithmetic and independent adaptive integration of the original moment weights. A further 90-digit check at the smallest $\lambda$ confirms the reference's convergence.
+For a useful accuracy claim, we must track the full path: input accuracy, calculation, storage, and the final quantity being checked.
 
-## Accurate coefficients still need enough stored digits
+The same lesson applies to coordinates. A finely spaced sampling grid is ineffective if its points round to identical numbers before evaluation. The [narrow-band study](../d6_global_axis/article.html) provides an example from the inner-profile calculations.
 
-At $\lambda=10^{-12}$, the two correction coefficients are of order $10^{12}$, while the moments we want to cancel are of order one. Their contributions nearly cancel.
+## What our experiment tested
 
-Double precision can represent each coefficient to a small relative error while still losing an absolute amount large enough to spoil that cancellation. For example, a relative error of $10^{-16}$ in a number of order $10^{12}$ corresponds to an absolute error of order $10^{-4}$.
+The numerical study examined a finite moment-repair problem from the companion material. As a parameter changes, two of its weighted constraints become increasingly alike.
 
-That is what the computation shows. Although the transformed coefficients have nearly full double-precision relative accuracy, their original moment remainder is about **`{python} f'{summary["selected_stable_original_moment_remainder"]:.2g}'`** at this parameter.
+We compared equivalent formulas, retained different numbers of digits, and changed the supplied discrepancies slightly. These experiments separated avoidable numerical loss from the sensitivity of the underlying solve.
 
-![High relative accuracy in stored coefficients does not guarantee small original moment remainders when large contributions cancel. Higher-precision coefficients preserve the cancellation only if their additional digits are retained. The left plot floors remainders below 1e-60 for display; the underlying values are exported.](figures/02_precision_and_storage.png){#fig-storage fig-alt="Moment cancellation deteriorates when large coefficients are stored in float64, while retaining higher precision preserves substantially smaller remainders."}
+This is a test of an algebraic component. It does not measure whether a fluid flow is dynamically stable, and it is not a numerical check of the whole proof.
 
-The right panel repeats the original solve at 20, 30, 40, and 50 decimal digits. Keeping those digits improves the moment remainder. Rounding the resulting coefficients back to float64 restores approximately the same error floor.
+## Where this fits in the bigger picture
 
-Thus, for a future assembled correction, higher-precision arithmetic may need to continue through coefficient storage, profile evaluation, and residual evaluation. A high-precision solve followed by low-precision storage can discard the improvement.
+**Computer accuracy and mathematical validity are different questions, and both need attention.** A computation can illustrate a proof block only if it preserves the information that the block uses.
 
-## Better arithmetic does not remove input sensitivity
+This is an optional lesson about the companion's numerical methods, not an additional mechanism in the paper. Return to the [paper map](../paper-map/article.html) for the main reading route.
 
-The transformed matrix has well-separated rows, but its second right-hand side contains division by $\lambda$. Uncertainty in $d_2-d_1$ can therefore remain strongly amplified.
-
-To test this separately, choose $\lambda=10^{-10}$ and start from $\mathbf d=(1,1)$. Perturb only the second supplied discrepancy. The bump supports and positive parameter remain unchanged, and both the original and perturbed problems are solved with the accurate formulation.
-
-![A small relative change in the supplied discrepancies produces a much larger relative change in the correction coefficients. The accurate algorithm reveals this response rather than eliminating it. The dashed line indicates equal relative changes and serves only as a comparison.](figures/03_input_sensitivity.png){#fig-sensitivity fig-alt="Measured coefficient changes are about seven billion times larger than the relative input changes in the selected sensitive example."}
-
-For this declared perturbation direction, the measured ratio of relative output change to relative input change is about **`{python} f'{summary["sensitivity_amplification_range"][0]:.2g}'`**. The exported data record the actual floating-point input change as well as the nominal perturbation.
-
-This is sensitivity of an algebraic map. It does not mean a velocity perturbation grows by that factor under Navier–Stokes evolution. Nor have these perturbed discrepancy vectors been obtained from admissible full paper profiles.
-
-## What should future calculations report?
-
-This experiment motivates three separate checks:
-
-- **Coefficient accuracy:** compare against a reference or a converged independent evaluation.
-- **Accuracy after applying the correction:** reevaluate the original weighted moments or differential residual using the coefficients as actually stored.
-- **Sensitivity to inputs:** perturb the supplied data in a declared way while preserving the constraints being tested.
-
-The distinction between rounding error and problem conditioning is standard numerical analysis. The finite-precision and perturbation framework in [Higham's *Accuracy and Stability of Numerical Algorithms*](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) provides the broader context.
-
-Here, seven checks cover algebraic equivalence at a well-resolved parameter, independent high-precision references, quadrature and precision refinement, coefficient storage, and controlled input sensitivity. The [source notes](source-notes.md) specify every error measure.
-
-## Research decision at this stage
-
-The supported result is a useful numerical-analysis note: one source-defined moment operator needs careful evaluation and, in severe cases, more retained precision. The proposed change uses an elementary row transformation and a standard numerical function. We make no claim of a new general algorithm or a new result about blowup.
-
-The [research decision note](research-decision.md) records what further evidence would support a paper. The central missing link is still a constructed leading profile and its actual correction discrepancies. That would show whether the sensitive parameter and input regimes examined here arise in the chosen realization, and whether the numerical improvements enable a meaningful full residual calculation.
-
-The [executed notebook](../../code/d7_conditioning/study.ipynb), [parameters](../../code/d7_conditioning/parameters.json), and [CSV data](../../code/d7_conditioning/data/) reproduce the three experiments.
+The [technical article](technical-article.html), [notebook](../../code/d7_conditioning/study.ipynb), and [source notes](source-notes.md) record the actual moment weights, equivalent formulation, and precision experiments.

@@ -1,5 +1,10 @@
 # Continuing D6 after the amplitude and exit study
 
+**Paused, 2026-09-12.** The user redirected the project toward a
+[plain-language explanation of the paper](../paper-map/article.html).
+The possible computational work below is retained for reference and should
+not resume unless the user reopens it.
+
 Stage D supplies an analytic B.16 amplitude envelope and finite numerical
 checks of B.17–B.19. The larger declared radial scale passes those checks.
 The next work should connect this numerical inner profile to the annular

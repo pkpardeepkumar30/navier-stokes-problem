@@ -91,4 +91,3 @@ This connects the pulse's life cycle directly to the theorem's force regularity.
 Adding pulses still creates new errors and can disturb important weighted totals. Continue with [small local repairs that preserve those totals](../d6_moment_correction/article.html).
 
 The [technical article](technical-article.html), [notebook](../../code/d5_shearing_wave/study.ipynb), and [source notes](source-notes.md) provide the exact straight-shear example and its energy accounting.
-

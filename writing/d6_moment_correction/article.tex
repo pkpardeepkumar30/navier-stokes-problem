@@ -165,7 +165,7 @@
 \@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
 \makeatother
 \hypersetup{
-  pdftitle={How local corrections repair global constraints},
+  pdftitle={How small local repairs preserve important totals},
   pdflang={en},
   colorlinks=true,
   linkcolor={blue},
@@ -175,285 +175,190 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{How local corrections repair global constraints}
+\title{How small local repairs preserve important totals}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{An executable five-moment step from the Navier--Stokes
-construction}
+\subtitle{From balancing a ruler to matching a fluid construction}
 \author{}
-\date{2026-09-11}
+\date{2026-09-12}
 \begin{document}
 \maketitle
 
 
-\textbf{A correction confined to a small region can still leave an
-unwanted effect outside that region. Weighted integrals determine
-whether those exterior tails disappear.} This installment shows how five
-localized adjustments can cancel five prescribed integral discrepancies.
+\href{../paper-map/article.html}{Start with the paper map} · Main route,
+article 8 of 9
 
-The previous articles made the momentum residual and oscillatory
-transport concrete. We now return to a specific correction step in the
-paper. Its positive-order axisymmetric profiles must preserve integral
-constraints when extended away from the axis. Equations (5.14)--(5.16)
-repair those constraints using two axial bumps and three angular bumps.
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-Lemma 5.2, pages 50--52}
+Suppose you adjust a small part of a velocity profile to fix its local
+behaviour. Why should a distant part of the flow care?
 
-We implement that finite solve, choose explicit smooth bumps, and verify
-the corrected integrals with separate quadrature. The five input
-discrepancies are prescribed test values. They have \textbf{not} been
-computed from a reconstructed inner solution, so this is stage A of D6:
-a source-defined substep, rather than a completed order-one momentum
-correction.
+Because some quantities are determined by totals accumulated across the
+profile. Pressure and momentum constructions can depend on such totals.
+A local change can therefore leave an unwanted effect outside the region
+you meant to modify.
 
-\subsection{Why does a local change leave a distant
-tail?}\label{why-does-a-local-change-leave-a-distant-tail}
+The paper uses carefully placed local adjustments to repair these
+totals. The basic idea can be understood with sums and the balance of a
+ruler.
 
-Consider the simple relation
+\subsection{A total and a weighted total are
+different}\label{a-total-and-a-weighted-total-are-different}
 
-\[
-F(R)=\int_0^R g(s)\,ds,
-\]
+Put equal small weights at different places on a ruler. Their total mass
+tells you how heavy the ruler's load is. Their distances from the pivot
+determine its turning effect.
 
-where \(g\) vanishes outside a bounded interval. Beyond that interval,
-\(F\) becomes constant. It becomes zero there only if the \textbf{total
-integral of \(g\) is zero}.
+A \textbf{moment} is a total in which position, or another specified
+factor, supplies a weight. You already know a moment from the seesaw
+rule: weight multiplied by distance from the pivot.
 
-Adding a compactly supported \(g\) therefore does not automatically give
-a compactly supported \(F\). An integral condition is needed.
+For the fluid profiles, the weights are mathematical functions of
+radius. There are several totals to preserve. The principle is the same:
+knowing the plain sum does not tell you every weighted sum.
 
-The same issue occurs in the correction construction. Reconstructing
-radial velocity, pressure, and stress requires integration. Five moments
-are imposed so that those reconstructed quantities have the required
-exterior behavior. The two integrated stress conditions use cylindrical
-radial weights.
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-Equations (5.9)--(5.12)}
+\subsection{Two small adjustments can do two different
+jobs}\label{two-small-adjustments-can-do-two-different-jobs}
 
-We can understand and test the finite moment solve before evaluating the
-entire flow.
+Consider two correction amounts, one at position 1 and one at position
+3. Remove one unit at the first position and add one unit at the second.
 
-\subsection{Five controls for five
-discrepancies}\label{five-controls-for-five-discrepancies}
-
-Let \(R=\sqrt{2X}\) denote the dimensionless profile radius. Add two
-compact bumps to the axial coefficient \(U_n\) and three to the angular
-coefficient \(E_n\):
+The total change is zero:
 
 \[
-\delta U_n=\alpha_1b^U_1+\alpha_2b^U_2,\qquad
-\delta E_n=\beta_1b^E_1+\beta_2b^E_2+\beta_3b^E_3.
+-1+1=0.
 \]
 
-The bumps are nonnegative, have unit integral, and occupy disjoint
-radial intervals. Their coefficients may have either sign. These are
-signed corrections to velocity profiles, rather than the nonnegative
-squared wave amplitudes used for covariance matching in D4.
-
-Our explicit bump centered at \(c\) has halfwidth \(w\):
+The position-weighted change is two:
 
 \[
-b(R)=
-\begin{cases}
-\displaystyle\frac1{wZ}
-\exp\!\left[-\frac1{1-((R-c)/w)^2}\right],&|R-c|<w,\\
-0,&|R-c|\ge w,
-\end{cases}
+1(-1)+3(1)=2.
 \]
 
-where \(Z\) normalizes its integral. The bump and all its derivatives
-vanish at the edges. We use centers \(2,3\) for the axial bumps and
-\(4,5,6\) for the angular bumps, with halfwidth \(0.12\). These are
-representative positive profile radii; they have not been located inside
-the actual paper annulus.
-
-\subsection{The required coefficients come from two small
-systems}\label{the-required-coefficients-come-from-two-small-systems}
-
-The reserved patch has the source form \(U_0=0\) and
-\(E_0=e_*f(\eta)R^{-1-2\lambda}\). This makes the moment response split
-into two blocks:
-
-\[
-(B_U)_{ij}=\int_0^\infty R^{p_i}b^U_j(R)\,dR,
-\qquad (p_1,p_2)=(1,1-2\lambda),
-\]
-
-\[
-(B_E)_{ij}=\int_0^\infty R^{s_i}b^E_j(R)\,dR,
-\qquad (s_1,s_2,s_3)=(2,-2-2\lambda,-2\lambda).
-\]
-
-For scaled discrepancies \(\mathbf d_U,\mathbf d_E\), the repair is
-
-\[
-B_U\boldsymbol\alpha=-\mathbf d_U,\qquad
-B_E\boldsymbol\beta=-\mathbf d_E.
-\]
-
-These are the two systems in Equation (5.16).
-\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{OpenAI,
-pages 51--52}
-
-We solve the systems directly rather than explicitly forming matrix
-inverses. The baseline uses \(\lambda=0.1\),
-
-\[
-\mathbf d_U=(1,-0.4),\qquad
-\mathbf d_E=(0.3,-0.2,0.1).
-\]
-
-The parameter \(\lambda\) here controls the reserved-patch power law. It
-is distinct from the expansion-order notation \(\lambda_n=2nh\).
+We have changed a moment while preserving the ordinary total.
 
 \begin{figure}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={Two axial bumps and three angular bumps, with positive and negative coefficients, occupy disjoint intervals.}]{figures/01_local_profile_repair.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Two correction bars at positions one and three have heights minus one and plus one; labels show zero total change and weighted change two.}]{figures/reader.png}}
 
 }
 
-\caption{\label{fig-profiles}The finite solve produces two signed axial
-adjustments and three signed angular adjustments. Each bump is confined
-to its chosen interval. The vertical axes show added profile
-coefficients, not dimensional velocities or the complete corrected
-profiles.}
+\caption{\label{fig-moments}Moving one unit of correction from position
+1 to position 3 leaves the total unchanged but increases the
+position-weighted total by two. The negative amount denotes a decrease
+in a profile, not negative fluid mass.}
 
 \end{figure}%
 
-\subsection{Check the integrals after applying the
-correction}\label{check-the-integrals-after-applying-the-correction}
-
-A small linear-system residual is useful, but it only checks consistency
-with the matrix that was supplied to the solver. If the matrix integrals
-are inaccurate, that solve can still give the wrong correction.
-
-We therefore calculate the baseline matrix with quadrature order 96 and
-evaluate the resulting moments again with order 384. The tests also
-integrate the bump-weight products independently using adaptive
-quadrature, including the pressure and momentum-flux factors from the
-reserved patch.
-
-For \(e_*f=1\), the original five moments corresponding to our inputs
-are
+More generally, if the two amounts are called \(a\) and \(b\), we can
+choose them by solving
 
 \[
-(m_1,m_2,m_3,m_4,m_5)=(1,0.3,-0.4,-0.4,-0.1).
+a+b=0,\qquad a+3b=2.
 \]
 
-Each plotted remainder is divided by that moment's own initial
-magnitude. This avoids combining moments with different weights into an
-unexplained single norm.
+Subtract the first equation from the second: \(2b=2\), so \(b=1\) and
+\(a=-1\). This is the entire algebra behind our example.
 
-\begin{figure}
+\subsection{Replace point adjustments with smooth
+patches}\label{replace-point-adjustments-with-smooth-patches}
 
-\centering{
+A real fluid correction cannot be a sharp spike with a discontinuous
+edge. The paper uses smooth, localized patches.
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={Five normalized moment discrepancies fall from one to near floating-point precision, with a separate quadrature-refinement check.}]{figures/02_moment_cancellation.png}}
+Imagine a small hill-shaped graph that starts at zero, rises smoothly,
+and returns smoothly to zero. Multiply it by a positive number to add a
+local bump or by a negative number to make a local decrease.
 
-}
+Place several such patches in reserved intervals. Each patch changes the
+required weighted totals by calculable amounts. Its coefficient becomes
+a control knob.
 
-\caption{\label{fig-moments}All five supplied discrepancies are reduced
-close to floating-point precision after the correction. The right panel
-recomputes the correction with different quadrature orders, then checks
-every result using the higher reference order. These are moment
-remainders, not Navier--Stokes momentum residuals.}
+The patches should affect the totals in sufficiently independent ways.
+Two knobs that always produce exactly the same combination of changes
+would not let us control two independent targets.
 
-\end{figure}%
+That is the practical meaning of solving an invertible small system in
+this part of the proof.
 
-The largest absolute moment remainder is approximately \textbf{3.8e-14}.
-The largest componentwise relative remainder is \textbf{1.3e-13}.
+\subsection{Why matching these totals keeps the repair
+local}\label{why-matching-these-totals-keeps-the-repair-local}
 
-This verifies the selected integral repair for the declared inputs. It
-does not verify the differential equations satisfied by an entire
-corrected background.
+Suppose an outer quantity is obtained by adding contributions from the
+centre outward. A local correction with nonzero accumulated total may
+leave a constant offset after its own support has ended.
 
-\subsection{An invertible system can still be difficult to
-compute}\label{an-invertible-system-can-still-be-difficult-to-compute}
+The correction is locally supported, but the quantity reconstructed from
+its cumulative effect is not.
 
-The axial weights are \(R\) and \(R^{1-2\lambda}\). As \(\lambda\)
-decreases toward zero, these two functions become nearly identical. The
-two rows of \(B_U\) then become nearly dependent.
+Making the relevant weighted totals vanish removes these tails. This
+allows pressure and velocity corrections to remain confined to their
+intended regions and makes the matching to the exterior work.
 
-That has two separate consequences for our fixed test discrepancies. The
-coefficients needed to satisfy both constraints become large, and
-numerical errors in the moments become more strongly amplified.
+The same general technique appears at several points in the paper:
+preparing the profiles, restoring totals after the rapid shear changes
+of Appendix C, and correcting mean-flow compatibility conditions later.
+The exact totals differ between these tasks.
+\href{https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf}{Paper,
+Appendices A and C, Section 5, and Section 8.6}
 
-\begin{figure}
+\subsection{What our five-control experiment
+does}\label{what-our-five-control-experiment-does}
 
-\centering{
+The companion implements a particular five-moment repair from Section 5.
+It uses two axial patches and three angular patches, then chooses their
+coefficients to cancel five supplied discrepancies.
 
-\pandocbounded{\includegraphics[keepaspectratio,alt={As lambda approaches zero, the axial matrix condition number and correction coefficients grow, and moment cancellation loses digits.}]{figures/03_conditioning_limit.png}}
+``Axial'' refers to motion along the vortex axis; ``angular'' refers to
+motion around it. The actual weights are more complicated than positions
+1 and 3 on our ruler, but the logical operation is the same.
 
-}
+The computation checks the weighted totals again after applying the
+patches. In the declared test, the remaining discrepancies are near
+ordinary floating-point precision.
 
-\caption{\label{fig-conditioning}Decreasing the reserved-patch exponent
-makes the axial moment matrix poorly conditioned, while the angular
-block remains bounded over this scan. The fixed input discrepancies
-require increasingly large axial coefficients. Reintegrated moment
-remainders become larger in double precision. This is algebraic
-sensitivity of the isolated solve, not dynamical stability of a flow.}
+The supplied discrepancies are test inputs. They were not measured from
+a completed first correction of the full joined vortex. The experiment
+demonstrates this repair tool, not a full before-and-after
+Navier--Stokes residual calculation.
 
-\end{figure}%
+Signed profile corrections should also not be confused with the
+nonnegative squared amplitudes used to weight the leading pulse
+families. They serve different jobs.
 
-At \(\lambda=10^{-8}\), the axial condition number is about
-\textbf{5.3e+08}, and the largest relative moment remainder is
-approximately \textbf{9.7e-08} in this implementation.
+\subsection{Why this part of the proof is easy to
+underestimate}\label{why-this-part-of-the-proof-is-easy-to-underestimate}
 
-Condition numbers depend on the chosen coordinates and scaling. The data
-therefore also include the axial condition number after normalizing each
-matrix row. Its deterioration persists because the rows are becoming
-parallel.
+The large waves and shrinking vortex attract attention. Weighted totals
+can look like bookkeeping.
 
-The scan keeps the prescribed discrepancies fixed while changing
-\(\lambda\). It does not construct a corresponding family of full paper
-profiles. In particular, it establishes no instability of the proposed
-Navier--Stokes solution. It identifies a numerical issue to check when
-an actual profile supplies these discrepancies.
+But a profile may look excellent locally and still fail to match its
+outside because a small integrated discrepancy remains. Local plots
+alone can miss that problem.
 
-\subsection{What is still needed for a full correction
-comparison?}\label{what-is-still-needed-for-a-full-correction-comparison}
+The repair step makes a local modification compatible with global
+requirements. It is part of what turns a collection of plausible pieces
+into a candidate whole.
 
-The finite repair is ready to accept discrepancies from a future profile
-calculation. The missing work lies upstream:
+\subsection{Where this fits in the bigger
+picture}\label{where-this-fits-in-the-bigger-picture}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Evaluate one joined leading profile, including its inner, annular, and
-  exterior regions and the selected construction constants.
-\item
-  Solve the coupled first inner coefficient equations for the angular
-  velocity, axial velocity, and pressure.
-\item
-  Extend that inner coefficient, compute its five actual discrepancies,
-  and pass them to this repair.
-\item
-  Reconstruct the complete corrected fields and compare their momentum
-  residuals on resolved physical-coordinate samples.
-\end{enumerate}
+\textbf{Moments are the connection checks between local repairs and the
+rest of the flow.} A handful of well-placed smooth patches can restore
+the required totals while keeping their effects confined.
 
-The \href{implementation-ledger.md}{implementation ledger} lists the
-source definitions and current status of those dependencies. The
-published formalization repository was also inventoried; that check
-found Lean source, but no Python/Julia/notebook or tabulated-profile
-files of the inspected types. It was not a proof audit.
+We now have the main tools needed to understand the final construction
+cycle. Continue with \href{../completing-the-flow/article.html}{how the
+pieces become one complete flow}.
 
-The numerical result here is a working, independently checked component
-of the correction machinery. A reduction in these five integral
-remainders must remain separate from the still-uncomputed reduction in
-the full momentum residual.
-
-The \href{../../code/d6_moment_correction/study.ipynb}{notebook},
-\href{../../code/d6_moment_correction/parameters.json}{parameters}, and
-\href{../../code/d6_moment_correction/data/}{CSV data} expose all
-inputs, coefficients, and checks.
+The \href{technical-article.html}{technical article},
+\href{../../code/d6_moment_correction/study.ipynb}{notebook}, and
+\href{source-notes.md}{source notes} identify the precise five
+constraints and their numerical checks.
 
 
 

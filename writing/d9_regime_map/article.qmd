@@ -1,170 +1,101 @@
 ---
-title: "The vortex radius is only one of the lengths that matter"
-subtitle: "A physical regime map for compressibility, molecular motion, and unresolved pulse scales"
+title: "The vortex radius is not the only small length"
+subtitle: "Why fine ripples and molecular motion need their own rulers"
 date: 2026-09-12
 lang: en
-jupyter: python3
 format:
   html:
     toc: true
     toc-depth: 2
     embed-resources: true
     theme: cosmo
-    css: ../d1_core_size/article.css
+    css: ../reader-style.css
   latex:
     documentclass: article
     fontsize: 11pt
     geometry: margin=25mm
-execute:
-  echo: false
-  warning: false
-  error: false
 ---
 
-```{python}
-#| label: setup
-from nscomp.d9 import load_parameters, generate, crossing_table
-p = load_parameters()
-summary = generate()
-```
+[Return to the paper map](../paper-map/article.html) · Physical interpretation, article 2 of 3
 
-**A vortex can outgrow the assumptions of an incompressible fluid model long before its core becomes atomic. The answer depends on how fast the fluid moves, how rapidly it varies in space, and whether molecules have time to respond.**
+Imagine a painting that is one metre wide but contains lines a tenth of a millimetre apart. The canvas size does not tell you how fine a camera must be to resolve the lines.
 
-The [first article](../d1_core_size/article.html) connected increasing speed with decreasing core radius. Its formal extrapolation reached molecular and atomic lengths. That makes the eventual physical limitation vivid, but it leaves a practical engineering question: which assumption needs attention first?
+A vortex has the same distinction. Its core radius measures the size of an intense region. Fine waves inside that region can vary over a much shorter distance.
 
-A visible vortex core may contain much finer structures. A gas can remain slow compared with sound yet vary over distances too short for the usual continuum description. A liquid requires its own molecular and thermodynamic assessment. And a computer can accurately evaluate equations after those equations have ceased to describe the intended material.
+This matters when asking whether a continuum fluid model has a physical interpretation. We need a ruler for the variation we want to describe, not just a ruler for the whole object.
 
-This installment builds a map rather than a single cutoff. We retain the same illustrative reference—1 mm radius at 1 m/s—and compare air and water at specified states. We vary the assumed flow-variation length, compare gas collision and flow times, and audit what the paper actually tells us about its smaller oscillations. The result identifies useful next experiments while keeping missing physical information visible.
+## Compare the right lengths
 
-## Start with the length over which the flow changes
+A one-millimetre core might, in an illustrative scenario, contain changes over one micrometre. That is a thousand times smaller.
 
-Write the core radius as $a$. The leading scaling gives the anchored surrogate
+The overall radius may look comfortably large while the fine structure demands much smaller averaging regions.
+
+The paper has several lengths: the core width, the axial extent, the width of a pulse envelope, and the spacing of the oscillation inside it. A further distinction is the distance over which velocity changes appreciably, which also depends on amplitude and direction.
+
+We cannot replace all of these by “the vortex size.” Nor have our physical scale studies reconstructed the complete pulse wavelengths and gradients.
+
+## An averaging box must be neither too large nor too small
+
+To assign a local velocity, imagine averaging molecular motion in a small box.
+
+If the box is too large, it blends different parts of the flow and erases the feature we wanted to describe. If it is too small, it contains too few molecules for the intended smooth average.
+
+Suppose a box contains 1,000 molecules on average. Shrink each side by ten while holding the density fixed. Its volume is divided by 1,000, so its expected molecular count drops to one.
+
+That is why a modest-looking change in the required linear resolution can cause a large change in molecular statistics.
+
+![At fixed density, reducing each side of an averaging cube by ten reduces its expected molecular count by a thousand. The count illustrates volume scaling, not a universal minimum number for fluid modelling.](figures/reader.png){#fig-average fig-alt="A larger averaging cube labelled 1000 molecules is compared with a cube one tenth as wide labelled one molecule."}
+
+The whole core may still contain many molecules. The question concerns the small regions needed to describe its local variations.
+
+## Gas molecules bring another ruler
+
+Between collisions, gas molecules travel a typical distance called the **mean free path**.
+
+If the flow changes over a distance much larger than that path, a local continuum description has a useful separation of scales. If the two become comparable, molecules can cross significantly different conditions between collisions.
+
+A common preliminary comparison is
 
 $$
-a(U)=a_0\left(\frac{U}{U_0}\right)^{-1/(1+2h)}.
+\text{length ratio}=
+\frac{\text{mean free path}}
+{\text{flow-variation length}}.
 $$
 
-The main map uses its inverse-law limit, $h\to0^+$, so $aU=a_0U_0$. The source supplies asymptotic scales; the chosen SI anchor does not establish a complete viscosity/profile match. [OpenAI, Section 2.1 and Lemma 4.8](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
+This is the Knudsen number. For the stated room-temperature air reference, the mean free path is about **67 nanometres**. A variation length about one hundred times larger is approximately **6.7 micrometres**.
 
-Now introduce a separate length $L$: the distance over which a relevant local quantity changes appreciably. For screening, we assume
+The corresponding ratio of 0.01 is often used as an engineering screen. It is not an exact universal boundary or proof that every continuum assumption holds below it.
 
-$$
-L=\beta a,\qquad \beta=1,\ 0.1,\ 0.01,\ 0.001.
-$$
+## Speed and length ask different physical questions
 
-These are four scenarios. We have not measured $\beta$ from the paper's velocity, density, temperature, or phase gradients. A small-amplitude, short-wavelength pulse also requires its own amplitude when estimating a velocity gradient; combining the full core speed with its wavelength can overstate the variation rate.
+Comparing speed with sound speed asks whether density changes may matter. Comparing molecular flight length with flow-variation length asks whether a local continuum description is appropriate.
 
-The distinction matters immediately. Reducing $L$ by ten increases a gas Knudsen-number estimate by ten, even though the visible core and its characteristic speed have not changed.
+Either concern can arise first, depending on the flow. If a fine ripple is much smaller than the core radius, the molecular-length screen can be reached earlier than a calculation using the core radius would suggest.
 
-## Read the map as a set of screens
+A gas can also remain a continuum while needing a **compressible** model. “Continuum” and “incompressible” are different assumptions, so they should not be treated as a single switch.
 
-For a sound speed $c_s$ and gas mean free path $\lambda_{\rm mfp}$, use
-
-$$
-M=\frac{U}{c_s},\qquad {\rm Kn}_{\rm proxy}=\frac{\lambda_{\rm mfp}}{L}.
-$$
-
-We retain the engineering markers $M=0.3$ and $\mathrm{Kn}=0.01$. They indicate where to examine an assumption more carefully; passing them does not certify a whole flow. Rapid forcing, heating, pressure changes, and boundary effects can matter independently. [Low-Mach discussion](https://ntrs.nasa.gov/api/citations/19960045736/downloads/19960045736.pdf), [Knudsen-number discussion](https://ntrs.nasa.gov/api/citations/20000004526/downloads/20000004526.pdf)
-
-Air is evaluated at 296.15 K and 101.3 kPa, with $\lambda_{\rm mfp}=67.3$ nm under the cited convention. Its sound speed is an ideal-gas estimate, about 345 m/s. Water is evaluated at 298.15 K and 0.1 MPa, with sound speed about 1497 m/s and estimated mean molecular spacing 0.311 nm. These properties remain frozen during the screening calculation. [NIST air reference, Equation (11) and Table 3](https://nvlpubs.nist.gov/nistpubs/jres/110/1/j110-1kim.pdf), [IAPWS water reference, Table 8](https://iapws.org/technical-guidance/release/LiquidWater.download)
-
-![Four assumed variation lengths follow the same anchored core contraction. In air, the vertical line marks Mach 0.3 and the horizontal line marks the Knudsen proxy 0.01. In water, the horizontal markers are molecular or atomic rulers, not validated continuum boundaries. The high-speed portions are formal extrapolations at frozen properties.](figures/01_physical_regime_map.png){#fig-map fig-alt="Air and water maps compare speed with four assumed flow-variation lengths. Compressibility and gas rarefaction screens appear far above atomic dimensions."}
-
-The air Mach marker occurs at about **`{python} f'{summary["air_mach_screen_speed_m_s"]:.0f}'` m/s**, where the assumed core radius is **`{python} f'{1e6*summary["air_core_radius_at_mach_screen_m"]:.2f}'` micrometres**. For water, the corresponding values are **`{python} f'{summary["water_mach_screen_speed_m_s"]:.0f}'` m/s** and **`{python} f'{1e6*summary["water_core_radius_at_mach_screen_m"]:.2f}'` micrometres**.
-
-Those radii are already much larger than atomic lengths. The water marker is a compressibility comparison only: an absolute-pressure and phase-change calculation could identify another limitation sooner.
-
-## A smaller variation length can change what happens first
-
-Solving $\lambda_{\rm mfp}/(\beta a)=0.01$ gives the formal air rarefaction crossing. The Mach crossing is independent of $\beta$ in this frozen-state experiment.
-
-```{python}
-#| label: crossing-table
-#| output: asis
-print(crossing_table(p))
-```
-
-With $L=a$, the Mach marker comes first. With $L=0.1a$, the Knudsen marker comes first, near 15 m/s. With $L=0.001a$, it has already been exceeded at the 1 m/s reference stage.
-
-The changeover occurs at $\beta\approx$ **`{python} f'{summary["beta_for_simultaneous_air_screens"]:.3f}'`**. This is a property of the chosen anchor and screens, not a universal vortex constant. It shows why a core-radius estimate cannot by itself select the correct physical model.
-
-![The left panel shows how the assumed gradient factor changes the ordering of the two air screens. The right compares the estimated time for flow variation with a frozen gas collision-time proxy. Neither panel measures the actual gradients or relaxation of the paper's flow.](figures/02_screen_order_and_times.png){#fig-times fig-alt="The rarefaction crossing decreases with the assumed variation length. Flow times decrease toward the molecular collision-time proxy as speed increases."}
+For a liquid, the gas mean-free-path picture is not directly transferable. Molecular spacing, correlations, relaxation, and thermodynamic state require their own treatment.
 
 ## Molecules also need time to respond
 
-For the air reference, the ideal-gas mean thermal speed is
+Lengths are only part of the story. The local state may change so quickly that molecules do not have enough time to establish the kind of local balance assumed by the model.
 
-$$
-\bar v=\sqrt{\frac{8RT}{\pi}},\qquad
-t_{\rm coll,proxy}=\frac{\lambda_{\rm mfp}}{\bar v}
-\approx 1.45\times10^{-10}\ {\rm s}.
-$$
+A rough flow time is “variation length divided by speed.” Shorten the distance or increase the speed and that time decreases.
 
-This is a convention-dependent collision-time estimate, not a measured relaxation time for every stress or thermal process. We compare it with $t_{\rm flow,proxy}=L/U$:
+Comparing it with a molecular response time is another useful question. Our gas calculations use a declared collision-time proxy. They do not establish a universal liquid response time or a physical realization of the paper's detailed field.
 
-$$
-\chi_{\rm proxy}=\frac{t_{\rm coll,proxy}}{t_{\rm flow,proxy}}
-={\rm Kn}_{\rm proxy}\frac{U}{\bar v}.
-$$
+## What our regime map actually compares
 
-The last equality explains why these gas screens are related. A small Knudsen number does not specify the time comparison until a speed is also supplied. Conversely, $\chi_{\rm proxy}$ is not an independent universal failure threshold.
+The supporting study follows several assumed variation lengths along the same illustrative radius–speed curve. It asks how the order of the physical screening markers changes.
 
-The exported data also include the sound-crossing time $L/c_s$ and diffusion time $L^2/\nu$. Their ratios to $L/U$ are $M$ and $\mathrm{Re}=UL/\nu$. These are characteristic comparisons. In particular, $U/L$ is not the symmetric strain rate: rigid rotation provides an example with nonzero velocity variation but zero strain.
+These are scenarios. The figure does not measure the actual smallest length in the paper's pulses. Its purpose is to expose the dependency that a single core-radius plot hides.
 
-We leave water's relaxation time unevaluated. Assigning a dilute-gas collision formula to a dense liquid would conceal the very molecular physics this audit is meant to examine.
+The physical discussion draws on the scalings in Sections 2–3 of the paper and the property/model references recorded in the [source notes](source-notes.md).
 
-## What about the paper's much smaller oscillations?
+## Where this fits in the bigger picture
 
-The source identifies a carrier scale with bare power
+**A large object can contain structure too fine for the model used to describe it.** Physical interpretation therefore needs both the overall geometry and the actual variation scales.
 
-$$
-\ell_{\rm car}\asymp Q^{(1+h)/2}.
-$$
+This is a companion question about the meaning of the continuum construction, not another proof block. Continue with [what changes when gas density is allowed to vary](../d10_compressible_vortex/article.html), or return to the [paper map](../paper-map/article.html).
 
-Combining this with the corresponding leading speed scale $U\asymp Q^{-1/2-h}$ gives the anchored power-law comparison
-
-$$
-\frac{\ell_{\rm car}}{a}
-=\frac{\ell_0}{a_0}
-\left(\frac{U}{U_0}\right)^{-h/(1+2h)}.
-$$
-
-Here we freeze all prefactors to isolate the powers. [OpenAI, page 81, discussion following Equation (7.22)](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf)
-
-![The left panel isolates the small change in the bare carrier/core ratio across the stated formal speed range. The right varies its unspecified reference ratio. These curves do not reconstruct the physical pulse wavelength, its phase gradient, or the finer correction scales.](figures/03_carrier_scale_audit.png){#fig-pulse fig-alt="The bare carrier/core exponent causes less than a tenth of a percent change in this range, while arbitrary initial scale factors remain undetermined."}
-
-Using the excluded necessary ceiling $h=e^{-10}$ gives only about **`{python} f'{summary["ceiling_bare_carrier_ratio_decrease_percent"]:.3f}'`%** decrease in this normalized ratio between 1 m/s and the formal endpoint $0.1c$. The chosen finite $h=10^{-6}$ is a sensitivity example, not a certified instance of the paper's full parameter hierarchy.
-
-This small percentage does **not** show that the actual pulses are close to the core size. Their initial ratio is unknown here; local phase gradients and envelope/cutoff factors remain uncomputed. A physical phase $\phi(\mathbf x)$ has local full wavelength $2\pi/|\nabla\phi|$, which is not determined by a bare power alone. The [Kelvin wave from D5](../d5_shearing_wave/article.html) illustrates shearing and damping, but supplies no missing dimensional calibration for these pulses.
-
-## Why “many molecules” and “a local value” must both fit
-
-A local density or velocity averages molecular motion over a region small compared with the flow variation. Let a cubic averaging region have side $\epsilon L$, where $\epsilon<1$. If the mean molecular spacing is $d=n^{-1/3}$, its expected particle count is
-
-$$
-N=n(\epsilon L)^3=\left(\frac{\epsilon L}{d}\right)^3.
-$$
-
-This simple count shows the competing requirements. Taking $\epsilon=0.1$ and $L=10d$ leaves only one molecule on average in that cube. Taking $L=100d$ gives 1000. The latter count is an illustration, not a universal accuracy criterion; correlations and the observable being averaged matter.
-
-![Expected molecular counts for two averaging-cube sizes. The cube must be smaller than the scale over which the flow changes, so counting molecules in the entire vortex is insufficient. The lines are a geometric calculation, not a molecular simulation or a universal cutoff.](figures/04_averaging_scale_separation.png){#fig-average fig-alt="The number of molecules in a local averaging cube falls rapidly when its size is reduced relative to the flow-variation length."}
-
-Water's spacing estimate uses $d=(M_{\rm mol}/(\rho N_A))^{1/3}$, with the molar mass from the [NIST Chemistry WebBook](https://webbook.nist.gov/cgi/cbook.cgi?Name=water). The Bohr radius is a separate atomic ruler from [CODATA](https://physics.nist.gov/cuu/Constants/Table/allascii.txt); it is not the radius of every atom or a universal fluid cutoff.
-
-## What is established, and what should we compute next?
-
-| Quantity | Status in this study |
-| --- | --- |
-| Anchored core radius and speed | Evaluated surrogate; full dimensional profile match absent |
-| Mach and gas Knudsen screens | Evaluated at frozen reference states and declared $L/a$ |
-| Gas collision/flow time comparison | Evaluated proxy; actual strain and relaxation absent |
-| Carrier/core power ratio | Evaluated with frozen prefactors; actual pulse wavelength absent |
-| Water averaging-volume count | Evaluated geometry; liquid relaxation and correlations absent |
-| Heating, absolute pressure, cavitation, equation-of-state evolution | Unevaluated |
-| CFD resolution of the full construction | Unevaluated; no mesh is used by this study |
-
-The practical choice is conditional. Where the gas remains well separated from molecular scales but compressibility matters, a compressible continuum experiment is appropriate. Where variation lengths approach molecular transport scales, a kinetic description needs consideration. Liquids require a case-specific constitutive and phase assessment. Relativistic hydrodynamics does not repair a lost molecular averaging scale.
-
-The [model-selection note](model-selection.md) defines a tractable first comparison: a smooth rotating gas vortex in radial balance, comparing constant-density pressure support with a compressible ideal-gas equilibrium. Its observable is the density deficit and pressure difference as the rotation speed increases. Keeping the velocity profile and exterior state explicit will let that experiment isolate a physical effect without pretending to continue the proposed blowup solution.
-
-Eight scientific checks cover independent scale elimination, numerical threshold roots, Maxwell-speed integration, time-scale identities, and averaging-volume counts. The [source notes](source-notes.md), [executed notebook](../../code/d9_regime_map/study.ipynb), [parameters](../../code/d9_regime_map/parameters.json), and [CSV data](../../code/d9_regime_map/data/) record the assumptions and reproduce the map.
+The [technical article](technical-article.html), [notebook](../../code/d9_regime_map/study.ipynb), and [source notes](source-notes.md) retain the scenario assumptions, units, and unresolved gradient scales.

@@ -38,7 +38,7 @@ Here is the whole strategy in one sentence:
 
 **Design a shrinking vortex, calculate the push that its motion is missing, supply that push through carefully arranged small-scale motion, and control the errors so the external force stays smooth.**
 
-![The argument runs from a concentrating vortex to a smooth external force. The loop in the middle repeatedly repairs the errors introduced by earlier repairs. This is a conceptual map, not a simulation.](figures/reader.png){#fig-map fig-alt="Six connected blocks: concentrate a vortex; join core to exterior; identify missing transport; prepare shear and add pulses; repair remaining errors; localize the result and keep the force smooth."}
+![The argument runs from a concentrating vortex to a smooth external force. The repair stage repeatedly addresses errors introduced by earlier repairs. This is a conceptual map, not a simulation.](figures/reader.png){#fig-map fig-alt="Six connected blocks: concentrate a vortex; join core to exterior; identify missing transport; prepare shear and add pulses; repair remaining errors; localize the result and keep the force smooth."}
 
 ### Block 1: a fast motion in a shrinking region
 
@@ -148,4 +148,3 @@ The physical interpretation has its own short route: [core size versus speed](..
 You do not need to remember every symbol. You should be able to say what problem each block solves, why that problem appears, and what the next block needs from it.
 
 The central thread is the balance between a growing velocity and a well-behaved force. The shrinking geometry makes the energy possible; the background establishes the shape; the ripples and pulses provide the missing transport; the corrections and final estimates make the pieces fit.
-

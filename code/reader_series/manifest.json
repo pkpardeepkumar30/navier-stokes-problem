@@ -1,0 +1,28 @@
+{
+  "audience": "General public; arithmetic, graphs, area and slope",
+  "purpose": "Explain the paper's mechanisms and how they connect; no new research objective",
+  "date": "2026-09-12",
+  "articles": [
+    {"folder":"paper-map","route":"start","technical":false},
+    {"folder":"d2_finite_energy","route":"main","step":1,"technical":true},
+    {"folder":"d6_inner_profile","route":"main","step":2,"technical":true},
+    {"folder":"d6_axis_pressure","route":"main","step":3,"technical":true},
+    {"folder":"d3_residual","route":"main","step":4,"technical":true},
+    {"folder":"convex-integration","route":"main","step":5,"technical":false},
+    {"folder":"d4_mean_stress","route":"main","step":6,"technical":true},
+    {"folder":"d5_shearing_wave","route":"main","step":7,"technical":true},
+    {"folder":"d6_moment_correction","route":"main","step":8,"technical":true},
+    {"folder":"completing-the-flow","route":"main","step":9,"technical":false},
+    {"folder":"d6_global_axis","route":"optional_math","technical":true},
+    {"folder":"d7_conditioning","route":"optional_numerics","technical":true},
+    {"folder":"d1_core_size","route":"physical","step":1,"technical":true},
+    {"folder":"d9_regime_map","route":"physical","step":2,"technical":true},
+    {"folder":"d10_compressible_vortex","route":"physical","step":3,"technical":true}
+  ],
+  "paper": {
+    "url":"https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf",
+    "sha256":"0e779481c4da40bd28d1e642e1d8ca57447d129610df28dfa5a11e9af8ae228f"
+  },
+  "figures": "One newly simplified PNG/SVG per article; existing scientific figures retained with technical articles",
+  "numerical_scope": "Earlier computations preserved; new plots are labelled arithmetic illustrations or explicit re-presentations of existing data"
+}

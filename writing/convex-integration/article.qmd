@@ -124,4 +124,3 @@ There are two related uses of fine structure to remember. **Appendix C changes l
 The first prepares suitable conditions for the second. Growth, viscous decay, and repeated correction then make the oscillatory construction work as part of the paper's full argument.
 
 Continue with [zero average, nonzero momentum transport](../d4_mean_stress/article.html), or return to the [paper map](../paper-map/article.html). The [source notes](source-notes.md) distinguish the elementary illustrations, the general convex-integration viewpoint, and the source's specific construction.
-
